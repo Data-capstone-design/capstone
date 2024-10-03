@@ -5,6 +5,8 @@
 - python-ffmpeg
 - Wisper
 - Nuxt3
+- Pinia
+- Quasar
 
 ## Frontend
 
