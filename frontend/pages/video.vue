@@ -3,12 +3,7 @@
     <div class="video-container">
       <div id="player"></div>
     </div>
-    <div class="summary-container">
-      <q-card class="q-pa-md">
-        <h2>영상 해설</h2>
-        <p>{{ videoSummary }}</p>
-      </q-card>
-    </div>
+    <ExplanationSidebar />
   </div>
 </template>
 
@@ -19,7 +14,6 @@ import { useVideoStore } from "~/stores/video";
 const videoStore = useVideoStore();
 const player = ref<any>(null);
 const intervalId = ref<number | null>(null);
-const videoSummary = ref("해설 여기에 집어넣으면 됌");
 
 const loadYouTubeAPI = () => {
   return new Promise<void>((resolve) => {
@@ -100,11 +94,6 @@ onBeforeUnmount(() => {
 .video-container {
   flex: 3;
   background-color: black;
-}
-
-.summary-container {
-  flex: 1;
-  overflow-y: auto;
 }
 
 #player {
