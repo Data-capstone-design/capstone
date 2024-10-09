@@ -1,12 +1,10 @@
 body {
-    font-size: 16px; /* 기본 16px로 설정 */
+    font-size: 16px;  
     line-height: 1.5;
   }
-  
-  /* 타이포그래피 설정 */
+
   h1 {
-    font-size: 2em; /* body 폰트 크기의 2배 */
-    font-weight: bold;
+    font-size: 2em;  
     line-height: 1.2;
   }
   
@@ -19,27 +17,25 @@ body {
     font-size: 1.5em;
   }
   
-  /* 코드 블록 및 기타 설정 */
   code, pre {
     font-size: 0.9em;
   }
   
-  /* 반응형 미디어 쿼리 */
   @media (max-width: 600px) {
     body {
-      font-size: 14px; /* 작은 화면에서는 폰트 크기 줄임 */
+      font-size: 14px;  
     }
   }
   
   @media (min-width: 601px) and (max-width: 1199px) {
     body {
-      font-size: 16px; /* 중간 크기 화면에서는 기본 설정 유지 */
+      font-size: 16px;  
     }
   }
   
   @media (min-width: 1200px) {
     body {
-      font-size: 18px; /* 큰 화면에서는 폰트 크기 늘림 */
+      font-size: 18px;  
     }
   }
   
