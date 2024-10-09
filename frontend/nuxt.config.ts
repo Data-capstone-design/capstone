@@ -5,7 +5,7 @@ export default defineNuxtConfig({
      'nuxt-quasar-ui',
      '@pinia/nuxt'
   ],
-  quasar: {
-      
-  },
+  css: [
+    '@/assets/global.css' // 전역 CSS 파일 추가
+  ]
 })
