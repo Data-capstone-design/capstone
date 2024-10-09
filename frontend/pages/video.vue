@@ -11,6 +11,10 @@
 import { onMounted, onBeforeUnmount, ref } from "vue";
 import { useVideoStore } from "~/stores/video";
 
+definePageMeta({
+  middleware: "check-video-url",
+});
+
 const videoStore = useVideoStore();
 const player = ref<any>(null);
 const intervalId = ref<number | null>(null);

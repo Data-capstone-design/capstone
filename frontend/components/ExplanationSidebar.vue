@@ -1,6 +1,6 @@
 <template>
   <div class="summary-container">
-    <q-card class="q-pa-md">
+    <q-card class="q-pa-md no-shadow">
       <div v-html="videoSummary" class="markdown-content"></div>
     </q-card>
   </div>
