@@ -33,13 +33,14 @@ const router = useRouter();
 const videoStore = useVideoStore();
 
 const validateYoutubeUrl = (val: string) => {
-  const pattern = /^https:\/\/www\.youtube\.com\/watch\?v=([\w-]{11})$/;
+  const pattern = /^https:\/\/www\.youtube\.com\/watch\?v=/;
   return pattern.test(val);
 };
 
 const handleSubmit = () => {
   if (validateYoutubeUrl(youtubeUrl.value) === true) {
-    videoStore.setVideoURL(youtubeUrl.value);
+    const trimmedUrl = youtubeUrl.value.split("&")[0];
+    videoStore.setVideoURL(trimmedUrl);
     router.push("/video");
   }
 };
