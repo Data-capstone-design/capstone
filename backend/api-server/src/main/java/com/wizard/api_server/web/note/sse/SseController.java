@@ -18,15 +18,13 @@ public class SseController {
 
     @GetMapping("/connect/{connectId}")
     public SseEmitter connect(@PathVariable("connectId") String connectId){
-        log.info("요청 받음 "+ connectId);
-        SseEmitter emitter = new SseEmitter();
-        emitters.addEmiter(connectId, emitter);
-
+        log.info("Connect to sse: {}", connectId);
+        SseEmitter emitter = emitters.addEmiter(connectId);
         try {
-            log.info("Connecting to " + connectId);
-            emitters.sendConnectEvent(emitter);
+            log.info("Connecting to {}", connectId);
+            emitters.sendConnectEvent(connectId);
         } catch (IOException e) {
-            log.info("SSE 연결 실패");
+            log.info("SSE connect failed");
             throw new RuntimeException(e);
         }
         return emitter;

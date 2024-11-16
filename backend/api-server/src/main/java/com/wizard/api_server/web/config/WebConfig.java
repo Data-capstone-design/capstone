@@ -12,12 +12,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000")
                 .allowedMethods("GET", "POST", "OPTIONS")
-                .allowedHeaders("*")
-                .allowedHeaders(
-                "Content-Type",
-                "X-Requested-With",// AJAX 요청 식별용
-                "Accept",          // 서버 응답 타입 지정
-                "Cache-Control"    // 캐싱 방지
-        );
+                .allowedHeaders("*");
     }
 }
