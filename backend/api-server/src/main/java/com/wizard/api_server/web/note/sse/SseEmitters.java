@@ -4,65 +4,76 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Slf4j
 @Component
 public class SseEmitters {
+    private final long EMITTER_TIMEOUT = 5*60*1000L;
     private final Map<String, SseEmitter> emitters = new ConcurrentHashMap<>();
 
-    public void addEmiter(String connectId, SseEmitter emitter) {
+    public SseEmitter addEmiter(String connectId) {
         if(emitters.containsKey(connectId)) {
             log.info("Emitter already exist for connectId {}", connectId);
-            return;
+            return emitters.get(connectId);
         }
+        SseEmitter emitter = new SseEmitter(EMITTER_TIMEOUT);
         emitters.put(connectId, emitter);
 
         log.info("Added emitter {}", connectId);
         log.info("emitter list size: {}", emitters.size());
 
         emitter.onCompletion(() -> {
-            log.info("emitter completed");
+            log.info("Emitter completed for connectId: {}", connectId);
             emitters.remove(connectId);
         });
 
         emitter.onTimeout(() -> {
-            log.info("emitter timed out");
+            log.info("Emitter timed out for connectId: {}", connectId);
             emitters.remove(connectId);
         });
+
         emitter.onError((error) -> {
             log.error("Error occurred for connectId: {}", connectId, error);
+            emitters.remove(connectId);
         });
+        return emitter;
     }
 
-    public void sendConnectEvent(SseEmitter emitter) throws IOException {
+    public void sendConnectEvent(String connectId) throws IOException {
+        SseEmitter emitter = emitters.get(connectId);
         var event = SseEmitter.event()
-                    .name("connect")
-                            .data("send connect event");
+                .name("connect")
+                .data("send connect event");
             emitter.send(event);
-        log.info("emitter sent first event");
+        log.info("emitter sent first event connectId: {}", connectId);
     }
 
-    public void sendEvent(String requestId, String data) throws IOException {
-        SseEmitter emitter = emitters.get(requestId);
+    public void sendCommentaryEvent(String connectId, String data) throws IOException {
+        SseEmitter emitter = emitters.get(connectId);
         if (emitter != null) {
             var event = SseEmitter.event()
                     .name("commentary")
                     .data(data);
 
-            emitter.send(event, MediaType.APPLICATION_JSON);
+            emitter.send(event);
             log.info("emitter sent comment event");
         } else {
             log.warn("emitter not found");
         }
     }
 
-    public Map<String, SseEmitter> getEmitters() {
-        return emitters;
+    public void sendIndexEvent(String connectId, String data) throws IOException {
+        SseEmitter emitter = emitters.get(connectId);
+        if (emitter != null) {
+            var event = SseEmitter.event()
+                    .name("index")
+                    .data(data);
+            emitter.send(event);
+            log.info("emitter sent index event");
+        } else {
+            log.warn("emitter not found");
+        }
     }
-    /**
-     *   {"requestId": "3ddfd9be-3896-41d3-a8d1-97e1e33c623f", "startTime": 0, "content": "# This is a commentary about the note."}
-     */
 }
