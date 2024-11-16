@@ -1,8 +1,8 @@
 <template>
   <section class="video-container">
-    <div v-if="loading" class="v-Loading q-pa-md full-width fixed-top">
-      <q-card flat style="max-width: 100%;">
-        <q-skeleton style="min-height: 33vh" square />
+    <div v-if="loading" class="v-Loading q-pa-md">
+      <q-card flat class="column full-width full-height" >
+        <q-skeleton square style="flex:1"/>
 
         <q-card-section>
           <q-skeleton type="text" height="35px"  class="text-subtitle1" />
@@ -11,8 +11,7 @@
         </q-card-section>
       </q-card>
     </div>
-
-    <div  id="player" class="v-Player"></div>
+    <div id="player" class="v-Player"></div>
   </section>
 
 </template>
@@ -21,6 +20,8 @@
 import {onBeforeUnmount, onMounted} from "vue";
 import {useVideoStore} from "~/stores/videoStore";
 import {useCommentaryStore} from "~/stores/commentaryStore";
+import {useIndexStore} from "~/stores/indexStore";
+
 import { v4 as uuidv4 } from "uuid";
 
 definePageMeta({
@@ -29,6 +30,7 @@ definePageMeta({
 
 const videoStore = useVideoStore();
 const commentaryStore = useCommentaryStore();
+const indexStore = useIndexStore();
 
 const loading = ref<boolean>(true);
 const {startAutoDisplayCommentary, stopAutoDisplayCommentary} = useAutoDisplayCommentary();
@@ -77,7 +79,9 @@ onMounted(async () => {
 
   const videoId = videoStore.getVideoId();
   const clientId = uuidv4();
-  eventSource = new EventSource(`http://localhost:8080/sse/connect/${videoId}?clientId=${clientId}`);
+  const url = '/api/sse'
+  // `http://localhost:8080/sse/connect/${videoId}?clientId=${clientId}`
+  eventSource = new EventSource(url);
   eventSource.addEventListener("connect", () => {
     console.log("서버와 연결")
   })
@@ -88,11 +92,19 @@ onMounted(async () => {
     await commentaryStore.addCommentary(startTime, content);
   });
 
+  eventSource.addEventListener("index", (e: any) => {
+    const data = JSON.parse(e.data);
+    const { noteIndex } = data;
+    indexStore.setNoteIndices(noteIndex);
+  });
+
   eventSource.onerror = (error) => {
     console.error("Error receiving SSE:", error);
-
-
   };
+
+  eventSource.addEventListener("close", ()=> {
+    eventSource.close();
+  })
 });
 
 onBeforeUnmount(() => {
@@ -110,17 +122,18 @@ window.addEventListener('resize', () => videoStore.setPlayerSize(window.innerWid
 <style scoped>
 .video-container {
   position: relative;
-  height: 100%;
-  min-width: 50%;
-  border:1px solid red;
+  aspect-ratio: 16 / 9;
 }
 .v-Loading {
-  width: 100%;
-  background-color: white;
-  height: 100%;
   position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
   z-index: 1001;
 }
+
 
 @media (max-width: 768px) {
   .video-container {
