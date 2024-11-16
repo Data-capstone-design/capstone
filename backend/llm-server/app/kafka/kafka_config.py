@@ -4,13 +4,13 @@
 KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"  # 예: 로컬 호스트에 설치된 Kafka 브로커
 
 #topic
-VIDEO_REQUEST_TOPIC = "video_request_topic"
+VIDEO_LINK_EVENTS = "video-link-events"
 LLM_REQUEST_TOPIC = "llm_request_topic"
 LLM_INITIALIZATION_TOPIC = "llm_initialization_topic"
 LLM_CONTENT_TOPIC = "llm_content_topic"
 STT_RESULT_TOPIC = "stt_result_topic"
 LLM_INDEX_EVENTS = "llm_index_events"
-LLM_RESULT_TOPIC = "llm_result_topic"
+LLM_COMMENTARY_EVENTS = "llm-commentary-events"
 
 # 메시지의 전송에 대한 확인 수준
 # all: 모든 복제본이 메시지를 확인해야 성공으로 간주
