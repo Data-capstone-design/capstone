@@ -1,3 +1,9 @@
 :root {
+  --q-header-height: 90px;
+}
 
+@media (max-width: 768px) {
+  :root {
+    --q-header-height: 48px;
+  }
 }

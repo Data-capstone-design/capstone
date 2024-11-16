@@ -6,7 +6,7 @@
            label="영상 따라가기"
            icon="adjust"
            class="toggle-btn q-mr-sm q-pa-x-sm q-pa-y-xs bg-grey-3 text-grey-9 border q-border-grey-3 text-bold no-ripple icon-spacing"
-           :class="{'mobile-btn': isMobile}"
+           :class="{'mobile-btn': $q.screen.lt.sm }"
     />
     <q-btn v-else
            unelevated
@@ -14,7 +14,7 @@
            label="자유롭게 보기"
            icon="sticky_note_2"
            class="toggle-btn q-mr-sm q-pa-x-sm q-pa-y-xs bg-grey-3 text-grey-9 border q-border-grey-3 text-bold no-ripple icon-spacing"
-           :class="{'mobile-btn': isMobile}"
+           :class="{'mobile-btn': $q.screen.lt.sm }"
     />
     <q-btn
         unelevated
@@ -23,7 +23,7 @@
         icon="filter_center_focus"
         class="toggle-btn q-mr-sm q-pa-x-sm q-pa-y-xs bg-grey-3 text-grey-9 border q-border-grey-3 text-bold no-ripple icon-spacing"
         :disable="isCommentaryFollowingVideo"
-        :class="{'mobile-btn': isMobile}"
+        :class="{'mobile-btn': $q.screen.lt.sm }"
     />
   </div>
 </template>
@@ -32,9 +32,7 @@
 import {useCommentaryStore} from "~/stores/commentaryStore"
 import {useAutoDisplayCommentary} from "~/composables/useAutoDisplayCommentary";
 import {useDebounce} from "~/composables/useDebounce";
-import {useIsMobile} from "~/composables/useIsMobile";
 
-const { isMobile } = useIsMobile();
 
 const commentaryStore = useCommentaryStore();
 const {startAutoDisplayCommentary, stopAutoDisplayCommentary} = useAutoDisplayCommentary();
@@ -46,11 +44,12 @@ const isCommentaryFollowingVideo = computed(() => commentaryStore.getIsCommentar
 
 const scrollTo = () => {
   const startTime = commentaryStore.getCurrentCommentaryTime();
-  const elementId = `c-ST-${startTime}`; // 이동할 요소의 ID 생성
-  const element = document.getElementById(elementId); // 요소 선택
+  console.log(startTime);
+  const elementId = `c-ST-${startTime}`;
+  const element = document.getElementById(elementId);
 
   if (element) {
-    element.scrollIntoView({ behavior: 'smooth' }); // 부드러운 스크롤로 이동
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 }
 </script>
