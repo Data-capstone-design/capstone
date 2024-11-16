@@ -1,13 +1,11 @@
 <template>
   <header class="fixed-header flex justify-between mb-2">
-    <video-controls/>
-    <note-controls/>
+    <VideoControls/>
+    <NoteControls/>
   </header>
 </template>
 
 <script setup lang="ts">
-
-import VideoControls from "~/components/VideoControls.vue";
 </script>
 
 <style scoped>

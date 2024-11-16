@@ -1,4 +1,10 @@
 export default defineNuxtConfig({
+    components: [
+        {
+            path: '~/components',
+            pathPrefix: false,
+        }
+    ],
     app: {
         head: {
             title: "정확한 영상해설 | TechNote"

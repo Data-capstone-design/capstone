@@ -81,7 +81,7 @@ const handleSubmit = async (): Promise<void> => {
     const userLevel = selectedLevel.value;
     await noteStore.createNote(videoId, userLevel);
     videoStore.setVideoId(videoId);
-    navigateTo("/video");
+    navigateTo("/note");
   }
 };
 </script>

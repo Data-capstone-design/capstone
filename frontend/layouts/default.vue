@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout style="height: 100vh">
     <AppHeader/>
     <q-page-container>
       <nuxt-page/>

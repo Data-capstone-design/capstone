@@ -14,7 +14,7 @@ import {useFormatTime} from "~/composables/useFormatTime";
 
 const {formatTime} = useFormatTime();
 
-const props = defineProps({
+defineProps({
   commentary: {
     type: Object as PropType<Commentary>,
     required: true,

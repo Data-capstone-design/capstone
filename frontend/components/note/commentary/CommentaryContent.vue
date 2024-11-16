@@ -18,8 +18,8 @@ const commentaries = computed(()=> commentaryStore.getCommentaries());
 
 <style lang="scss" scoped>
 .s-Scroller {
-  min-height: calc(100vh - 200px);
-  max-height: calc(100vh - 200px);
+  min-height: 87.1vh;
+  max-height: 87.1vh;
 }
 
 @media (max-width: 768px) {
