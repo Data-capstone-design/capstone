@@ -48,7 +48,11 @@ class MessageProcessor:
     async def create_indices(self, thread):
         logger.info(f"목차 생성 시작 | Thread ID: {thread.id}")
         text = await read_text_file("capstone_storage/test_request_123/original_test_request_123.txt")
-        instruction = load_basic_prompt("create_indices", full_original_text=text)
+        instruction = load_prompt(
+            explanation_level=self.explanation_level,
+            stage="create_indices",
+            full_original_text=text
+        )
         run = await run_stream(self.assistant.id, thread.id, event_handler=IndexEventHandler(self.request_id, producer=self.producer), instructions=instruction)
 
     async def create_explanations(self, dir_path):
@@ -83,7 +87,11 @@ class MessageProcessor:
         logger.info(f"설명문 생성 시작 | 파일: {chunk_file_path} | Thread ID: {thread.id} | 청크: {chunk_index + 1}/{self.total_chunks}")
         chunk_text = await read_text_file(
             f"capstone_storage/{request_id}/transcription_chunks/{request_id}_{chunk_index}.txt")
-        instruction = load_basic_prompt("create_explanation", chunk_original_text=chunk_text)
+        instruction = load_prompt(
+            explanation_level = self.explanation_level,
+            stage="create_explanation",
+            chunk_original_text=chunk_text
+        )
 
         await run_stream(self.assistant.id, thread.id, event_handler=event_handler, instructions=instruction
         )
@@ -108,7 +116,12 @@ class MessageProcessor:
             f"capstone_storage/{request_id}/explanation/explanation_{request_id}_{chunk_index}.txt")
         chunk_text = await read_text_file(
             f"capstone_storage/{request_id}/transcription_chunks/{request_id}_{chunk_index}.txt")
-        instruction = load_basic_prompt("create_feedback", chunk_original_text=chunk_text, chunk_explanation=chunk_explanation_text)
+        instruction = load_prompt(
+            explanation_level = self.explanation_level,
+            stage = "create_feedback",
+            chunk_original_text=chunk_text,
+            chunk_explanation=chunk_explanation_text
+        )
 
         logger.info("instruction 생성완료")
         await run_stream(self.assistant.id, thread.id, event_handler=feedback_event_handler, instructions=instruction)
@@ -133,7 +146,12 @@ class MessageProcessor:
             f"capstone_storage/{self.request_id}/explanation/explanation_{self.request_id}_{chunk_index}.txt")
         chunk_explanation_feedback_text = await read_text_file(
             f"capstone_storage/{self.request_id}/feedback/feedback_{self.request_id}_{chunk_index}.txt")
-        instruction = load_basic_prompt("create_enhanced_explanation", chunk_explanation=chunk_explanation_text,chunk_feedback=chunk_explanation_feedback_text)
+        instruction = load_prompt(
+            explanation_level = self.explanation_level,
+            stage="create_enhanced_explanation",
+            chunk_explanation=chunk_explanation_text,
+            chunk_feedback=chunk_explanation_feedback_text
+        )
 
         await run_stream(self.assistant.id, thread.id, event_handler=enhanced_explanation_event_handler, instructions=instruction)
 
