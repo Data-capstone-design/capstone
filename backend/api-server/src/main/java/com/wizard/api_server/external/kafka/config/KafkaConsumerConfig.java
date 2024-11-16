@@ -1,6 +1,7 @@
 package com.wizard.api_server.external.kafka.config;
 
 import com.wizard.api_server.external.kafka.note.dto.NoteContent;
+import com.wizard.api_server.external.kafka.note.dto.NoteIndex;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -30,10 +31,34 @@ public class KafkaConsumerConfig {
         return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), errorHandlingDeserializer);
     }
 
+
+    @Bean
+    public ConsumerFactory<String, NoteIndex> consumerIndexFactory() {
+        Map<String, Object> config = new HashMap<>();
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        config.put(ConsumerConfig.GROUP_ID_CONFIG, "group_1");
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        config.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+
+        JsonDeserializer<NoteIndex> jsonDeserializer = new JsonDeserializer<>(NoteIndex.class, false);
+        ErrorHandlingDeserializer<NoteIndex> errorHandlingDeserializer = new ErrorHandlingDeserializer<>(jsonDeserializer);
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), errorHandlingDeserializer);
+    }
+
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, NoteContent> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, NoteContent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
+
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, NoteIndex> kafkaIndexListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, NoteIndex> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerIndexFactory());
+        return factory;
+    }
+
 }
