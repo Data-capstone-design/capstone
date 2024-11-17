@@ -1,7 +1,7 @@
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.0
-    container_name: zookeeper
+    container_name: technote-zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -12,7 +12,7 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:7.3.0
-    container_name: kafka
+    container_name: technote-kafka
     depends_on:
       - zookeeper
     environment:
@@ -22,6 +22,14 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     ports:
       - "9092:9092"
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:7
+    container_name: technote-mongo
+    ports:
+      - "27017:27017"
     networks:
       - app-network
 
