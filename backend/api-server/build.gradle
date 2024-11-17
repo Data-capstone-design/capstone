@@ -1,61 +1,52 @@
 plugins {
-	id 'java'
+	id 'java-library'
 	id 'org.springframework.boot' version '3.3.4'
 	id 'io.spring.dependency-management' version '1.1.6'
 }
 
-group = 'com.wizard'
-version = '0.0.1-SNAPSHOT'
-
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+allprojects {
+	repositories {
+		mavenCentral()
 	}
 }
 
+subprojects {
+	group = 'com.technote'
+	version = '0.0.1-SNAPSHOT'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
+	apply plugin: 'java-library'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+
+	java {
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(17)
+		}
 	}
-}
 
-repositories {
-	mavenCentral()
-}
+	dependencies {
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+	}
 
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-//	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
 
-	// Kafka
-	implementation 'org.springframework.kafka:spring-kafka:3.0.10'
+	bootJar {
+		enabled = false
+	}
 
-	// MapStruct
-	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-	testImplementation 'io.projectreactor:reactor-test'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+	jar {
+		enabled = true
+	}
 
-	// Lombok
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-
-	// MySQL
-//	runtimeOnly 'com.mysql:mysql-connector-j'
-
-	// Test
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	testImplementation 'org.springframework.kafka:spring-kafka-test'
-
-	// Devtools
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-}
-
-test {
-	useJUnitPlatform()
+	test {
+		useJUnitPlatform()
+	}
 }
