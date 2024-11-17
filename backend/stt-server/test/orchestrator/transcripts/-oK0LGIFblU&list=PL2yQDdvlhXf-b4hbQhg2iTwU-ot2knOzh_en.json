@@ -1,0 +1,1732 @@
+[
+  {
+    "text": "- [Martin] So you guys\nhave probably seen AI",
+    "start": 1.11,
+    "duration": 2.04
+  },
+  {
+    "text": "in almost every booth in here.",
+    "start": 3.15,
+    "duration": 1.59
+  },
+  {
+    "text": "And we're gonna talk about",
+    "start": 4.74,
+    "duration": 1.59
+  },
+  {
+    "text": "what we think AI should do for you.",
+    "start": 6.33,
+    "duration": 1.773
+  },
+  {
+    "text": "So first of all, if you\ndon't know who Trellix is,",
+    "start": 9.18,
+    "duration": 2.16
+  },
+  {
+    "text": "and we've been around a long time.",
+    "start": 11.34,
+    "duration": 1.95
+  },
+  {
+    "text": "We are the combination of\nMcAfee Enterprise and FireEye.",
+    "start": 13.29,
+    "duration": 4.08
+  },
+  {
+    "text": "We came together",
+    "start": 17.37,
+    "duration": 0.87
+  },
+  {
+    "text": "and we've formed a lot of new things",
+    "start": 18.24,
+    "duration": 1.56
+  },
+  {
+    "text": "since the merger back in '22.",
+    "start": 19.8,
+    "duration": 2.37
+  },
+  {
+    "text": "And what I wanna focus on today",
+    "start": 22.17,
+    "duration": 1.32
+  },
+  {
+    "text": "are some of the building blocks",
+    "start": 23.49,
+    "duration": 1.83
+  },
+  {
+    "text": "that we've built over the years.",
+    "start": 25.32,
+    "duration": 1.32
+  },
+  {
+    "text": "So you see, back in 2014,",
+    "start": 26.64,
+    "duration": 2.58
+  },
+  {
+    "text": "some friends of mine and\nI created some analytics,",
+    "start": 29.22,
+    "duration": 3.273
+  },
+  {
+    "text": "one of the most important\nones in security called",
+    "start": 33.36,
+    "duration": 1.77
+  },
+  {
+    "text": "the \"Impossible Travel Analytic.\"",
+    "start": 35.13,
+    "duration": 1.77
+  },
+  {
+    "text": "And in 2016,",
+    "start": 36.9,
+    "duration": 0.9
+  },
+  {
+    "text": "we invented something called\n\"Guided Investigations,\"",
+    "start": 37.8,
+    "duration": 1.89
+  },
+  {
+    "text": "which is essentially the playbooks",
+    "start": 39.69,
+    "duration": 1.59
+  },
+  {
+    "text": "or questions that go with\nany alert that shows up.",
+    "start": 41.28,
+    "duration": 2.82
+  },
+  {
+    "text": "And then fast forward to last year,",
+    "start": 44.1,
+    "duration": 1.59
+  },
+  {
+    "text": "where we came out with our\nAI guided investigations,",
+    "start": 45.69,
+    "duration": 2.64
+  },
+  {
+    "text": "which builds on all these things.",
+    "start": 48.33,
+    "duration": 1.26
+  },
+  {
+    "text": "So you can see, we have a rich heritage.",
+    "start": 49.59,
+    "duration": 1.8
+  },
+  {
+    "text": "So before AI,",
+    "start": 51.39,
+    "duration": 1.29
+  },
+  {
+    "text": "we had this approach where\nyou would take data sources",
+    "start": 52.68,
+    "duration": 2.97
+  },
+  {
+    "text": "from everywhere you could get it,",
+    "start": 55.65,
+    "duration": 1.26
+  },
+  {
+    "text": "which is whether they're SaaS connectors,",
+    "start": 56.91,
+    "duration": 2.55
+  },
+  {
+    "text": "whether they're high-volume\nthroughput through S3,",
+    "start": 59.46,
+    "duration": 3.03
+  },
+  {
+    "text": "whether it's syslog, all\nthese different sources,",
+    "start": 62.49,
+    "duration": 2.64
+  },
+  {
+    "text": "put it in a data lake, index it,",
+    "start": 65.13,
+    "duration": 1.98
+  },
+  {
+    "text": "and then we'd run analytics\nrules and intel on it.",
+    "start": 67.11,
+    "duration": 2.76
+  },
+  {
+    "text": "This is a very valuable thing.",
+    "start": 69.87,
+    "duration": 1.14
+  },
+  {
+    "text": "You're gonna find where\nall the bad stuff is.",
+    "start": 71.01,
+    "duration": 1.89
+  },
+  {
+    "text": "You'll create anomalies,\na human is notified,",
+    "start": 72.9,
+    "duration": 2.257
+  },
+  {
+    "text": "\"Hey, you gotta look at something.\"",
+    "start": 75.157,
+    "duration": 1.403
+  },
+  {
+    "text": "And then the human would use",
+    "start": 76.56,
+    "duration": 2.04
+  },
+  {
+    "text": "the OpenSearch service to go through",
+    "start": 78.6,
+    "duration": 1.44
+  },
+  {
+    "text": "and do that investigation.",
+    "start": 80.04,
+    "duration": 1.95
+  },
+  {
+    "text": "So this was really successful\nat ingesting the data itself,",
+    "start": 81.99,
+    "duration": 4.14
+  },
+  {
+    "text": "doing the indexing and matching,",
+    "start": 86.13,
+    "duration": 1.14
+  },
+  {
+    "text": "and searching what I would\ncall obscene data volumes",
+    "start": 87.27,
+    "duration": 2.22
+  },
+  {
+    "text": "because we're talking\nterabytes today per customer.",
+    "start": 89.49,
+    "duration": 2.43
+  },
+  {
+    "text": "What didn't work so well",
+    "start": 91.92,
+    "duration": 1.2
+  },
+  {
+    "text": "is that we didn't have time\nto get through all the alerts.",
+    "start": 93.12,
+    "duration": 2.52
+  },
+  {
+    "text": "We talked to customers,\nand they would get,",
+    "start": 95.64,
+    "duration": 1.98
+  },
+  {
+    "text": "I'll show you later, but upwards\nof a thousand alerts a day,",
+    "start": 97.62,
+    "duration": 2.88
+  },
+  {
+    "text": "and they couldn't get\nthrough all of them in time.",
+    "start": 100.5,
+    "duration": 2.46
+  },
+  {
+    "text": "So what we figured out\nwas that we needed to take",
+    "start": 102.96,
+    "duration": 2.19
+  },
+  {
+    "text": "that broad bird's eye view",
+    "start": 105.15,
+    "duration": 1.65
+  },
+  {
+    "text": "that we have with all this context",
+    "start": 106.8,
+    "duration": 1.56
+  },
+  {
+    "text": "and add generative AI to it",
+    "start": 108.36,
+    "duration": 1.32
+  },
+  {
+    "text": "so that we can actually get\nthrough those alerts quickly.",
+    "start": 109.68,
+    "duration": 2.37
+  },
+  {
+    "text": "So this is what it looks like now.",
+    "start": 112.05,
+    "duration": 1.59
+  },
+  {
+    "text": "You see it starts out the same way.",
+    "start": 113.64,
+    "duration": 1.47
+  },
+  {
+    "text": "We still need to collect all that data,",
+    "start": 115.11,
+    "duration": 1.35
+  },
+  {
+    "text": "we still need to do the initial detection,",
+    "start": 116.46,
+    "duration": 2.07
+  },
+  {
+    "text": "using things like analytics, and rules,",
+    "start": 118.53,
+    "duration": 1.74
+  },
+  {
+    "text": "and intel to figure out\nwhat is interesting,",
+    "start": 120.27,
+    "duration": 2.46
+  },
+  {
+    "text": "but here's where things change.",
+    "start": 122.73,
+    "duration": 1.56
+  },
+  {
+    "text": "Instead of asking the human to go see,",
+    "start": 124.29,
+    "duration": 2.047
+  },
+  {
+    "text": "\"Hey, there's an alert, go look at this,\"",
+    "start": 126.337,
+    "duration": 1.853
+  },
+  {
+    "text": "we have Bedrock do the\ninvestigation on your behalf",
+    "start": 128.19,
+    "duration": 3.6
+  },
+  {
+    "text": "for you before you're notified.",
+    "start": 131.79,
+    "duration": 2.37
+  },
+  {
+    "text": "And the reason that we're able to do",
+    "start": 134.16,
+    "duration": 1.41
+  },
+  {
+    "text": "that is we have these questions\nlined up for the AI to ask.",
+    "start": 135.57,
+    "duration": 3.69
+  },
+  {
+    "text": "So we go out",
+    "start": 139.26,
+    "duration": 0.833
+  },
+  {
+    "text": "and we collect the data so\nthat we have the answers.",
+    "start": 140.093,
+    "duration": 2.017
+  },
+  {
+    "text": "So we have answers around\nwhat else happened?",
+    "start": 142.11,
+    "duration": 3.06
+  },
+  {
+    "text": "what else has this asset been doing?",
+    "start": 145.17,
+    "duration": 1.77
+  },
+  {
+    "text": "How often does it happen?",
+    "start": 146.94,
+    "duration": 1.41
+  },
+  {
+    "text": "These are not correlations,\nthese are questions and answers,",
+    "start": 148.35,
+    "duration": 2.82
+  },
+  {
+    "text": "and that's really the key difference.",
+    "start": 151.17,
+    "duration": 1.47
+  },
+  {
+    "text": "And the reason that we're able\nto do that is, first of all,",
+    "start": 152.64,
+    "duration": 2.13
+  },
+  {
+    "text": "we have that initial detection.",
+    "start": 154.77,
+    "duration": 1.38
+  },
+  {
+    "text": "So we have those rules that are saying,",
+    "start": 156.15,
+    "duration": 1.327
+  },
+  {
+    "text": "\"Hey, you need to look at something.\"",
+    "start": 157.477,
+    "duration": 1.673
+  },
+  {
+    "text": "That's kind of obvious,\nbut the second part isn't.",
+    "start": 159.15,
+    "duration": 2.4
+  },
+  {
+    "text": "It's the fact that we\ncan ask these questions",
+    "start": 161.55,
+    "duration": 2.49
+  },
+  {
+    "text": "in sub-second response times.",
+    "start": 164.04,
+    "duration": 2.07
+  },
+  {
+    "text": "That allows us to ask 20\nquestions of every single alert",
+    "start": 166.11,
+    "duration": 2.91
+  },
+  {
+    "text": "that comes through in a timely fashion.",
+    "start": 169.02,
+    "duration": 2.64
+  },
+  {
+    "text": "If you have some other\nindexing engine on the backend,",
+    "start": 171.66,
+    "duration": 2.94
+  },
+  {
+    "text": "you're not gonna be able to answer",
+    "start": 174.6,
+    "duration": 0.96
+  },
+  {
+    "text": "that question very quickly,",
+    "start": 175.56,
+    "duration": 1.17
+  },
+  {
+    "text": "which is why you don't see",
+    "start": 176.73,
+    "duration": 1.08
+  },
+  {
+    "text": "this on any other booth around here.",
+    "start": 177.81,
+    "duration": 1.74
+  },
+  {
+    "text": "We are the only ones that are able",
+    "start": 179.55,
+    "duration": 1.26
+  },
+  {
+    "text": "to successfully do this\nauto triage right now.",
+    "start": 180.81,
+    "duration": 2.7
+  },
+  {
+    "text": "The other reason",
+    "start": 183.51,
+    "duration": 0.833
+  },
+  {
+    "text": "is that we have these\nprebuilt investigations",
+    "start": 184.343,
+    "duration": 1.897
+  },
+  {
+    "text": "that go with it.",
+    "start": 186.24,
+    "duration": 0.833
+  },
+  {
+    "text": "These are not playbooks.",
+    "start": 187.073,
+    "duration": 1.147
+  },
+  {
+    "text": "These are questions and answers.",
+    "start": 188.22,
+    "duration": 1.59
+  },
+  {
+    "text": "And there's a big difference\nbetween a playbook,",
+    "start": 189.81,
+    "duration": 1.62
+  },
+  {
+    "text": "and a question, and answer.",
+    "start": 191.43,
+    "duration": 1.14
+  },
+  {
+    "text": "And this leads us to this,\nwhich is the important part.",
+    "start": 192.57,
+    "duration": 3.15
+  },
+  {
+    "text": "So I used to run a SoC\nfor almost a full decade.",
+    "start": 195.72,
+    "duration": 2.58
+  },
+  {
+    "text": "When I look at this\nstuff, I look at it as,",
+    "start": 198.3,
+    "duration": 2.137
+  },
+  {
+    "text": "\"How does this help my\nstaff get more work done?\"",
+    "start": 200.437,
+    "duration": 2.933
+  },
+  {
+    "text": "And what we have found\nwas that most places",
+    "start": 203.37,
+    "duration": 2.79
+  },
+  {
+    "text": "would look at just their favorite alerts,",
+    "start": 206.16,
+    "duration": 1.56
+  },
+  {
+    "text": "the ones that they could trust to know",
+    "start": 207.72,
+    "duration": 1.23
+  },
+  {
+    "text": "were pretty high fidelity",
+    "start": 208.95,
+    "duration": 1.26
+  },
+  {
+    "text": "and you'd ignore all the\ninformational low-level alerts.",
+    "start": 210.21,
+    "duration": 2.64
+  },
+  {
+    "text": "But what we've learned is\nthat advanced threat actors",
+    "start": 212.85,
+    "duration": 2.25
+  },
+  {
+    "text": "often show up in\ninformational level alerts,",
+    "start": 215.1,
+    "duration": 2.76
+  },
+  {
+    "text": "password resets, service\naccounts being created.",
+    "start": 217.86,
+    "duration": 3.27
+  },
+  {
+    "text": "These are just informational\ndaily business activities.",
+    "start": 221.13,
+    "duration": 3.3
+  },
+  {
+    "text": "But when you get the right\nsequence of them over time,",
+    "start": 224.43,
+    "duration": 2.76
+  },
+  {
+    "text": "that's actually an\nindication of a threat actor.",
+    "start": 227.19,
+    "duration": 1.95
+  },
+  {
+    "text": "So how would anyone look at\nan informational-level alert?",
+    "start": 229.14,
+    "duration": 3.09
+  },
+  {
+    "text": "You start with the billing\nevents going into the system.",
+    "start": 232.23,
+    "duration": 2.31
+  },
+  {
+    "text": "We do the rules, analytics,",
+    "start": 234.54,
+    "duration": 1.32
+  },
+  {
+    "text": "and intel to get that down to a thousand.",
+    "start": 235.86,
+    "duration": 2.07
+  },
+  {
+    "text": "This is where we've been",
+    "start": 237.93,
+    "duration": 1.32
+  },
+  {
+    "text": "as an industry up until this last year.",
+    "start": 239.25,
+    "duration": 2.97
+  },
+  {
+    "text": "What we added was Trellix\nWise with Bedrock,",
+    "start": 242.22,
+    "duration": 2.46
+  },
+  {
+    "text": "which actually asks us\nquestion and answers",
+    "start": 244.68,
+    "duration": 1.83
+  },
+  {
+    "text": "and gets you down to the\nactual 10 alerts that you can,",
+    "start": 246.51,
+    "duration": 2.94
+  },
+  {
+    "text": "if we're being honest, actually\nlook at as a human in a day.",
+    "start": 249.45,
+    "duration": 3.78
+  },
+  {
+    "text": "You're not gonna look at a\nthousand alerts as a human.",
+    "start": 253.23,
+    "duration": 2.04
+  },
+  {
+    "text": "You might sort, you might filter,",
+    "start": 255.27,
+    "duration": 1.71
+  },
+  {
+    "text": "but you're not actually looking\nat the content for each one.",
+    "start": 256.98,
+    "duration": 3.03
+  },
+  {
+    "text": "And that's because this is what it takes",
+    "start": 260.01,
+    "duration": 1.65
+  },
+  {
+    "text": "to actually look through an alert.",
+    "start": 261.66,
+    "duration": 1.98
+  },
+  {
+    "text": "You'd have to find the answers\nto all these questions,",
+    "start": 263.64,
+    "duration": 2.31
+  },
+  {
+    "text": "and that takes time.",
+    "start": 265.95,
+    "duration": 1.14
+  },
+  {
+    "text": "So in the green here,",
+    "start": 267.09,
+    "duration": 0.9
+  },
+  {
+    "text": "I've kind of made some estimates about",
+    "start": 267.99,
+    "duration": 1.71
+  },
+  {
+    "text": "how long that would often\ntake someone to figure out,",
+    "start": 269.7,
+    "duration": 2.227
+  },
+  {
+    "text": "\"is this user currently traveling?",
+    "start": 271.927,
+    "duration": 2.07
+  },
+  {
+    "text": "\"Were there failed password resets?\"",
+    "start": 273.997,
+    "duration": 1.86
+  },
+  {
+    "text": "\"Does the user have an\nexecutive assistant?\"",
+    "start": 275.857,
+    "duration": 2.28
+  },
+  {
+    "text": "\"What level of access do they have?\"",
+    "start": 278.137,
+    "duration": 1.56
+  },
+  {
+    "text": "\"And what do they do\nafter the password reset?\"",
+    "start": 279.697,
+    "duration": 2.243
+  },
+  {
+    "text": "If you were to do a full investigation,",
+    "start": 281.94,
+    "duration": 1.77
+  },
+  {
+    "text": "these are the questions",
+    "start": 283.71,
+    "duration": 0.9
+  },
+  {
+    "text": "that you would have to ask as an analyst.",
+    "start": 284.61,
+    "duration": 1.8
+  },
+  {
+    "text": "We can do all of that automatically.",
+    "start": 286.41,
+    "duration": 2.13
+  },
+  {
+    "text": "And the cool part is that\nwe collect all the data,",
+    "start": 288.54,
+    "duration": 2.64
+  },
+  {
+    "text": "give it to Bedrock, and say,",
+    "start": 291.18,
+    "duration": 1.387
+  },
+  {
+    "text": "\"Based on all of this,",
+    "start": 292.567,
+    "duration": 1.23
+  },
+  {
+    "text": "\"do you think a human needs\nto look at this, yes or no?\"",
+    "start": 293.797,
+    "duration": 3.083
+  },
+  {
+    "text": "And because it has all\nthat information available,",
+    "start": 296.88,
+    "duration": 2.31
+  },
+  {
+    "text": "it can do that 13 minutes of work for you,",
+    "start": 299.19,
+    "duration": 2.19
+  },
+  {
+    "text": "but you don't have to take my word for it.",
+    "start": 301.38,
+    "duration": 1.38
+  },
+  {
+    "text": "I know this looks like marketing slides.",
+    "start": 302.76,
+    "duration": 1.71
+  },
+  {
+    "text": "Let's dive in.",
+    "start": 304.47,
+    "duration": 0.99
+  },
+  {
+    "text": "This is the part that I like.",
+    "start": 305.46,
+    "duration": 1.02
+  },
+  {
+    "text": "Let's get into the weeds",
+    "start": 306.48,
+    "duration": 0.833
+  },
+  {
+    "text": "because I think this is the part",
+    "start": 307.313,
+    "duration": 1.447
+  },
+  {
+    "text": "where things get really cool.",
+    "start": 308.76,
+    "duration": 1.17
+  },
+  {
+    "text": "When I started to see this\nstuff come out of Bedrock,",
+    "start": 309.93,
+    "duration": 2.28
+  },
+  {
+    "text": "this is when I knew that we\nwere in a new era of security.",
+    "start": 312.21,
+    "duration": 2.79
+  },
+  {
+    "text": "This is actual, we put\nthe highlights in here,",
+    "start": 315.0,
+    "duration": 2.73
+  },
+  {
+    "text": "but this is copied",
+    "start": 317.73,
+    "duration": 0.833
+  },
+  {
+    "text": "and pasted from the output",
+    "start": 318.563,
+    "duration": 1.717
+  },
+  {
+    "text": "that you get in our product today.",
+    "start": 320.28,
+    "duration": 2.25
+  },
+  {
+    "text": "So it'll say,",
+    "start": 322.53,
+    "duration": 1.117
+  },
+  {
+    "text": "\"Based on what I just read through,",
+    "start": 323.647,
+    "duration": 1.5
+  },
+  {
+    "text": "\"all of the question,\nanswers that you gave me,",
+    "start": 325.147,
+    "duration": 2.35
+  },
+  {
+    "text": "\"you have an IoC that was triggered,",
+    "start": 329.167,
+    "duration": 1.38
+  },
+  {
+    "text": "\"you have a source IP that communicated.\"",
+    "start": 330.547,
+    "duration": 1.763
+  },
+  {
+    "text": "And the highlighted in blue here appears",
+    "start": 332.31,
+    "duration": 2.16
+  },
+  {
+    "text": "to be cloud hosting providers.",
+    "start": 334.47,
+    "duration": 2.04
+  },
+  {
+    "text": "Generative AI understands the concept",
+    "start": 336.51,
+    "duration": 2.16
+  },
+  {
+    "text": "of a cloud hosting provider.",
+    "start": 338.67,
+    "duration": 1.62
+  },
+  {
+    "text": "So if you say \"AWS,\" it knows\nthat's a cloud provider.",
+    "start": 340.29,
+    "duration": 2.79
+  },
+  {
+    "text": "It knows that means that the IP addresses",
+    "start": 343.08,
+    "duration": 1.68
+  },
+  {
+    "text": "are often shared between tenants",
+    "start": 344.76,
+    "duration": 1.53
+  },
+  {
+    "text": "that they're not necessarily\nallocated to one entity.",
+    "start": 346.29,
+    "duration": 2.76
+  },
+  {
+    "text": "And it uses that in its decision-making",
+    "start": 349.05,
+    "duration": 2.34
+  },
+  {
+    "text": "as it's going through\nhere to decide whether",
+    "start": 351.39,
+    "duration": 2.34
+  },
+  {
+    "text": "or not someone should\nactually look at this.",
+    "start": 353.73,
+    "duration": 1.86
+  },
+  {
+    "text": "And it's important",
+    "start": 355.59,
+    "duration": 0.833
+  },
+  {
+    "text": "because if it's a scanning IP address",
+    "start": 356.423,
+    "duration": 1.537
+  },
+  {
+    "text": "coming from a cloud provider,",
+    "start": 357.96,
+    "duration": 1.32
+  },
+  {
+    "text": "it understands that that's\nnot necessarily the same",
+    "start": 359.28,
+    "duration": 2.25
+  },
+  {
+    "text": "as if it's coming from somebody's home.",
+    "start": 361.53,
+    "duration": 2.04
+  },
+  {
+    "text": "So it has all of these\npre-trained concepts built in.",
+    "start": 363.57,
+    "duration": 3.9
+  },
+  {
+    "text": "And this is really important.",
+    "start": 367.47,
+    "duration": 1.02
+  },
+  {
+    "text": "We didn't do any training of that model",
+    "start": 368.49,
+    "duration": 2.82
+  },
+  {
+    "text": "for a very good reason.",
+    "start": 371.31,
+    "duration": 1.2
+  },
+  {
+    "text": "We want it to be the\njudge and jury to decide,",
+    "start": 372.51,
+    "duration": 2.827
+  },
+  {
+    "text": "\"When we give it all the facts,",
+    "start": 375.337,
+    "duration": 1.38
+  },
+  {
+    "text": "\"should someone look at this, yes or no?\"",
+    "start": 376.717,
+    "duration": 2.093
+  },
+  {
+    "text": "We don't wanna bias it.",
+    "start": 378.81,
+    "duration": 1.17
+  },
+  {
+    "text": "We don't want to give it anything",
+    "start": 379.98,
+    "duration": 1.08
+  },
+  {
+    "text": "that might make it hallucinate.",
+    "start": 381.06,
+    "duration": 1.5
+  },
+  {
+    "text": "We do this so that when\nwe give it the facts,",
+    "start": 382.56,
+    "duration": 1.95
+  },
+  {
+    "text": "we get the objective result out of it,",
+    "start": 384.51,
+    "duration": 2.437
+  },
+  {
+    "text": "\"Should someone look at this, yes or no?\"",
+    "start": 386.947,
+    "duration": 2.633
+  },
+  {
+    "text": "Another one here is pretty interesting.",
+    "start": 389.58,
+    "duration": 2.22
+  },
+  {
+    "text": "This is from our demo environment.",
+    "start": 391.8,
+    "duration": 1.77
+  },
+  {
+    "text": "Notice that the AI figured out\nit's in a demo environment.",
+    "start": 393.57,
+    "duration": 3.66
+  },
+  {
+    "text": "It said, \"This asset is a demo user.\"",
+    "start": 397.23,
+    "duration": 2.487
+  },
+  {
+    "text": "Now, this is pretty topical\nbecause in the last few weeks,",
+    "start": 400.56,
+    "duration": 3.18
+  },
+  {
+    "text": "we've seen a security\nincident that happened",
+    "start": 403.74,
+    "duration": 1.98
+  },
+  {
+    "text": "because of single-factor\nauthentication on demo users,",
+    "start": 405.72,
+    "duration": 3.183
+  },
+  {
+    "text": "which could be prone to compromise",
+    "start": 409.77,
+    "duration": 1.71
+  },
+  {
+    "text": "if credentials are shared.",
+    "start": 411.48,
+    "duration": 1.29
+  },
+  {
+    "text": "It not only figured out\nthis was a demo user,",
+    "start": 412.77,
+    "duration": 2.34
+  },
+  {
+    "text": "it understood that that is\nmore prone to be compromised",
+    "start": 415.11,
+    "duration": 2.64
+  },
+  {
+    "text": "because in a demo environment,",
+    "start": 417.75,
+    "duration": 1.89
+  },
+  {
+    "text": "you're gonna have\nsingle-factor authentication",
+    "start": 419.64,
+    "duration": 1.77
+  },
+  {
+    "text": "and share this.",
+    "start": 421.41,
+    "duration": 0.93
+  },
+  {
+    "text": "This is completely new.",
+    "start": 422.34,
+    "duration": 1.05
+  },
+  {
+    "text": "You go back 12 months, this\ntech simply didn't exist.",
+    "start": 423.39,
+    "duration": 3.33
+  },
+  {
+    "text": "And we've been in a great position",
+    "start": 426.72,
+    "duration": 1.32
+  },
+  {
+    "text": "to take the whole concept of data lakes",
+    "start": 428.04,
+    "duration": 2.25
+  },
+  {
+    "text": "and connectors to be\nable to give those facts",
+    "start": 430.29,
+    "duration": 2.4
+  },
+  {
+    "text": "to the AI so that it can make\nthe right determination on it.",
+    "start": 432.69,
+    "duration": 3.69
+  },
+  {
+    "text": "It doesn't stop there.",
+    "start": 436.38,
+    "duration": 1.05
+  },
+  {
+    "text": "What about Tor activity?",
+    "start": 437.43,
+    "duration": 1.35
+  },
+  {
+    "text": "It understands the concept of Tor.",
+    "start": 438.78,
+    "duration": 1.62
+  },
+  {
+    "text": "It knows inherently,",
+    "start": 440.4,
+    "duration": 0.99
+  },
+  {
+    "text": "that's a very weird thing for\nan enterprise environment.",
+    "start": 441.39,
+    "duration": 2.55
+  },
+  {
+    "text": "So if any of the events\nsurrounding the alerts",
+    "start": 443.94,
+    "duration": 2.28
+  },
+  {
+    "text": "that it's looking at have\nsomething referencing Tor,",
+    "start": 446.22,
+    "duration": 2.73
+  },
+  {
+    "text": "it knows that,",
+    "start": 448.95,
+    "duration": 0.847
+  },
+  {
+    "text": "\"This is definitely not business as usual.",
+    "start": 449.797,
+    "duration": 1.8
+  },
+  {
+    "text": "\"Someone should absolutely look at this",
+    "start": 451.597,
+    "duration": 1.41
+  },
+  {
+    "text": "\"because it's a strong\nindicator of compromise.\"",
+    "start": 453.007,
+    "duration": 1.954
+  },
+  {
+    "text": "So again,",
+    "start": 454.961,
+    "duration": 0.833
+  },
+  {
+    "text": "this is copied",
+    "start": 455.794,
+    "duration": 0.833
+  },
+  {
+    "text": "and pasted directly out\nof the writeup that the AI",
+    "start": 456.627,
+    "duration": 2.313
+  },
+  {
+    "text": "is doing completely in the\nbackground on your behalf.",
+    "start": 458.94,
+    "duration": 3.03
+  },
+  {
+    "text": "And it will only bug you if\nthere's something to look at.",
+    "start": 461.97,
+    "duration": 3.24
+  },
+  {
+    "text": "And this is how we get to this.",
+    "start": 465.21,
+    "duration": 1.68
+  },
+  {
+    "text": "Instead of saying,",
+    "start": 466.89,
+    "duration": 1.147
+  },
+  {
+    "text": "\"We'll look at just the top 10% of alerts",
+    "start": 468.037,
+    "duration": 1.98
+  },
+  {
+    "text": "\"that we know are something interesting,\"",
+    "start": 470.017,
+    "duration": 2.213
+  },
+  {
+    "text": "this will dig through that 90% of alerts",
+    "start": 472.23,
+    "duration": 2.31
+  },
+  {
+    "text": "that nobody was ever gonna look at",
+    "start": 474.54,
+    "duration": 1.62
+  },
+  {
+    "text": "with that full level one investigation",
+    "start": 476.16,
+    "duration": 2.37
+  },
+  {
+    "text": "and bubble those up to the surface that,",
+    "start": 478.53,
+    "duration": 2.28
+  },
+  {
+    "text": "so when somebody creates\na service account,",
+    "start": 480.81,
+    "duration": 2.07
+  },
+  {
+    "text": "you know that it's okay,",
+    "start": 482.88,
+    "duration": 1.77
+  },
+  {
+    "text": "somebody did an investigation to make sure",
+    "start": 484.65,
+    "duration": 1.77
+  },
+  {
+    "text": "that that service account\nwas created, was all right.",
+    "start": 486.42,
+    "duration": 2.46
+  },
+  {
+    "text": "And this is the way to think about it.",
+    "start": 488.88,
+    "duration": 1.38
+  },
+  {
+    "text": "Our average customer has\nabout a billion events",
+    "start": 490.26,
+    "duration": 2.28
+  },
+  {
+    "text": "that come in per day.",
+    "start": 492.54,
+    "duration": 1.17
+  },
+  {
+    "text": "That's about a thousand alerts per day,",
+    "start": 493.71,
+    "duration": 2.58
+  },
+  {
+    "text": "and then that takes about\n65 events for each alert.",
+    "start": 496.29,
+    "duration": 2.94
+  },
+  {
+    "text": "If you multiply that out\nby taking five seconds",
+    "start": 499.23,
+    "duration": 2.64
+  },
+  {
+    "text": "to look at every event that\nlines up at those alerts,",
+    "start": 501.87,
+    "duration": 2.82
+  },
+  {
+    "text": "that would take 12 eight-hour\nshifts worth of people",
+    "start": 504.69,
+    "duration": 2.94
+  },
+  {
+    "text": "for our average customer\nto actually investigate",
+    "start": 507.63,
+    "duration": 2.73
+  },
+  {
+    "text": "every single alert that came through.",
+    "start": 510.36,
+    "duration": 1.89
+  },
+  {
+    "text": "And you would have to hire that\nmany staff to actually say,",
+    "start": 512.25,
+    "duration": 3.247
+  },
+  {
+    "text": "\"Yes, we investigate every\nalert that comes through.\"",
+    "start": 515.497,
+    "duration": 2.273
+  },
+  {
+    "text": "This is where AI comes in.",
+    "start": 517.77,
+    "duration": 1.59
+  },
+  {
+    "text": "You can trust it because\nyou can see the output",
+    "start": 519.36,
+    "duration": 2.46
+  },
+  {
+    "text": "and the decision-making that it has,",
+    "start": 521.82,
+    "duration": 2.07
+  },
+  {
+    "text": "and it's doing the work\nof that many people.",
+    "start": 523.89,
+    "duration": 2.37
+  },
+  {
+    "text": "In addition, it's not\nreplacing the analyst entirely,",
+    "start": 526.26,
+    "duration": 2.7
+  },
+  {
+    "text": "it's letting them scale out",
+    "start": 528.96,
+    "duration": 1.47
+  },
+  {
+    "text": "so that they are actually\nlooking at the right things",
+    "start": 530.43,
+    "duration": 2.37
+  },
+  {
+    "text": "because you want them\noperating at a level two.",
+    "start": 532.8,
+    "duration": 3.15
+  },
+  {
+    "text": "And that doesn't stop there.",
+    "start": 535.95,
+    "duration": 1.26
+  },
+  {
+    "text": "This gets us in a situation\nwhere you can start tuning this.",
+    "start": 537.21,
+    "duration": 3.24
+  },
+  {
+    "text": "So instead of just saying,",
+    "start": 540.45,
+    "duration": 1.207
+  },
+  {
+    "text": "\"Well,",
+    "start": 541.657,
+    "duration": 0.833
+  },
+  {
+    "text": "\"I don't agree with the\ndecision that the AI made there",
+    "start": 542.49,
+    "duration": 1.657
+  },
+  {
+    "text": "\"because we don't have\nall the right information",
+    "start": 544.147,
+    "duration": 2.01
+  },
+  {
+    "text": "\"to give it very time,\" you can tune it.",
+    "start": 546.157,
+    "duration": 1.823
+  },
+  {
+    "text": "You can say,",
+    "start": 547.98,
+    "duration": 0.833
+  },
+  {
+    "text": "\"By the way,",
+    "start": 548.813,
+    "duration": 0.833
+  },
+  {
+    "text": "\"we always escalate endpoint alerts",
+    "start": 549.646,
+    "duration": 1.911
+  },
+  {
+    "text": "\"when user has access to\nAWS,\" et cetera, et cetera.",
+    "start": 551.557,
+    "duration": 2.753
+  },
+  {
+    "text": "You can go through anything you want.",
+    "start": 554.31,
+    "duration": 1.23
+  },
+  {
+    "text": "You can say,",
+    "start": 555.54,
+    "duration": 0.833
+  },
+  {
+    "text": "\"Alerts from sales on Tuesdays",
+    "start": 556.373,
+    "duration": 1.214
+  },
+  {
+    "text": "\"are especially important for us.\"",
+    "start": 557.587,
+    "duration": 2.693
+  },
+  {
+    "text": "And you can put this all in\nnatural language for the tuning.",
+    "start": 560.28,
+    "duration": 2.73
+  },
+  {
+    "text": "And once you tune your\nentire security ecosystem",
+    "start": 563.01,
+    "duration": 2.91
+  },
+  {
+    "text": "in just one place",
+    "start": 565.92,
+    "duration": 1.11
+  },
+  {
+    "text": "and lets the AI figure that part out.",
+    "start": 567.03,
+    "duration": 2.04
+  },
+  {
+    "text": "And so this is how you\ngo from data mining,",
+    "start": 569.07,
+    "duration": 1.89
+  },
+  {
+    "text": "which is where we started to alert mining",
+    "start": 570.96,
+    "duration": 2.28
+  },
+  {
+    "text": "because you can put all of\nyour alerts in one place,",
+    "start": 573.24,
+    "duration": 2.25
+  },
+  {
+    "text": "let the AI go through,",
+    "start": 575.49,
+    "duration": 1.17
+  },
+  {
+    "text": "and triage everything\nwith that investigation",
+    "start": 576.66,
+    "duration": 2.46
+  },
+  {
+    "text": "that you can read\nthrough on its reasoning.",
+    "start": 579.12,
+    "duration": 1.86
+  },
+  {
+    "text": "And then you can focus your time",
+    "start": 580.98,
+    "duration": 1.65
+  },
+  {
+    "text": "not on the machine-level stuff,",
+    "start": 582.63,
+    "duration": 1.59
+  },
+  {
+    "text": "but on the human-level stuff.",
+    "start": 584.22,
+    "duration": 1.65
+  },
+  {
+    "text": "So now,",
+    "start": 585.87,
+    "duration": 0.833
+  },
+  {
+    "text": "you can make those phone calls",
+    "start": 586.703,
+    "duration": 0.833
+  },
+  {
+    "text": "to critical business leaders and say,",
+    "start": 587.536,
+    "duration": 1.431
+  },
+  {
+    "text": "\"Hey, what's your most important app?",
+    "start": 588.967,
+    "duration": 1.38
+  },
+  {
+    "text": "\"How do we get telemetry in it?",
+    "start": 590.347,
+    "duration": 1.29
+  },
+  {
+    "text": "\"Because now, we can make\nsure that AI has your back.\"",
+    "start": 591.637,
+    "duration": 2.453
+  },
+  {
+    "text": "It's actually going to look",
+    "start": 594.09,
+    "duration": 1.02
+  },
+  {
+    "text": "at every alert that comes through there.",
+    "start": 595.11,
+    "duration": 1.53
+  },
+  {
+    "text": "You could start to do things like,",
+    "start": 596.64,
+    "duration": 1.92
+  },
+  {
+    "text": "bring in telemetry from places",
+    "start": 598.56,
+    "duration": 1.47
+  },
+  {
+    "text": "that are most business critical",
+    "start": 600.03,
+    "duration": 1.74
+  },
+  {
+    "text": "and make those bridges\nacross the organization.",
+    "start": 601.77,
+    "duration": 3.21
+  },
+  {
+    "text": "Again, it's elevating to the human level.",
+    "start": 604.98,
+    "duration": 2.05
+  },
+  {
+    "text": "And this has become\nreally important lately",
+    "start": 608.61,
+    "duration": 2.1
+  },
+  {
+    "text": "because if you go back in 2005,",
+    "start": 610.71,
+    "duration": 2.43
+  },
+  {
+    "text": "that's when we had to get serious",
+    "start": 613.14,
+    "duration": 1.26
+  },
+  {
+    "text": "about machine learning on the desktop",
+    "start": 614.4,
+    "duration": 2.04
+  },
+  {
+    "text": "because you had polymorphic malware",
+    "start": 616.44,
+    "duration": 1.74
+  },
+  {
+    "text": "where every single malware\nsample was different.",
+    "start": 618.18,
+    "duration": 2.19
+  },
+  {
+    "text": "In 2010 you had automated phishing,",
+    "start": 620.37,
+    "duration": 2.13
+  },
+  {
+    "text": "so we had to get better at that.",
+    "start": 622.5,
+    "duration": 1.65
+  },
+  {
+    "text": "And then in 2015 is when\ncredential theft really picked up.",
+    "start": 624.15,
+    "duration": 2.82
+  },
+  {
+    "text": "That's where you saw we had that analytic",
+    "start": 626.97,
+    "duration": 1.47
+  },
+  {
+    "text": "for \"Impossible Travel\"",
+    "start": 628.44,
+    "duration": 0.93
+  },
+  {
+    "text": "because people were\nstarted selling credentials",
+    "start": 629.37,
+    "duration": 2.13
+  },
+  {
+    "text": "on the dark web.",
+    "start": 631.5,
+    "duration": 1.23
+  },
+  {
+    "text": "Now, fast forward to now,\nand starting last year,",
+    "start": 632.73,
+    "duration": 2.88
+  },
+  {
+    "text": "you started to see the bad guys\ndo a lot more with phishing",
+    "start": 635.61,
+    "duration": 2.46
+  },
+  {
+    "text": "and just in general,",
+    "start": 638.07,
+    "duration": 1.74
+  },
+  {
+    "text": "being much more motivated\nby money and ransomware,",
+    "start": 639.81,
+    "duration": 2.79
+  },
+  {
+    "text": "which is hugely successful.",
+    "start": 642.6,
+    "duration": 2.19
+  },
+  {
+    "text": "So a good friend of mine",
+    "start": 644.79,
+    "duration": 1.5
+  },
+  {
+    "text": "is currently a negotiator for ransomware.",
+    "start": 646.29,
+    "duration": 2.91
+  },
+  {
+    "text": "Her full-time job is to\nnegotiate with ransomware",
+    "start": 649.2,
+    "duration": 4.05
+  },
+  {
+    "text": "to try to get the price\ndown for the ransom.",
+    "start": 653.25,
+    "duration": 2.22
+  },
+  {
+    "text": "That's where we're at right now.",
+    "start": 655.47,
+    "duration": 1.59
+  },
+  {
+    "text": "And if you don't have something",
+    "start": 657.06,
+    "duration": 1.53
+  },
+  {
+    "text": "that's auto triaging all\nthe alerts coming through,",
+    "start": 658.59,
+    "duration": 2.49
+  },
+  {
+    "text": "the difference between\nsomething that investigates",
+    "start": 661.08,
+    "duration": 2.1
+  },
+  {
+    "text": "an alert that comes in at midnight",
+    "start": 663.18,
+    "duration": 1.5
+  },
+  {
+    "text": "and waiting until the morning",
+    "start": 664.68,
+    "duration": 1.59
+  },
+  {
+    "text": "may cost you a conversation with my friend",
+    "start": 666.27,
+    "duration": 1.98
+  },
+  {
+    "text": "who negotiates with ransomware.",
+    "start": 668.25,
+    "duration": 1.81
+  },
+  {
+    "text": "So that's the big news here.",
+    "start": 670.06,
+    "duration": 2.21
+  },
+  {
+    "text": "So you don't want a chat bot,",
+    "start": 672.27,
+    "duration": 1.74
+  },
+  {
+    "text": "you don't wanna log into the\nsystem in the morning and say,",
+    "start": 674.01,
+    "duration": 1.837
+  },
+  {
+    "text": "\"Hey, did I get hacked last night?\"",
+    "start": 675.847,
+    "duration": 1.883
+  },
+  {
+    "text": "That's not what you wanna do.",
+    "start": 677.73,
+    "duration": 1.2
+  },
+  {
+    "text": "You wanna have the system\nwork on your behalf",
+    "start": 678.93,
+    "duration": 2.34
+  },
+  {
+    "text": "and tell you when you\nneed to pay attention.",
+    "start": 681.27,
+    "duration": 2.64
+  },
+  {
+    "text": "It needs to wake you up in the\nmiddle of the night and say,",
+    "start": 683.91,
+    "duration": 2.167
+  },
+  {
+    "text": "\"Hey, we just checked all this\nout, and this thing's legit.",
+    "start": 686.077,
+    "duration": 2.1
+  },
+  {
+    "text": "\"You gotta look at this.",
+    "start": 688.177,
+    "duration": 1.283
+  },
+  {
+    "text": "So this will work for you.",
+    "start": 689.46,
+    "duration": 1.3
+  },
+  {
+    "text": "And thank you.",
+    "start": 691.98,
+    "duration": 0.833
+  },
+  {
+    "text": "And I'm here for any questions.",
+    "start": 692.813,
+    "duration": 1.24
+  }
+]
