@@ -1,6 +1,6 @@
 import json
 
-def load_basic_prompt(prompt_stage,full_original_text,chunk_original_text, chunk_explanation, chunk_feedback):
+def load_basic_prompt(prompt_stage,full_original_text=None,chunk_original_text=None, chunk_explanation=None, chunk_feedback=None):
     prompt = {
         "create_indices":(
                 "Please read the content below the prompt and identify the main topics. "
