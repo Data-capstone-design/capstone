@@ -1,6 +1,9 @@
 # Python
 venv/
 downloads/
+__pycache__/
+*.pyc
+*.pyo
 
 # Nuxt dev/build outputs
 .output

@@ -24,8 +24,7 @@ class EnhancedExplanationEventHandler(AssistantEventHandler):
 
     @override
     def on_text_created(self, text: Text):
-        start_message = f"Explanation generation started for chunk {self.chunk_index}."
-        asyncio.run(self.kafka_producer.send_and_wait(self.kafka_topic, value=start_message.encode('utf-8')))
+        logger.info(f"Explanation generation started for chunk {self.chunk_index}.")
 
     @override
     def on_text_delta(self, delta, snapshot):
@@ -47,8 +46,6 @@ class EnhancedExplanationEventHandler(AssistantEventHandler):
             logger.info(f"설명문이 {explanation_file_path}에 저장되었습니다.")
         except Exception as e:
             logger.error(f"설명문을 저장하는 데 실패했습니다: {e}")
-        complete_message = f"Explanation generation completed for chunk {self.chunk_index}."
-        asyncio.run(self.kafka_producer.send_and_wait(self.kafka_topic, value=complete_message.encode('utf-8')))
 
         # LLMResultMessage 형식의 메시지 생성
         complete_message = LLMResultMessage(
@@ -60,7 +57,7 @@ class EnhancedExplanationEventHandler(AssistantEventHandler):
         # 메시지를 JSON으로 직렬화하여 Kafka에 전송
         try:
             asyncio.create_task(
-                self.kafka_producer.send_and_wait(self.kafka_topic, value=complete_message.model_dump_json().encode('utf-8')))
+                self.kafka_producer.send_message(self.kafka_topic, message=complete_message))
             logger.info(f"Kafka에 메시지가 전송되었습니다: chunk_{self.chunk_index}")
         except Exception as e:
             logger.error(f"Kafka에 메시지를 전송하는 중 오류가 발생했습니다: {e}")
