@@ -10,7 +10,6 @@ from app.openai_service.assistant_api_utils import *
 from app.message_processor.instructions.instructions import *
 from app.text_utils.text_utils import TextUtils
 
-
 async def read_text_file(file_path: str) -> str:
     """
     주어진 경로의 텍스트 파일을 읽어 내용을 문자열로 반환.
