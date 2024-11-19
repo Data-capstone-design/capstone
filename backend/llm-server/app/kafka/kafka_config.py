@@ -1,14 +1,7 @@
-# app/kafka/kafka_config.py
-
-# Kafka 서버 주소 (IP:포트 형식으로 작성)
 KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"  # 예: 로컬 호스트에 설치된 Kafka 브로커
 
 #topic
-VIDEO_LINK_EVENTS = "video-link-events"
-LLM_REQUEST_TOPIC = "llm_request_topic"
-LLM_INITIALIZATION_TOPIC = "llm_initialization_topic"
-LLM_CONTENT_TOPIC = "llm_content_topic"
-STT_RESULT_TOPIC = "stt_result_topic"
+LLM_REQUEST_EVENTS = "llm_request_events" #STT에서 요청
 LLM_INDEX_EVENTS = "llm_index_events"
 LLM_COMMENTARY_EVENTS = "llm-commentary-events"
 
@@ -26,3 +19,22 @@ LINGER_MS = 10  # 예: 10ms
 
 # 재시도 간의 백오프 시간 (밀리초)
 RETRY_BACKOFF_MS = 100  # 예: 100ms
+
+from aiokafka import AIOKafkaConsumer
+from app.kafka.producer.AsyncKafkaProducer import AsyncKafkaProducer
+
+async def initialize_kafka():
+    """
+    Kafka Consumer와 Producer 초기화.
+    """
+    stt_result_consumer = AIOKafkaConsumer(
+        LLM_REQUEST_EVENTS,
+        bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+        group_id="stt_result_group"
+    )
+    producer = AsyncKafkaProducer(KAFKA_BOOTSTRAP_SERVERS)
+
+    await stt_result_consumer.start()
+    await producer.start()
+
+    return stt_result_consumer, producer
