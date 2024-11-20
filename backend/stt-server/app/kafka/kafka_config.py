@@ -10,7 +10,7 @@ from loguru import logger
 KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"  # 예: 로컬 호스트에 설치된 Kafka 브로커
 
 #topic
-VIDEO_REQUEST_TOPIC = "video_request_topic"
+NOTE_STT_COMMAND = "note-stt-command"
 STT_RESULT_TOPIC = "stt_result_topic"
 LLM_INITIALIZATION_TOPIC = "llm_initialization_topic"
 LLM_REQUEST_EVENTS = "llm_request_events"
@@ -32,7 +32,7 @@ RETRY_BACKOFF_MS = 100  # 예: 100ms
 
 async def initialize_kafka():
     consumer = AIOKafkaConsumer(
-        VIDEO_REQUEST_TOPIC,
+        NOTE_STT_COMMAND,
         bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
         auto_offset_reset='earliest',
         enable_auto_commit=True,
