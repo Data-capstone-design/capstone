@@ -1,33 +1,18 @@
 package com.technote.core.enums;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Arrays;
 import lombok.Getter;
 
 @Getter
 public enum UserLevel {
-    BEGINNER("BEGINNER"),
-    INTERMEDIATE("INTERMEDIATE"),
-    EXPERT("EXPERT");
+    BEGINNER,
+    INTERMEDIATE,
+    EXPERT;
 
-    private final String value;
-
-    UserLevel(String value) {
-        this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-        return value;
-    }
-
-    @JsonCreator
     public static UserLevel fromValue(String value) {
-        for (UserLevel level : values()) {
-            if (level.value.equals(value)) {
-                return level;
-            }
-        }
-        throw new IllegalArgumentException("Unknown value: " + value);
+        return Arrays.stream(UserLevel.values())
+                .filter(v -> v.name().equals(value))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user level: " + value));
     }
 }
