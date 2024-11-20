@@ -1,9 +1,9 @@
 package com.technote.core.domain.note.business;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.technote.core.domain.note.event.CreateNoteContentEvent;
-import com.technote.core.domain.note.event.CreateNoteIndexEvent;
 import com.technote.core.domain.note.implement.SseEventSender;
+import com.technote.core.support.error.CustomException;
+import com.technote.core.support.error.ErrorType;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +27,11 @@ public class NoteEventListener {
             String jsonData = objectMapper.writeValueAsString(eventData);
             sseEventSender.sendNoteContentEvent(event.videoId(),jsonData);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error("CreateNoteContentEvent 직렬화 과정에서 오류 발생: {}", e.getMessage(), e);
+            throw new CustomException(
+                    ErrorType.IO_ERROR,
+                    event.toString()
+            );
         }
     }
 
@@ -41,7 +45,11 @@ public class NoteEventListener {
             String jsonDate = objectMapper.writeValueAsString(eventData);
             sseEventSender.sendNoteIndexEvent(videoId, jsonDate);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error("CreateNoteIndexEvent 직렬화 과정에서 오류 발생: {}", e.getMessage(), e);
+            throw new CustomException(
+                    ErrorType.IO_ERROR,
+                    event.toString()
+            );
         }
     }
 }
