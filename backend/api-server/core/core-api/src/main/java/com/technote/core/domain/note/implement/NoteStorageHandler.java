@@ -8,6 +8,7 @@ import com.technote.core.support.error.CustomException;
 import com.technote.core.support.error.ErrorType;
 import com.technote.storage.mongo.core.Note;
 import com.technote.storage.mongo.core.NoteRepository;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +26,9 @@ public class NoteStorageHandler {
         Note newNote = Note.builder()
                 .videoId(videoId)
                 .userLevel(userLevel)
+                .status(NoteStatus.IN_PROGRESS)
+                .outline(new ArrayList<>())
+                .commentaries(new ArrayList<>())
                 .build();
         Note savedNote = noteRepository.save(newNote);
         return savedNote.getId();
