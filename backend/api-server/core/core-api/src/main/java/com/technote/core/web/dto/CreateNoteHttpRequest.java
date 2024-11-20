@@ -1,6 +1,6 @@
 package com.technote.core.web.dto;
 
-public record CreateNoteRequest (
+public record CreateNoteHttpRequest(
         String videoId,
         String userLevel
 ) {
