@@ -1,4 +1,4 @@
-package com.technote.core.domain.note.event;
+package com.technote.core.domain.note.business;
 
 import lombok.Builder;
 
