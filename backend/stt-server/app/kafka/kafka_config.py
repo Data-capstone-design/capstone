@@ -1,4 +1,10 @@
 # app/kafka/kafka_config.py
+import json
+
+from aiokafka import AIOKafkaConsumer
+
+from app.kafka.producers.kafka_producer_manager import AsyncProducer
+from loguru import logger
 
 # Kafka 서버 주소 (IP:포트 형식으로 작성)
 KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"  # 예: 로컬 호스트에 설치된 Kafka 브로커
@@ -7,7 +13,7 @@ KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"  # 예: 로컬 호스트에 설치된
 VIDEO_REQUEST_TOPIC = "video_request_topic"
 STT_RESULT_TOPIC = "stt_result_topic"
 LLM_INITIALIZATION_TOPIC = "llm_initialization_topic"
-LLm_REQUEST_EVENTS = "llm_request_events"
+LLM_REQUEST_EVENTS = "llm_request_events"
 
 # 메시지의 전송에 대한 확인 수준
 # all: 모든 복제본이 메시지를 확인해야 성공으로 간주
@@ -23,3 +29,21 @@ LINGER_MS = 10  # 예: 10ms
 
 # 재시도 간의 백오프 시간 (밀리초)
 RETRY_BACKOFF_MS = 100  # 예: 100ms
+
+async def initialize_kafka():
+    consumer = AIOKafkaConsumer(
+        VIDEO_REQUEST_TOPIC,
+        bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+        auto_offset_reset='earliest',
+        enable_auto_commit=True,
+        group_id='transcription-group',
+        value_deserializer=lambda x: json.loads(x.decode('utf-8'))
+    )
+
+    producer = AsyncProducer(bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS)
+
+    logger.info("consumer, producer start")
+    await consumer.start()
+    await producer.start()
+
+    return consumer, producer
