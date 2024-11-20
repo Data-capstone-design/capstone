@@ -1,5 +1,6 @@
 package com.technote.storage.mongo.core;
 
+import com.technote.core.enums.NoteStatus;
 import com.technote.core.enums.UserLevel;
 import java.util.List;
 import lombok.Builder;
@@ -19,15 +20,18 @@ public class Note {
 
     private UserLevel userLevel;
 
+    private NoteStatus status;
+
     private List<Segment> outline;
 
     private List<Commentary> commentaries;
 
     @Builder
-    private Note(String videoId, String title, UserLevel userLevel, List<Segment> outline, List<Commentary> commentaries) {
+    private Note(String videoId, String title, UserLevel userLevel, NoteStatus status, List<Segment> outline, List<Commentary> commentaries) {
         this.videoId = videoId;
         this.title = title;
         this.userLevel = userLevel;
+        this.status = status;
         this.outline = outline;
         this.commentaries = commentaries;
     }
