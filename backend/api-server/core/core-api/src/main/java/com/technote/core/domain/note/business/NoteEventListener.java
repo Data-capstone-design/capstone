@@ -1,9 +1,12 @@
 package com.technote.core.domain.note.business;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.technote.client.kafka.event.CreateNoteCommentaryEvent;
+import com.technote.client.kafka.event.CreateNoteOutlineEvent;
 import com.technote.core.domain.note.implement.SseEventSender;
 import com.technote.core.support.error.CustomException;
 import com.technote.core.support.error.ErrorType;
+import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,15 +22,22 @@ public class NoteEventListener {
     private final ObjectMapper objectMapper;
     private final SseEventSender sseEventSender;
 
+    @PostConstruct
+    public void init() {
+        log.info("NoteEventListener Bean 등록됨");
+    }
+
     @EventListener
-    public void handleCreateNoteContentEvent(CreateNoteContentEvent event) {
+    public void handleCreateNoteCommentaryEvent(CreateNoteCommentaryEvent event) {
         try {
-            log.info("Received create note content event: {}", event.toString());
+            log.info("Received create note commentary event: {}", event.toString());
             Map<String, Object> eventData = new HashMap<>();
+            eventData.put("startTime", event.startTime());
+            eventData.put("content", event.content());
             String jsonData = objectMapper.writeValueAsString(eventData);
-            sseEventSender.sendNoteContentEvent(event.videoId(),jsonData);
+            sseEventSender.broadcastNoteCommentaryEvent(event.noteId(),jsonData);
         } catch (IOException e) {
-            log.error("CreateNoteContentEvent 직렬화 과정에서 오류 발생: {}", e.getMessage(), e);
+            log.error("CreateNoteCommentaryEvent 직렬화 과정에서 오류 발생: {}", e.getMessage(), e);
             throw new CustomException(
                     ErrorType.IO_ERROR,
                     event.toString()
@@ -36,16 +46,15 @@ public class NoteEventListener {
     }
 
     @EventListener
-    public void handleCreateNoteIndexEvent(CreateNoteIndexEvent event) {
+    public void handleCreateNoteOutlineEvent(CreateNoteOutlineEvent event) {
         try {
-            log.info("Received create note index event: {}", event.toString());
+            log.info("Received create note outline event: {}", event.toString());
             Map<String, Object> eventData = new HashMap<>();
-            String videoId = event.videoId();
-            eventData.put("contents", event.contents());
-            String jsonDate = objectMapper.writeValueAsString(eventData);
-            sseEventSender.sendNoteIndexEvent(videoId, jsonDate);
+            eventData.put("segments", event.segments());
+            String jsonData = objectMapper.writeValueAsString(eventData);
+            sseEventSender.broadcastNoteOutlineEvent(event.noteId(), jsonData);
         } catch (IOException e) {
-            log.error("CreateNoteIndexEvent 직렬화 과정에서 오류 발생: {}", e.getMessage(), e);
+            log.error("CreateNoteOutlineEvent 직렬화 과정에서 오류 발생: {}", e.getMessage(), e);
             throw new CustomException(
                     ErrorType.IO_ERROR,
                     event.toString()
