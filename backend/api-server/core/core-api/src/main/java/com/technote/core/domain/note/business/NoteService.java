@@ -18,7 +18,7 @@ public class NoteService {
 
     public String createNote(String videoId, UserLevel userLevel) {
         String noteId = noteStorageHandler.saveNote(videoId, userLevel);
-        noteEventPublisher.publishCreateNoteEvent(videoId, userLevel);
+        noteEventPublisher.publishCreateNoteEvent(videoId, userLevel, noteId);
         return noteId;
     }
 

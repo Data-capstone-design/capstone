@@ -10,42 +10,51 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @Component
 public class SseEmitterManager {
     private static final long EMITTER_TIMEOUT = 5*60*1000L;
-    private final Map<String, SseEmitter> emitters = new ConcurrentHashMap<>();
+    private final Map<String, Map<String, SseEmitter>> emitters = new ConcurrentHashMap<>();
 
-    public SseEmitter addEmiter(String connectId) {
-        if(emitters.containsKey(connectId)) {
-            log.info("Emitter already exist for connectId {}", connectId);
-            return emitters.get(connectId);
-        }
+    public SseEmitter addEmiter(String noteId, String sessionId) {
+        emitters.putIfAbsent(noteId, new ConcurrentHashMap<>());
+        Map<String, SseEmitter> noteEmitters = emitters.get(noteId);
         SseEmitter emitter = new SseEmitter(EMITTER_TIMEOUT);
-        emitters.put(connectId, emitter);
+        noteEmitters.put(sessionId, emitter);
 
-        log.info("Added emitter {}", connectId);
+        log.info("Added emitter {}", sessionId);
         log.info("emitter list size: {}", emitters.size());
 
         emitter.onCompletion(() -> {
-            log.info("Emitter completed for connectId: {}", connectId);
-            removeEmitter(connectId);
+            log.info("Emitter completed for sessionId: {}", sessionId);
+            removeEmitter(noteId, sessionId);
         });
 
         emitter.onTimeout(() -> {
-            log.info("Emitter timed out for connectId: {}", connectId);
-            removeEmitter(connectId);
+            log.info("Emitter timed out for sessionId: {}", sessionId);
+            removeEmitter(noteId, sessionId);
         });
 
         emitter.onError((error) -> {
-            log.error("Error occurred for connectId: {}", connectId, error);
-            removeEmitter(connectId);
+            log.error("Error occurred for sessionId: {}", sessionId, error);
+            removeEmitter(noteId, sessionId);
         });
         return emitter;
     }
 
-    public SseEmitter getEmitter(String connectId) {
-        return emitters.get(connectId);
+    public Map<String, SseEmitter> getEmittersByNoteId(String noteId) {
+        return emitters.get(noteId);
     }
 
-    public void removeEmitter(String connectId) {
-        emitters.remove(connectId);
-        log.info("Removed emitter {}", connectId);
+    public SseEmitter getEmitter(String noteId, String sessionId) {
+        Map<String, SseEmitter> noteEmitters = emitters.get(noteId);
+        return noteEmitters.get(sessionId);
+    }
+
+    public void removeEmitter(String noteId, String sessionId) {
+        Map<String, SseEmitter> noteEmitters = emitters.get(noteId);
+        if (noteEmitters != null) {
+            noteEmitters.remove(sessionId);
+            log.info("Removed emitter {}", sessionId);
+            if(noteEmitters.isEmpty()) {
+                emitters.remove(noteId);
+            }
+        }
     }
 }
