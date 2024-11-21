@@ -4,8 +4,7 @@
       class="bg-white text-dark row items-center flex justify-start items-center shadow-none q-border"
       :style="{ height: 'var(--q-header-height)' }"
   >
-    <div class="cursor-pointer q-pa-md flex" style="height: 100%;" @click="toHome">
-      <!-- 반응형 이미지 크기 설정 -->
+    <div class="cursor-pointer q-pa-md flex full-height"  @click="toHome">
       <q-img
           class="logo"
           src="/logo.png"

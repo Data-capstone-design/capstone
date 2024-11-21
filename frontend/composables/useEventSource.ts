@@ -1,12 +1,11 @@
-import { ref } from 'vue';
 import { useCommentaryStore } from '~/stores/commentaryStore';
-import { useIndexStore } from '~/stores/indexStore';
+import { useOutlineStore } from '~/stores/outlineStore';
 
 export const useEventSource = () => {
 
     const connectSse = (noteId: string): EventSource => {
         const commentaryStore = useCommentaryStore();
-        const indexStore = useIndexStore();
+        const indexStore = useOutlineStore();
 
         const url = `http://localhost:8080/notes/sse/${noteId}`;
         const eventSource = new EventSource(url);

@@ -2,31 +2,31 @@
   <!-- 모바일 레이아웃 -->
   <div v-if="$q.screen.lt.sm" class="note-layout">
     <div class="note-layout__video">
-      <NoteVideo />
+      <NoteVideo/>
     </div>
-    <div class="note-layout__index">
-      <NoteIndex />
+    <div class="note-layout__outline">
+      <NoteOutline/>
     </div>
     <div class="note-layout__commentary">
-      <NoteCommentary />
+      <NoteCommentary/>
     </div>
   </div>
 
   <div v-else class="note-layout">
     <div class="note-layout__content">
       <div class="note-layout__video">
-        <NoteVideo />
+        <NoteVideo/>
       </div>
-      <div class="note-layout__index"
-        :style="{
-          height: indexHeight + 'px'
+      <div class="note-layout__outline"
+           :style="{
+          height: outlineHeight + 'px'
         }"
       >
-        <NoteIndex />
+        <NoteOutline/>
       </div>
     </div>
     <div class="note-layout__commentary">
-      <NoteCommentary />
+      <NoteCommentary/>
     </div>
   </div>
 </template>
@@ -45,26 +45,25 @@ const videoStore = useVideoStore();
 const videoHeight = computed(() => videoStore.videoHeight);
 
 // `computed`로 `videoHeight` 가져오기
-const indexHeight = ref<number>(0);
+const outlineHeight = ref<number>(0);
 
-// `100vh - videoHeight - headerHeight`을 계산하여 indexHeight에 반영하는 함수
-const updateIndexHeight = () => {
+// `100vh - videoHeight - headerHeight`을 계산하여 outlineHeight에 반영
+const updateOutlineHeight = () => {
   const viewportHeight = window.innerHeight;
-  indexHeight.value = viewportHeight - videoHeight.value - 150;
+  outlineHeight.value = viewportHeight - videoHeight.value - 150;
 };
 
-// 비디오 높이가 변경될 때마다 indexHeight를 업데이트
-watch(videoHeight, updateIndexHeight);
+// 비디오 높이가 변경될 때마다 outlineHeight 업데이트
+watch(videoHeight, updateOutlineHeight);
 
 const handleBeforeUnload = () => {
   if (window.location.pathname.includes('/note')) {
     localStorage.setItem('videoInProgress', 'false');
-    videoStore.setVideoId('');
   }
 };
 
 onMounted(() => {
-  updateIndexHeight();
+  updateOutlineHeight();
   localStorage.setItem('videoInProgress', 'true');
   syncTabs();
   window.addEventListener('beforeunload', handleBeforeUnload);
@@ -74,28 +73,23 @@ onBeforeUnmount(() => {
   localStorage.setItem('videoInProgress', 'false');
   window.removeEventListener('beforeunload', handleBeforeUnload);
 });
-
 </script>
 
-
 <style scoped>
-/* 최상위 레이아웃 스타일 */
 .note-layout {
   display: flex;
 }
 
-/* 데스크톱에서 가로 배치 */
 .note-layout__content {
-  flex:1;
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* 각 컴포넌트를 감싸는 Wrapper 스타일 */
 .note-layout__video {
 }
 
-.note-layout__index {
+.note-layout__outline {
   height: 100%;
 }
 
