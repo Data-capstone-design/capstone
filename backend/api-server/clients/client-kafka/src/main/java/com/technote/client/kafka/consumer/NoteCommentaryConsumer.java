@@ -1,7 +1,7 @@
 package com.technote.client.kafka.consumer;
 
-import com.technote.client.kafka.dto.NoteContentDto;
-import com.technote.client.kafka.event.CreateNoteContentEvent;
+import com.technote.client.kafka.dto.NoteCommentaryDto;
+import com.technote.client.kafka.event.CreateNoteCommentaryEvent;
 import com.technote.client.kafka.mapper.NoteEventMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -10,17 +10,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class NoteContentConsumer {
+public class NoteCommentaryConsumer {
 
     private final ApplicationEventPublisher eventPublisher;
 
     @KafkaListener(
-            topics = "llm-commentary-events",
+            topics = "note-commentary-created-events",
             groupId = "group_1",
-            containerFactory = "kafkaListenerContainerFactory"
+            containerFactory = "kafkaCommentaryListenerContainerFactory"
     )
-    public void listenToNoteContent(NoteContentDto noteContentDto) {
-        CreateNoteContentEvent event = NoteEventMapper.toCreateNoteContentEvent(noteContentDto);
+    public void listenToNoteContent(NoteCommentaryDto noteCommentaryDto) {
+        CreateNoteCommentaryEvent event = NoteEventMapper.toCreateNoteCommentaryEvent(noteCommentaryDto);
+        System.out.println(event);
         eventPublisher.publishEvent(event);
     }
 }

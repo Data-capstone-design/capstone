@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class NoteInfoProducer {
+    private static final String KAFKA_TOPIC = "note-stt-command";
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void produce(NoteInfoDto noteInfoDto) {
-        String topic = "video-link-events";
-        kafkaTemplate.send(topic, noteInfoDto);
+        kafkaTemplate.send(KAFKA_TOPIC, noteInfoDto);
     }
 }

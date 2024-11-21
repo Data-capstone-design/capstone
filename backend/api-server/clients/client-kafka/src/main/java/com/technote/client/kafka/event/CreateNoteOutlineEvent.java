@@ -4,12 +4,12 @@ import java.util.List;
 import lombok.Builder;
 
 @Builder
-public record CreateNoteIndexEvent (
-        String videoId,
-        List<CreateNoteIndexEventContent> contents
+public record CreateNoteOutlineEvent(
+        String noteId,
+        List<CreateNoteOutlineEventSegment> segments
 ) {
     @Builder
-    public record CreateNoteIndexEventContent (
+    public record CreateNoteOutlineEventSegment (
             String startTime,
             String title,
             String summary

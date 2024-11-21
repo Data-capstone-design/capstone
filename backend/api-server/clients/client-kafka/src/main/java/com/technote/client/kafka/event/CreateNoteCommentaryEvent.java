@@ -3,8 +3,8 @@ package com.technote.client.kafka.event;
 import lombok.Builder;
 
 @Builder
-public record CreateNoteContentEvent(
-        String videoId,
+public record CreateNoteCommentaryEvent(
+        String noteId,
         long startTime,
         String content
 ) {
