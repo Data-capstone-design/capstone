@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 public enum UserLevel {
-    BEGINNER,
+    BASIC,
     INTERMEDIATE,
-    EXPERT;
+    ADVANCED;
 
     public static UserLevel fromValue(String value) {
         return Arrays.stream(UserLevel.values())
