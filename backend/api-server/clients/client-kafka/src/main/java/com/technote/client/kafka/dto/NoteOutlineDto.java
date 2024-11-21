@@ -2,11 +2,11 @@ package com.technote.client.kafka.dto;
 
 import java.util.List;
 
-public record NoteIndexDto(
-      String videoId,
-      List<NoteIndexContent> contents
+public record NoteOutlineDto(
+      String noteId,
+      List<NoteOutlineContent> segments
 ) {
-    public record NoteIndexContent (
+    public record NoteOutlineContent (
             String startTime,
             String title,
             String summary

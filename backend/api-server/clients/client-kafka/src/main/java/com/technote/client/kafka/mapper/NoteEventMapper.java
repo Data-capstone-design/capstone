@@ -1,28 +1,27 @@
 package com.technote.client.kafka.mapper;
 
-import com.technote.client.kafka.dto.NoteContentDto;
-import com.technote.client.kafka.dto.NoteIndexDto;
-import com.technote.client.kafka.event.CreateNoteContentEvent;
-import com.technote.client.kafka.event.CreateNoteIndexEvent;
-import com.technote.client.kafka.event.CreateNoteIndexEvent.CreateNoteIndexEventContent;
+import com.technote.client.kafka.dto.NoteCommentaryDto;
+import com.technote.client.kafka.dto.NoteOutlineDto;
+import com.technote.client.kafka.event.CreateNoteCommentaryEvent;
+import com.technote.client.kafka.event.CreateNoteOutlineEvent;
+import com.technote.client.kafka.event.CreateNoteOutlineEvent.CreateNoteOutlineEventSegment;
 
 public class NoteEventMapper {
-    public static CreateNoteContentEvent toCreateNoteContentEvent(NoteContentDto noteContentDto) {
-        return CreateNoteContentEvent.builder()
-                .videoId(noteContentDto.videoId())
-                .startTime(noteContentDto.startTime())
-                .content(noteContentDto.content())
+    public static CreateNoteCommentaryEvent toCreateNoteCommentaryEvent(NoteCommentaryDto noteCommentaryDto) {
+        return CreateNoteCommentaryEvent.builder()
+                .noteId(noteCommentaryDto.noteId())
+                .startTime(noteCommentaryDto.startTime())
+                .content(noteCommentaryDto.content())
                 .build();
-
     }
 
-    public static CreateNoteIndexEvent toCreateNoteIndexEvent(NoteIndexDto noteIndexDto) {
-        return CreateNoteIndexEvent.builder()
-                .videoId(noteIndexDto.videoId())
-                .contents(
-                        noteIndexDto.contents()
+    public static CreateNoteOutlineEvent toCreateNoteOutlineEvent(NoteOutlineDto noteOutlineDto) {
+        return CreateNoteOutlineEvent.builder()
+                .noteId(noteOutlineDto.noteId())
+                .segments(
+                        noteOutlineDto.segments()
                                 .stream()
-                                .map(content -> CreateNoteIndexEventContent.builder()
+                                .map(content -> CreateNoteOutlineEventSegment.builder()
                                         .title(content.title())
                                         .startTime(content.startTime())
                                         .summary(content.summary())

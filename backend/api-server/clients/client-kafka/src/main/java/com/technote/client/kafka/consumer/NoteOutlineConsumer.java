@@ -1,7 +1,7 @@
 package com.technote.client.kafka.consumer;
 
-import com.technote.client.kafka.dto.NoteIndexDto;
-import com.technote.client.kafka.event.CreateNoteIndexEvent;
+import com.technote.client.kafka.dto.NoteOutlineDto;
+import com.technote.client.kafka.event.CreateNoteOutlineEvent;
 import com.technote.client.kafka.mapper.NoteEventMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -10,17 +10,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class NoteIndexConsumer {
+public class NoteOutlineConsumer {
 
     private final ApplicationEventPublisher eventPublisher;
 
     @KafkaListener(
-            topics = "llm-index-events",
+            topics = "note-outline-created-events",
             groupId = "group_1",
-            containerFactory = "kafkaIndexListenerContainerFactory"
+            containerFactory = "kafkaOutlineListenerContainerFactory"
     )
-    public void listenToNoteContent(NoteIndexDto noteIndex) {
-        CreateNoteIndexEvent event = NoteEventMapper.toCreateNoteIndexEvent(noteIndex);
+    public void listenToNoteContent(NoteOutlineDto noteOutline) {
+        CreateNoteOutlineEvent event = NoteEventMapper.toCreateNoteOutlineEvent(noteOutline);
+        System.out.println(event);
         eventPublisher.publishEvent(event);
     }
 }

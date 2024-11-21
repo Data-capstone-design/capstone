@@ -1,7 +1,7 @@
 package com.technote.client.kafka.dto;
 
-public record NoteContentDto(
-        String videoId,
+public record NoteCommentaryDto(
+        String noteId,
         long startTime,
         String content) {
 }
