@@ -2,6 +2,7 @@ from aiokafka import AIOKafkaProducer
 from loguru import logger
 import json
 from pydantic import BaseModel
+from loguru import logger
 
 
 class AsyncProducer:
@@ -16,12 +17,18 @@ class AsyncProducer:
         )
 
     async def start(self):
-        """비동기 프로듀서 시작"""
+        """
+        Kafka Producer 시작 메서드
+        """
         await self.producer.start()
+        logger.info("Kafka producer started.")
 
     async def stop(self):
-        """비동기 프로듀서 종료"""
+        """
+        Kafka Producer 종료 메서드
+        """
         await self.producer.stop()
+        logger.info("Kafka producer stopped.")
 
     async def send_message(self, message: BaseModel, topic):
         """
