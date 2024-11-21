@@ -24,7 +24,7 @@ class NoteRepositoryTest {
     class findByVideoIdAndUserLevel_메서드는 {
 
         private final String givenVideoId = "video123";
-        private final UserLevel givenUserLevel = UserLevel.BEGINNER;
+        private final UserLevel givenUserLevel = UserLevel.BASIC;
 
         @Nested
         class 저장된_Note가_존재하고_videoId와_userLevel이_일치하는_경우 {
@@ -74,13 +74,13 @@ class NoteRepositoryTest {
         @Nested
         class 저장된_Note가_존재하고_userLevel이_다른_경우 {
 
-            private final UserLevel invalidUserLevel = UserLevel.EXPERT;
+            private final UserLevel invalidUserLevel = UserLevel.ADVANCED;
 
             @BeforeEach
             void setup() {
                 Note note = Note.builder()
                         .videoId(givenVideoId)
-                        .userLevel(UserLevel.BEGINNER)
+                        .userLevel(UserLevel.BASIC)
                         .title("스프링 컨퍼런스")
                         .build();
                 noteRepository.save(note);
@@ -121,7 +121,7 @@ class NoteRepositoryTest {
         class 저장된_Note가_존재하고_videoId와_userLevel이_모두_다른_경우 {
 
             private final String invalidVideoId = "video999";
-            private final UserLevel invalidUserLevel = UserLevel.EXPERT;
+            private final UserLevel invalidUserLevel = UserLevel.ADVANCED;
 
             @BeforeEach
             void setup() {
@@ -148,7 +148,7 @@ class NoteRepositoryTest {
     class existsByVideoIdAndUserLevel_메서드는 {
 
         private final String givenVideoId = "video123";
-        private final UserLevel givenUserLevel = UserLevel.BEGINNER;
+        private final UserLevel givenUserLevel = UserLevel.BASIC;
 
         @Nested
         class 저장된_Note가_존재하고_videoId와_userLevel이_일치하는_경우 {
@@ -197,13 +197,13 @@ class NoteRepositoryTest {
         @Nested
         class 저장된_Note가_존재하고_userLevel이_다른_경우 {
 
-            private final UserLevel invalidUserLevel = UserLevel.EXPERT;
+            private final UserLevel invalidUserLevel = UserLevel.ADVANCED;
 
             @BeforeEach
             void setup() {
                 Note note = Note.builder()
                         .videoId(givenVideoId)
-                        .userLevel(UserLevel.BEGINNER)
+                        .userLevel(UserLevel.BASIC)
                         .title("스프링 컨퍼런스")
                         .build();
                 noteRepository.save(note);
@@ -227,7 +227,7 @@ class NoteRepositoryTest {
             void setup() {
                 Note note = Note.builder()
                         .videoId("video123")
-                        .userLevel(UserLevel.BEGINNER)
+                        .userLevel(UserLevel.BASIC)
                         .title("스프링 컨퍼런스")
                         .build();
                 noteRepository.save(note);
