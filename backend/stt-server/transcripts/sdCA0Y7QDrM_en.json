@@ -1,0 +1,6426 @@
+[
+  {
+    "text": "- Good morning, everybody,",
+    "start": 2
+  },
+  {
+    "text": "welcome to Poor Use\nCases for Generative AI,",
+    "start": 3
+  },
+  {
+    "text": "hopefully you're in the right room.",
+    "start": 6
+  },
+  {
+    "text": "No, don't worry, don't worry.",
+    "start": 8
+  },
+  {
+    "text": "We're in this beautiful\nroom with a lovely audience,",
+    "start": 10
+  },
+  {
+    "text": "being altogether is such a treat.",
+    "start": 13
+  },
+  {
+    "text": "And to the people in the similar cast room",
+    "start": 14
+  },
+  {
+    "text": "somewhere else in Vegas, hello to you",
+    "start": 16
+  },
+  {
+    "text": "and thank you for joining\nus, we're with you in spirits",
+    "start": 18
+  },
+  {
+    "text": "and if you're watching\nthe recording afterwards,",
+    "start": 20
+  },
+  {
+    "text": "well, high five to\neverybody in the future,",
+    "start": 22
+  },
+  {
+    "text": "thanks so much for watching.",
+    "start": 24
+  },
+  {
+    "text": "My name's Julian Wood,\nI'm a developer advocate",
+    "start": 25
+  },
+  {
+    "text": "in the Serverless Team, I love teaching",
+    "start": 27
+  },
+  {
+    "text": "and helping people build\nserverless applications",
+    "start": 30
+  },
+  {
+    "text": "and also act as your voice internally",
+    "start": 32
+  },
+  {
+    "text": "to make sure we're building\nthe best products and features.",
+    "start": 34
+  },
+  {
+    "text": "And I'm joined by the one and only...",
+    "start": 36
+  },
+  {
+    "text": "- Oh, that's me, Chris Munns,",
+    "start": 39
+  },
+  {
+    "text": "I used to lead developer advocacy",
+    "start": 41
+  },
+  {
+    "text": "for Serverless here at AWS,",
+    "start": 43
+  },
+  {
+    "text": "these days I work as\npart of our Startup team",
+    "start": 44
+  },
+  {
+    "text": "as the tech lead for North America.",
+    "start": 46
+  },
+  {
+    "text": "- Cool, Chris is gonna be\ntalking about lots of that later,",
+    "start": 48
+  },
+  {
+    "text": "but for now, so this is a big topic",
+    "start": 51
+  },
+  {
+    "text": "and talking about best\npractices for Serverless,",
+    "start": 54
+  },
+  {
+    "text": "we unfortunately don't have\nall four days of re:Invent,",
+    "start": 57
+  },
+  {
+    "text": "so there is a bit of a small warning,",
+    "start": 59
+  },
+  {
+    "text": "we are gonna be covering a lot",
+    "start": 60
+  },
+  {
+    "text": "and we're gonna be going quickly.",
+    "start": 63
+  },
+  {
+    "text": "So to give you as many possible\nbest practices as we can",
+    "start": 64
+  },
+  {
+    "text": "and give you as many jumping\noff points with other links",
+    "start": 68
+  },
+  {
+    "text": "to more contents and\ninformation to dive even deeper.",
+    "start": 70
+  },
+  {
+    "text": "So the slides and the recording\nwill be available later,",
+    "start": 74
+  },
+  {
+    "text": "it means you don't necessarily\nhave to take pictures",
+    "start": 77
+  },
+  {
+    "text": "if you don't want to, this resources page,",
+    "start": 79
+  },
+  {
+    "text": "which I'm gonna share again at the end,",
+    "start": 80
+  },
+  {
+    "text": "already has the slides",
+    "start": 82
+  },
+  {
+    "text": "and lots of other links to best practices,",
+    "start": 83
+  },
+  {
+    "text": "so you can have all the things you need",
+    "start": 86
+  },
+  {
+    "text": "to build your serverless applications.",
+    "start": 87
+  },
+  {
+    "text": "I've actually done two\nprevious talks on this topic",
+    "start": 89
+  },
+  {
+    "text": "at re:Invent in previous years,\nif you haven't seen them,",
+    "start": 91
+  },
+  {
+    "text": "the links are also in the resources page,",
+    "start": 93
+  },
+  {
+    "text": "lots of best practices over\nthere also worth considering,",
+    "start": 95
+  },
+  {
+    "text": "we just wanna cover some new stuff today",
+    "start": 98
+  },
+  {
+    "text": "and have some more things to think about.",
+    "start": 100
+  },
+  {
+    "text": "So Chris and I just need to take a breath,",
+    "start": 102
+  },
+  {
+    "text": "you probably need to take a breath,",
+    "start": 104
+  },
+  {
+    "text": "it's gonna be a lot\ntoday, everybody ready?",
+    "start": 106
+  },
+  {
+    "text": "- Woo.\n- Let's go, okay.",
+    "start": 109
+  },
+  {
+    "text": "So a question we may\ninitially be thinking about",
+    "start": 110
+  },
+  {
+    "text": "is, well, all the serverless\nstuff, is it a fad",
+    "start": 112
+  },
+  {
+    "text": "or actually is it the future?",
+    "start": 116
+  },
+  {
+    "text": "Well, we commonly think\nof the start of serverless",
+    "start": 117
+  },
+  {
+    "text": "at Lambda like nine\nyears ago at re:Invent.",
+    "start": 120
+  },
+  {
+    "text": "But S3 and SQS, some of\nour foundational services",
+    "start": 123
+  },
+  {
+    "text": "and they're very much serverless services,",
+    "start": 126
+  },
+  {
+    "text": "launched way before Lambda in 2006,",
+    "start": 128
+  },
+  {
+    "text": "and even before EC2 in 2008.",
+    "start": 131
+  },
+  {
+    "text": "The initial fundamental\nbuilding blocks of AWS",
+    "start": 134
+  },
+  {
+    "text": "were built before we\neven introduced the idea",
+    "start": 136
+  },
+  {
+    "text": "of being able to rent servers.",
+    "start": 139
+  },
+  {
+    "text": "And in fact, you could actually say",
+    "start": 141
+  },
+  {
+    "text": "that the cloud was born\nserverless in the same way",
+    "start": 142
+  },
+  {
+    "text": "and in fact, it's only gonna\nget more and more serverless",
+    "start": 145
+  },
+  {
+    "text": "as time progresses,",
+    "start": 148
+  },
+  {
+    "text": "as  announcements\neven after re:Invent come along",
+    "start": 149
+  },
+  {
+    "text": "and as we are gonna be\nproviding easier and easier ways",
+    "start": 152
+  },
+  {
+    "text": "to run and operate your applications.",
+    "start": 155
+  },
+  {
+    "text": "So when Lambda was launched in 2014,",
+    "start": 158
+  },
+  {
+    "text": "then the industry sort of created",
+    "start": 159
+  },
+  {
+    "text": "this weird term, serverless,\nit was designed to help people",
+    "start": 161
+  },
+  {
+    "text": "with this mental model of running code",
+    "start": 164
+  },
+  {
+    "text": "without managing servers\nor infrastructure.",
+    "start": 167
+  },
+  {
+    "text": "But over the past, sort\nof nearly decade now",
+    "start": 169
+  },
+  {
+    "text": "that we've been doing this,",
+    "start": 171
+  },
+  {
+    "text": "that sort of has evolved\na little bit more.",
+    "start": 172
+  },
+  {
+    "text": "And what we try and\nthink of serverless now,",
+    "start": 175
+  },
+  {
+    "text": "is more the terms of building applications",
+    "start": 177
+  },
+  {
+    "text": "beyond just running code\nto many more things.",
+    "start": 180
+  },
+  {
+    "text": "And today, many people I speak to",
+    "start": 183
+  },
+  {
+    "text": "have a sort of mental model\nas serverless being closer",
+    "start": 184
+  },
+  {
+    "text": "to delivering value for customers\nwithout having to manage",
+    "start": 187
+  },
+  {
+    "text": "complex infrastructure capabilities.",
+    "start": 189
+  },
+  {
+    "text": "And then actually what that translates to",
+    "start": 192
+  },
+  {
+    "text": "in a day-to-day basis, is\nyou're delegating the outcomes",
+    "start": 193
+  },
+  {
+    "text": "of building on the cloud,",
+    "start": 196
+  },
+  {
+    "text": "to people who are experts\non those outcomes.",
+    "start": 197
+  },
+  {
+    "text": "And if you think about what\ndevelopment in the cloud",
+    "start": 201
+  },
+  {
+    "text": "looks like today, well,\nyou need to understand",
+    "start": 203
+  },
+  {
+    "text": "how to develop for distributed services.",
+    "start": 205
+  },
+  {
+    "text": "How do you manage failures at large scale",
+    "start": 207
+  },
+  {
+    "text": "and manage availability\nand of course performance.",
+    "start": 209
+  },
+  {
+    "text": "And you've got other complexities",
+    "start": 212
+  },
+  {
+    "text": "of managing maybe large\nfleets of ephemeral compute",
+    "start": 214
+  },
+  {
+    "text": "and storage and networking\nthat come in and out",
+    "start": 216
+  },
+  {
+    "text": "in a virtual capacity, and\nyour network connectivity",
+    "start": 218
+  },
+  {
+    "text": "between various resources,\nthese all need to be managed",
+    "start": 221
+  },
+  {
+    "text": "with permission constructs",
+    "start": 224
+  },
+  {
+    "text": "and everything that also comes with that.",
+    "start": 225
+  },
+  {
+    "text": "And all of this requires, of course,",
+    "start": 227
+  },
+  {
+    "text": "a certain level of expertise.",
+    "start": 229
+  },
+  {
+    "text": "And over the nearly decade or so",
+    "start": 231
+  },
+  {
+    "text": "we've been doing the serverless thing,",
+    "start": 232
+  },
+  {
+    "text": "that expertise has become the norm.",
+    "start": 234
+  },
+  {
+    "text": "But learning all this cloud expertise",
+    "start": 237
+  },
+  {
+    "text": "isn't the actual value you\nget from doing the cloud work.",
+    "start": 238
+  },
+  {
+    "text": "The actual value is delivering\nvalue to your customers",
+    "start": 242
+  },
+  {
+    "text": "and being able to deliver and\nbuild cool things for them.",
+    "start": 246
+  },
+  {
+    "text": "And what we see more and more",
+    "start": 250
+  },
+  {
+    "text": "is builders leveraging AWS's expertise",
+    "start": 251
+  },
+  {
+    "text": "in delivering these best practices,",
+    "start": 253
+  },
+  {
+    "text": "and that's what we call the\nterm well-architected outcomes.",
+    "start": 255
+  },
+  {
+    "text": "And these are things\nlike security and scale",
+    "start": 258
+  },
+  {
+    "text": "and performance and availability,",
+    "start": 260
+  },
+  {
+    "text": "so the builders can focus their efforts",
+    "start": 262
+  },
+  {
+    "text": "on the differentiated work",
+    "start": 264
+  },
+  {
+    "text": "that they need to do for their customers.",
+    "start": 265
+  },
+  {
+    "text": "And when building serverless applications,",
+    "start": 268
+  },
+  {
+    "text": "we sort of actually\nevolve our building blocks",
+    "start": 270
+  },
+  {
+    "text": "from infrastructure perimeters,",
+    "start": 271
+  },
+  {
+    "text": "these are things like load\nbalances and instance types,",
+    "start": 273
+  },
+  {
+    "text": "networking and storage, to\nrather application constructs",
+    "start": 275
+  },
+  {
+    "text": "like databases, functions,\nqueues, workflows,",
+    "start": 279
+  },
+  {
+    "text": "and many more things.",
+    "start": 281
+  },
+  {
+    "text": "And this distinction is\nactually where I think",
+    "start": 283
+  },
+  {
+    "text": "some people sort of miss",
+    "start": 285
+  },
+  {
+    "text": "the full value proposition of serverless,",
+    "start": 286
+  },
+  {
+    "text": "when we talk about less\ninfrastructure to manage.",
+    "start": 288
+  },
+  {
+    "text": "And AWS really has a broader\nselection of services",
+    "start": 290
+  },
+  {
+    "text": "to offer those application constructs.",
+    "start": 293
+  },
+  {
+    "text": "EventBridge, debt\nfunctions, Lambda, DynamoDB,",
+    "start": 295
+  },
+  {
+    "text": "and all our managed\nservices including Redshift,",
+    "start": 298
+  },
+  {
+    "text": "ElastiCache, managed Kafka and others",
+    "start": 300
+  },
+  {
+    "text": "that are offering serverless services.",
+    "start": 303
+  },
+  {
+    "text": "And they're all offering or moving",
+    "start": 305
+  },
+  {
+    "text": "to a more serverless model,",
+    "start": 307
+  },
+  {
+    "text": "where we bake in the\nwell-architected goodness for you.",
+    "start": 308
+  },
+  {
+    "text": "And so I'd like you to sort\nof rather consider serverless",
+    "start": 312
+  },
+  {
+    "text": "as a strategic mindset and approach",
+    "start": 315
+  },
+  {
+    "text": "to how you can build applications.",
+    "start": 317
+  },
+  {
+    "text": "And certainly the events\nover the past years",
+    "start": 319
+  },
+  {
+    "text": "and the economic environment we're in,",
+    "start": 321
+  },
+  {
+    "text": "has universally sharpened\nthe focus on business value.",
+    "start": 323
+  },
+  {
+    "text": "So what Werner spoke about\nin his keynote this morning,",
+    "start": 326
+  },
+  {
+    "text": "was about cost and value\nand efficiency and speed",
+    "start": 328
+  },
+  {
+    "text": "in enabling real customer value.",
+    "start": 331
+  },
+  {
+    "text": "So today's serverless\ncan be thought of more",
+    "start": 334
+  },
+  {
+    "text": "as that operational model\nof being able to run",
+    "start": 336
+  },
+  {
+    "text": "or build applications\nwithout having to focus",
+    "start": 338
+  },
+  {
+    "text": "on the undifferentiated\nmuck, we like to call it,",
+    "start": 340
+  },
+  {
+    "text": "of managing low level infrastructure.",
+    "start": 343
+  },
+  {
+    "text": "And this allows you to\nbuild within the cloud,",
+    "start": 345
+  },
+  {
+    "text": "taking advantage of all the features,",
+    "start": 348
+  },
+  {
+    "text": "security, agility and scale,\nnot just building on the cloud,",
+    "start": 349
+  },
+  {
+    "text": "on top of the cloud",
+    "start": 353
+  },
+  {
+    "text": "with having to use a whole\nbunch of abstractions",
+    "start": 354
+  },
+  {
+    "text": "that maybe make you do a lot more work.",
+    "start": 356
+  },
+  {
+    "text": "And the benefits are clear,",
+    "start": 360
+  },
+  {
+    "text": "getting apps faster from\nprototype into production,",
+    "start": 361
+  },
+  {
+    "text": "fast feedback loop, which\nhelps you iterate quickly",
+    "start": 364
+  },
+  {
+    "text": "for your business.",
+    "start": 366
+  },
+  {
+    "text": "And we do need to measure things.",
+    "start": 368
+  },
+  {
+    "text": "I really actually like the DORA metrics",
+    "start": 369
+  },
+  {
+    "text": "from the team who've\nreally had a huge influence",
+    "start": 371
+  },
+  {
+    "text": "on making DevOps successful.",
+    "start": 373
+  },
+  {
+    "text": "And there are four metrics",
+    "start": 375
+  },
+  {
+    "text": "for working out how well you\ncan release applications,",
+    "start": 376
+  },
+  {
+    "text": "how well you can release\napplication software,",
+    "start": 379
+  },
+  {
+    "text": "how often you can release the production,",
+    "start": 381
+  },
+  {
+    "text": "the time then from commit to\nmaybe running a production,",
+    "start": 383
+  },
+  {
+    "text": "and then the percent of deployments",
+    "start": 386
+  },
+  {
+    "text": "causing a production failure,",
+    "start": 388
+  },
+  {
+    "text": "and then how long to recover\nfrom a production failure",
+    "start": 389
+  },
+  {
+    "text": "if you do have one.",
+    "start": 392
+  },
+  {
+    "text": "And the two top metrics\nthen correlate to speed,",
+    "start": 393
+  },
+  {
+    "text": "how quickly to get features",
+    "start": 396
+  },
+  {
+    "text": "into the hands of your customers,",
+    "start": 397
+  },
+  {
+    "text": "but then also importantly, quality,",
+    "start": 399
+  },
+  {
+    "text": "how good those changes are\nbecause I mean, the reality is",
+    "start": 401
+  },
+  {
+    "text": "there's no point being\nreally, really quick",
+    "start": 404
+  },
+  {
+    "text": "and rushing things into production,",
+    "start": 406
+  },
+  {
+    "text": "when you have to then go\nback out and redo the work",
+    "start": 407
+  },
+  {
+    "text": "to restore functionality.",
+    "start": 410
+  },
+  {
+    "text": "But Dave Farley also of big DevOps fame",
+    "start": 412
+  },
+  {
+    "text": "says if you want high speed,",
+    "start": 415
+  },
+  {
+    "text": "you must build high quality systems,",
+    "start": 416
+  },
+  {
+    "text": "and if you want high quality systems,",
+    "start": 418
+  },
+  {
+    "text": "you must build them quickly\nas a series of small changes.",
+    "start": 420
+  },
+  {
+    "text": "And this actually means excitingly",
+    "start": 425
+  },
+  {
+    "text": "that there isn't a trade off\nbetween speed and quality.",
+    "start": 426
+  },
+  {
+    "text": "They actually work together\nwhen you can do it right.",
+    "start": 430
+  },
+  {
+    "text": "And Serverless is really a\ngreat way to achieve this",
+    "start": 433
+  },
+  {
+    "text": "and improve your DORA metrics,",
+    "start": 435
+  },
+  {
+    "text": "iterating with small changes quickly.",
+    "start": 437
+  },
+  {
+    "text": "And Serverless brings you\nagility and cost benefits,",
+    "start": 440
+  },
+  {
+    "text": "which you can expect when\nyou build on top of AWS.",
+    "start": 444
+  },
+  {
+    "text": "And the thought process\nI'll leave you here",
+    "start": 448
+  },
+  {
+    "text": "is innovation comes from speed\nand speed means doing less",
+    "start": 449
+  },
+  {
+    "text": "and so to do less, go serverless.",
+    "start": 453
+  },
+  {
+    "text": "The next topic to cover\nis service-full serverless",
+    "start": 458
+  },
+  {
+    "text": "using configuration rather than code",
+    "start": 460
+  },
+  {
+    "text": "and using managed services\nand features where possible.",
+    "start": 462
+  },
+  {
+    "text": "When we often talk about\na serverless application,",
+    "start": 465
+  },
+  {
+    "text": "one maybe with Lambda,\nwhich we know can be written",
+    "start": 468
+  },
+  {
+    "text": "in a number of languages",
+    "start": 470
+  },
+  {
+    "text": "or of course you can bring\nyour own, with an event source,",
+    "start": 471
+  },
+  {
+    "text": "which then triggers your Lambda function",
+    "start": 474
+  },
+  {
+    "text": "and based on a change or a request,",
+    "start": 476
+  },
+  {
+    "text": "and then perform some\nactions on that request",
+    "start": 478
+  },
+  {
+    "text": "and sends it to another service.",
+    "start": 480
+  },
+  {
+    "text": "This is a very common\nLambda-based application.",
+    "start": 481
+  },
+  {
+    "text": "But what if the event source",
+    "start": 484
+  },
+  {
+    "text": "directly talks to a destination service?",
+    "start": 486
+  },
+  {
+    "text": "You don't have to then\nmaintain your own code",
+    "start": 488
+  },
+  {
+    "text": "and this is a direct service integration,",
+    "start": 490
+  },
+  {
+    "text": "what is called being service-full.",
+    "start": 492
+  },
+  {
+    "text": "And a great code from one\nof the fathers of Lambda,",
+    "start": 495
+  },
+  {
+    "text": "Ajay Nair, who says, you misuse Lambda",
+    "start": 497
+  },
+  {
+    "text": "when you need to transform data,\nnot just to transport data.",
+    "start": 500
+  },
+  {
+    "text": "If you're just copying data around,",
+    "start": 503
+  },
+  {
+    "text": "well, of course there're gonna\nbe other ways to do that.",
+    "start": 505
+  },
+  {
+    "text": "And another thing to think about",
+    "start": 507
+  },
+  {
+    "text": "is how much logic you're then\nsqueezing into your code.",
+    "start": 508
+  },
+  {
+    "text": "Are you adding more and more\nfunctionality into your code,",
+    "start": 511
+  },
+  {
+    "text": "into a Lambda function, doing\neverything possible in code,",
+    "start": 514
+  },
+  {
+    "text": "if then's decision, trees,\nall those kind of things,",
+    "start": 516
+  },
+  {
+    "text": "and it becomes what we call a Lambda lift,",
+    "start": 519
+  },
+  {
+    "text": "getting a little bit large and unwieldy.",
+    "start": 521
+  },
+  {
+    "text": "Or another way, how little\ncode are you actually running",
+    "start": 524
+  },
+  {
+    "text": "in your Lambda function\nwhen your function runs?",
+    "start": 526
+  },
+  {
+    "text": "You've got a whole lot\nof code in your function",
+    "start": 528
+  },
+  {
+    "text": "that isn't doing much,",
+    "start": 530
+  },
+  {
+    "text": "well, it's gonna be adding complexity,",
+    "start": 531
+  },
+  {
+    "text": "it means you've gotta\nhave tests against that,",
+    "start": 532
+  },
+  {
+    "text": "you've gotta secure that",
+    "start": 535
+  },
+  {
+    "text": "and you're not actually using that code.",
+    "start": 536
+  },
+  {
+    "text": "And this often does come\nfrom good intentions",
+    "start": 539
+  },
+  {
+    "text": "when you're moving to the cloud,",
+    "start": 541
+  },
+  {
+    "text": "well, you've got an application\nthat sits on premises",
+    "start": 542
+  },
+  {
+    "text": "maybe in a container or a VM,",
+    "start": 544
+  },
+  {
+    "text": "and a lot of the components\nand functions on the app",
+    "start": 546
+  },
+  {
+    "text": "are in a single place,\nthat was a good thing.",
+    "start": 548
+  },
+  {
+    "text": "And so you move it to...",
+    "start": 551
+  },
+  {
+    "text": "you move it to the cloud",
+    "start": 552
+  },
+  {
+    "text": "and of course, wisely you\nthink I'm gonna choose Lambda",
+    "start": 553
+  },
+  {
+    "text": "for your compute, stick\nan API in front of it",
+    "start": 556
+  },
+  {
+    "text": "and maybe S3 for some of the storage,",
+    "start": 557
+  },
+  {
+    "text": "but all those components\nand a lot of that complexity",
+    "start": 559
+  },
+  {
+    "text": "is just moving into your Lambda function.",
+    "start": 562
+  },
+  {
+    "text": "And when you ultimately really\nwhat should be migrating",
+    "start": 565
+  },
+  {
+    "text": "all those components into\ndifferent discreet services",
+    "start": 567
+  },
+  {
+    "text": "as it shows here, using the\nbest service for the job,",
+    "start": 570
+  },
+  {
+    "text": "move your front end to S3, get API Gateway",
+    "start": 573
+  },
+  {
+    "text": "to handle your auth, your\ncaching, your routing,",
+    "start": 575
+  },
+  {
+    "text": "and maybe your throttling,\nand then you can use",
+    "start": 578
+  },
+  {
+    "text": "your various messaging\nservices asynchronously,",
+    "start": 580
+  },
+  {
+    "text": "offload transactions to a workflow,",
+    "start": 582
+  },
+  {
+    "text": "use the native service\nerror handling and retries",
+    "start": 584
+  },
+  {
+    "text": "and then also split your Lambda functions",
+    "start": 587
+  },
+  {
+    "text": "into more discrete targeted components.",
+    "start": 589
+  },
+  {
+    "text": "And this all helps you\nscale your application,",
+    "start": 591
+  },
+  {
+    "text": "provides high resilience,\nimproved security,",
+    "start": 594
+  },
+  {
+    "text": "and hopefully even better costs.",
+    "start": 597
+  },
+  {
+    "text": "And as part of this, it does help",
+    "start": 600
+  },
+  {
+    "text": "to make your functions modular",
+    "start": 601
+  },
+  {
+    "text": "and single purpose if you can,",
+    "start": 603
+  },
+  {
+    "text": "instead of having a huge,\nbig single Lambda function",
+    "start": 605
+  },
+  {
+    "text": "that does a whole bunch of things,",
+    "start": 607
+  },
+  {
+    "text": "rather have multiple functions\nthat each do a single thing.",
+    "start": 609
+  },
+  {
+    "text": "For example, if you have a\nsingle image processing function",
+    "start": 612
+  },
+  {
+    "text": "that changes the format,\ncreates a thumbnail",
+    "start": 615
+  },
+  {
+    "text": "and adds it to a database,\nthat's what's going on here,",
+    "start": 618
+  },
+  {
+    "text": "think about it maybe having\nthree different Lambda functions",
+    "start": 620
+  },
+  {
+    "text": "that do each process.",
+    "start": 623
+  },
+  {
+    "text": "This also improves performance",
+    "start": 624
+  },
+  {
+    "text": "as you don't have to load extra\ncode that you don't need to",
+    "start": 625
+  },
+  {
+    "text": "and you can improve security",
+    "start": 628
+  },
+  {
+    "text": "as each function can be scoped down",
+    "start": 629
+  },
+  {
+    "text": "to only what it needs to do.",
+    "start": 632
+  },
+  {
+    "text": "But to unpack the Lambda-lith\na little bit that people use,",
+    "start": 634
+  },
+  {
+    "text": "it might seem reasonable to have an app",
+    "start": 638
+  },
+  {
+    "text": "where API gateway then is\ngonna catch all the requests",
+    "start": 640
+  },
+  {
+    "text": "and route them downstream\nto a single Lambda function.",
+    "start": 643
+  },
+  {
+    "text": "And then the Lambda function\nitself can contain logic",
+    "start": 645
+  },
+  {
+    "text": "to branch internally, to\nfit the appropriate code",
+    "start": 647
+  },
+  {
+    "text": "and to run the appropriate code.",
+    "start": 650
+  },
+  {
+    "text": "And that can be based on\nthe inbound event method,",
+    "start": 651
+  },
+  {
+    "text": "the URL or the query parameters.",
+    "start": 654
+  },
+  {
+    "text": "And this works, and yes, it\ndoes scale operationally,",
+    "start": 656
+  },
+  {
+    "text": "but it means that the\nsecurity, the permissions,",
+    "start": 659
+  },
+  {
+    "text": "the resources, the memory\nallocation and performance",
+    "start": 661
+  },
+  {
+    "text": "is applied to the whole function",
+    "start": 663
+  },
+  {
+    "text": "and when you think about splitting this up",
+    "start": 666
+  },
+  {
+    "text": "into more granular functions.",
+    "start": 667
+  },
+  {
+    "text": "Now, this is an extreme example",
+    "start": 669
+  },
+  {
+    "text": "where every single API route\nis a separate Lambda function,",
+    "start": 670
+  },
+  {
+    "text": "which of course does have the benefits",
+    "start": 674
+  },
+  {
+    "text": "of very granular ion permissions",
+    "start": 675
+  },
+  {
+    "text": "and being able to manage your scaling",
+    "start": 677
+  },
+  {
+    "text": "per individual function,",
+    "start": 679
+  },
+  {
+    "text": "but operationally, this is\ngonna be a lot to manage.",
+    "start": 680
+  },
+  {
+    "text": "And so particularly for web apps like this",
+    "start": 683
+  },
+  {
+    "text": "and other scenarios, it doesn't\nmake sense to be pragmatic",
+    "start": 685
+  },
+  {
+    "text": "about how you group your web\nroute and your functions.",
+    "start": 688
+  },
+  {
+    "text": "Too many functions can\nbe an operational burden",
+    "start": 691
+  },
+  {
+    "text": "and too few can be too broad security",
+    "start": 693
+  },
+  {
+    "text": "and have resource issues.",
+    "start": 695
+  },
+  {
+    "text": "So grouping your function,\nyour Lambda functions",
+    "start": 697
+  },
+  {
+    "text": "based on maybe bounded\ncontext or permission groups",
+    "start": 699
+  },
+  {
+    "text": "or no common dependencies or\nmaybe your initialization time,",
+    "start": 702
+  },
+  {
+    "text": "can give you the best of both worlds,",
+    "start": 705
+  },
+  {
+    "text": "effective permissions\nand resource management",
+    "start": 707
+  },
+  {
+    "text": "and operational simplicity.",
+    "start": 709
+  },
+  {
+    "text": "So more on using services.",
+    "start": 712
+  },
+  {
+    "text": "When building distributed applications,",
+    "start": 714
+  },
+  {
+    "text": "another aspect to think about",
+    "start": 716
+  },
+  {
+    "text": "is how you can effectively\nuse orchestration",
+    "start": 717
+  },
+  {
+    "text": "and choreography as communication methods",
+    "start": 720
+  },
+  {
+    "text": "for your workflows and rather\nthan writing your own code,",
+    "start": 722
+  },
+  {
+    "text": "manage this as configuration.",
+    "start": 725
+  },
+  {
+    "text": "Now, in orchestration you\nhave a central coordinator",
+    "start": 728
+  },
+  {
+    "text": "which is gonna manage the\nservice to service communication",
+    "start": 730
+  },
+  {
+    "text": "and do the coordination\nand act of interactions",
+    "start": 733
+  },
+  {
+    "text": "and ordering, in which\nthe services are used.",
+    "start": 736
+  },
+  {
+    "text": "Now, choreography is slightly different",
+    "start": 739
+  },
+  {
+    "text": "and it communicates without tight control.",
+    "start": 741
+  },
+  {
+    "text": "Events flow between the services",
+    "start": 744
+  },
+  {
+    "text": "without any central coordination",
+    "start": 745
+  },
+  {
+    "text": "and many applications\nuse both choreography",
+    "start": 747
+  },
+  {
+    "text": "and orchestration for different use cases.",
+    "start": 749
+  },
+  {
+    "text": "Step Functions is an example,",
+    "start": 753
+  },
+  {
+    "text": "it's an orchestrator doing\nthat central coordination",
+    "start": 754
+  },
+  {
+    "text": "and ordering to manage a workflow.",
+    "start": 756
+  },
+  {
+    "text": "And EventBridge is a great choreographer",
+    "start": 758
+  },
+  {
+    "text": "when you don't need strict\nordering and workflows,",
+    "start": 760
+  },
+  {
+    "text": "and need events to flow seamlessly",
+    "start": 762
+  },
+  {
+    "text": "without centralized control.",
+    "start": 764
+  },
+  {
+    "text": "And at re:Invent this year,\nwe've been demoing a great app",
+    "start": 766
+  },
+  {
+    "text": "which I've loved doing,",
+    "start": 769
+  },
+  {
+    "text": "which shows how these\ntwo can work together.",
+    "start": 770
+  },
+  {
+    "text": "ServerlessVideo is a live\nvideo streaming application",
+    "start": 772
+  },
+  {
+    "text": "built with serverless technologies.",
+    "start": 775
+  },
+  {
+    "text": "Make sure to take a look.",
+    "start": 776
+  },
+  {
+    "text": "We are bringing you live\nbroadcasts from AWS experts",
+    "start": 778
+  },
+  {
+    "text": "all throughout re:Invents,\nand after the live broadcast,",
+    "start": 781
+  },
+  {
+    "text": "you can watch the content on-demand",
+    "start": 784
+  },
+  {
+    "text": "and all of this is managed\nwith a serverless backend.",
+    "start": 785
+  },
+  {
+    "text": "There are a number of microservices\nmanaging the channels,",
+    "start": 789
+  },
+  {
+    "text": "video streaming and publishing,",
+    "start": 791
+  },
+  {
+    "text": "and doing post-processing of videos,",
+    "start": 793
+  },
+  {
+    "text": "which has got a really cool\nflexible plugin architecture",
+    "start": 795
+  },
+  {
+    "text": "where different builders\ncan build functionality",
+    "start": 798
+  },
+  {
+    "text": "to do a whole bunch of different things.",
+    "start": 800
+  },
+  {
+    "text": "And it could be transcribing\nthe speech-to-text,",
+    "start": 802
+  },
+  {
+    "text": "generating the video titles\nbased on generative AI",
+    "start": 805
+  },
+  {
+    "text": "and doing some optimized\nintegration with Amazon Bedrock",
+    "start": 808
+  },
+  {
+    "text": "and also doing some content moderation.",
+    "start": 811
+  },
+  {
+    "text": "And this uses then bus\nEventBridge and Step Functions",
+    "start": 814
+  },
+  {
+    "text": "to work effectively together.",
+    "start": 816
+  },
+  {
+    "text": "It uses EventBridge to pass information",
+    "start": 818
+  },
+  {
+    "text": "between the microservices,",
+    "start": 820
+  },
+  {
+    "text": "and each microservice then\ndoes what it needs to do,",
+    "start": 822
+  },
+  {
+    "text": "and asynchronously places a\nfinished event on the event bus.",
+    "start": 824
+  },
+  {
+    "text": "An individual microservice",
+    "start": 828
+  },
+  {
+    "text": "like the video processing service,",
+    "start": 829
+  },
+  {
+    "text": "then uses Step Functions\nto do its orchestration.",
+    "start": 831
+  },
+  {
+    "text": "It's got decision logic\nlike whether to use Lambda",
+    "start": 833
+  },
+  {
+    "text": "or Fargate for the compute\ndepending on the video length",
+    "start": 835
+  },
+  {
+    "text": "and then Step Functions\nthen makes a decision,",
+    "start": 839
+  },
+  {
+    "text": "does the orchestration parts,",
+    "start": 841
+  },
+  {
+    "text": "and when it finishes,\nemits an event when done",
+    "start": 842
+  },
+  {
+    "text": "so the rest of the microservices\ncan react, very powerful.",
+    "start": 845
+  },
+  {
+    "text": "The plugin manager service\nalso uses Step Functions",
+    "start": 848
+  },
+  {
+    "text": "to handle the video processing timeline",
+    "start": 851
+  },
+  {
+    "text": "using various lifecycle hooks.",
+    "start": 853
+  },
+  {
+    "text": "And so the text-to-speech and\nthe Gen AI title generation,",
+    "start": 855
+  },
+  {
+    "text": "all work in a particular order.",
+    "start": 859
+  },
+  {
+    "text": "Again, when finished, the\nplugin manager service",
+    "start": 860
+  },
+  {
+    "text": "puts an event back on the event bus",
+    "start": 862
+  },
+  {
+    "text": "and the other services can react.",
+    "start": 864
+  },
+  {
+    "text": "Extremely flexible, and\nof course super scalable.",
+    "start": 867
+  },
+  {
+    "text": "With Step Functions, great\nopportunities to remove code,",
+    "start": 871
+  },
+  {
+    "text": "the state machine on the left\nis doing quite a lot of logic",
+    "start": 873
+  },
+  {
+    "text": "with Lambda functions, but\nthey're pretty much just invoking",
+    "start": 876
+  },
+  {
+    "text": "other AWS services.",
+    "start": 879
+  },
+  {
+    "text": "So you can optimize this\nwith direct SDK integrations",
+    "start": 880
+  },
+  {
+    "text": "like this, implementing\nthe same business logic",
+    "start": 883
+  },
+  {
+    "text": "without running and paying\nfor a Lambda function.",
+    "start": 886
+  },
+  {
+    "text": "And obviously you can mix and match",
+    "start": 888
+  },
+  {
+    "text": "and transition gradually,\nyou have complete control",
+    "start": 890
+  },
+  {
+    "text": "over what your workflow contains.",
+    "start": 892
+  },
+  {
+    "text": "So the story of how choreography",
+    "start": 895
+  },
+  {
+    "text": "and orchestration work together,",
+    "start": 897
+  },
+  {
+    "text": "as we see when running serverless video,",
+    "start": 898
+  },
+  {
+    "text": "each of the microservices\ncan act independently",
+    "start": 900
+  },
+  {
+    "text": "and within each microservice,",
+    "start": 903
+  },
+  {
+    "text": "the bounded context then\ndecides what happens.",
+    "start": 904
+  },
+  {
+    "text": "Step Functions can help\nwith any orchestration",
+    "start": 907
+  },
+  {
+    "text": "within the service and then\nuse events to communicate",
+    "start": 909
+  },
+  {
+    "text": "between the bounds,\nbetween the microservices,",
+    "start": 912
+  },
+  {
+    "text": "which is a very effective way",
+    "start": 914
+  },
+  {
+    "text": "to build distributed applications.",
+    "start": 915
+  },
+  {
+    "text": "If you didn't know, there\nare actually two parts",
+    "start": 918
+  },
+  {
+    "text": "of Step Functions, standard workflows,",
+    "start": 919
+  },
+  {
+    "text": "they run for up to a year on asynchronous,",
+    "start": 921
+  },
+  {
+    "text": "and express workflows on the\nright, they fast and furious",
+    "start": 924
+  },
+  {
+    "text": "and they build for high throughput",
+    "start": 926
+  },
+  {
+    "text": "and they can run for a max of five minutes",
+    "start": 928
+  },
+  {
+    "text": "and can also be synchronous.",
+    "start": 930
+  },
+  {
+    "text": "Standard workflows and express workflows",
+    "start": 932
+  },
+  {
+    "text": "have different sort of pricing models,",
+    "start": 934
+  },
+  {
+    "text": "and the cool thing is, with\nthe different cost structures,",
+    "start": 936
+  },
+  {
+    "text": "express workflows can also\nbe significantly cheaper.",
+    "start": 939
+  },
+  {
+    "text": "And here in this example we've got here,",
+    "start": 942
+  },
+  {
+    "text": "you can use express flows",
+    "start": 944
+  },
+  {
+    "text": "as the workflow runs\nsynchronously under five minutes,",
+    "start": 945
+  },
+  {
+    "text": "and this is actually half a second faster",
+    "start": 947
+  },
+  {
+    "text": "to run per execution, so\nalso a performance boost.",
+    "start": 949
+  },
+  {
+    "text": "And then a million standard\nworkflow executions",
+    "start": 952
+  },
+  {
+    "text": "would cost $420, but\nusing express workflows,",
+    "start": 954
+  },
+  {
+    "text": "this is $12.77.",
+    "start": 957
+  },
+  {
+    "text": "So that is seriously quite\na big cost benefit too.",
+    "start": 959
+  },
+  {
+    "text": "But even better story is how\nthey can both work together",
+    "start": 962
+  },
+  {
+    "text": "nesting express workflows\nwithin standard workflows,",
+    "start": 965
+  },
+  {
+    "text": "allowing you to run\nlong-running standard workflows",
+    "start": 968
+  },
+  {
+    "text": "that can support callbacks\nand other kinda things.",
+    "start": 970
+  },
+  {
+    "text": "And then you nest the express\nworkflows for high speed",
+    "start": 973
+  },
+  {
+    "text": "and high scale, which return\nto the parent standard workflow",
+    "start": 975
+  },
+  {
+    "text": "when they're complete",
+    "start": 978
+  },
+  {
+    "text": "and a great way to get\nthe best of both worlds,",
+    "start": 979
+  },
+  {
+    "text": "which is also happy for your budget.",
+    "start": 981
+  },
+  {
+    "text": "Now when building the Step Functions,",
+    "start": 984
+  },
+  {
+    "text": "you don't have to start from scratch,",
+    "start": 986
+  },
+  {
+    "text": "our team has to put together",
+    "start": 987
+  },
+  {
+    "text": "the serverless workflows collection,",
+    "start": 989
+  },
+  {
+    "text": "prebuilt open-source\nStep Functions workflows",
+    "start": 991
+  },
+  {
+    "text": "on serverlessland.com, for\na whole bunch of patterns",
+    "start": 993
+  },
+  {
+    "text": "that you can literally just pick up",
+    "start": 995
+  },
+  {
+    "text": "and get going as soon as you need to.",
+    "start": 996
+  },
+  {
+    "text": "Also other options for reducing code,",
+    "start": 999
+  },
+  {
+    "text": "same goes for API gateway.",
+    "start": 1001
+  },
+  {
+    "text": "Do you have Lambda functions\nthat you serve only as a proxy",
+    "start": 1002
+  },
+  {
+    "text": "between API Gateway and\ndownstream services?",
+    "start": 1005
+  },
+  {
+    "text": "Well, you can optimize them as well.",
+    "start": 1007
+  },
+  {
+    "text": "You can configure API Gateway",
+    "start": 1009
+  },
+  {
+    "text": "to connect directly to\nmultiple AWS services,",
+    "start": 1010
+  },
+  {
+    "text": "such as Dynamo, SQS, Step\nFunctions and many more.",
+    "start": 1013
+  },
+  {
+    "text": "Once again, no need to use\nLambda just as a proxy.",
+    "start": 1016
+  },
+  {
+    "text": "There are many other ways to reduce code",
+    "start": 1020
+  },
+  {
+    "text": "and use native service integrations,",
+    "start": 1022
+  },
+  {
+    "text": "it's a common pattern to\nconsume DynamoDB streams",
+    "start": 1023
+  },
+  {
+    "text": "using a Lambda function\nto pause the events",
+    "start": 1026
+  },
+  {
+    "text": "and then put them on EventBridge",
+    "start": 1029
+  },
+  {
+    "text": "maybe for a downstream service\nto, I dunno, take some action",
+    "start": 1030
+  },
+  {
+    "text": "when a new customer is added\nto a database, for example.",
+    "start": 1033
+  },
+  {
+    "text": "Well, EventBridge pipes,\nif you're not aware,",
+    "start": 1037
+  },
+  {
+    "text": "is another part of the EventBridge family",
+    "start": 1038
+  },
+  {
+    "text": "and allows you to do just this",
+    "start": 1040
+  },
+  {
+    "text": "but with configuration code\nrather than Lambda code.",
+    "start": 1042
+  },
+  {
+    "text": "You configure the pipe to read from Dynamo",
+    "start": 1045
+  },
+  {
+    "text": "and then there's a built-in integration",
+    "start": 1047
+  },
+  {
+    "text": "to send the event to an event bus.",
+    "start": 1048
+  },
+  {
+    "text": "And the pipe actually uses\nthe same polling mechanism",
+    "start": 1050
+  },
+  {
+    "text": "under the hood as the\nLambda event source mapping",
+    "start": 1053
+  },
+  {
+    "text": "but the code to move the\ndata is just handled for you.",
+    "start": 1055
+  },
+  {
+    "text": "Just manage your configuration,",
+    "start": 1058
+  },
+  {
+    "text": "which doesn't need security\npatching or any maintenance.",
+    "start": 1059
+  },
+  {
+    "text": "It's a winner in my book.",
+    "start": 1062
+  },
+  {
+    "text": "So with all of this\nservice-full stuff remember,",
+    "start": 1064
+  },
+  {
+    "text": "the best performing and\ncheapest Lambda function",
+    "start": 1067
+  },
+  {
+    "text": "is the one you actually remove",
+    "start": 1069
+  },
+  {
+    "text": "and replace with a built-in integration.",
+    "start": 1070
+  },
+  {
+    "text": "But don't get too excited about that,",
+    "start": 1072
+  },
+  {
+    "text": "that's not the whole story, over to Chris.",
+    "start": 1074
+  },
+  {
+    "text": "- Thanks, Julian.",
+    "start": 1076
+  },
+  {
+    "text": "So Julian's obviously just covered here",
+    "start": 1077
+  },
+  {
+    "text": "a whole bunch of ways",
+    "start": 1079
+  },
+  {
+    "text": "that you can build serverless applications",
+    "start": 1080
+  },
+  {
+    "text": "without thinking about Lambda.",
+    "start": 1082
+  },
+  {
+    "text": "Well, Lambda was obviously the thing",
+    "start": 1084
+  },
+  {
+    "text": "that kind of started the\nworld of serverless here",
+    "start": 1085
+  },
+  {
+    "text": "for us at AWS, actually we\ndidn't first call it Lambda",
+    "start": 1088
+  },
+  {
+    "text": "a serverless product when we launched it,",
+    "start": 1090
+  },
+  {
+    "text": "but obviously we've seen this concept",
+    "start": 1092
+  },
+  {
+    "text": "and this world kinda grow around it.",
+    "start": 1094
+  },
+  {
+    "text": "Now, Julian talked a\nlittle bit about Lambda,",
+    "start": 1097
+  },
+  {
+    "text": "the model that we have of\nyou have an invoke source,",
+    "start": 1098
+  },
+  {
+    "text": "you have a Lambda function,",
+    "start": 1101
+  },
+  {
+    "text": "you have the things that\nyour Lambda function does,",
+    "start": 1102
+  },
+  {
+    "text": "and one of the unique\nthings that Lambda brought",
+    "start": 1104
+  },
+  {
+    "text": "to the industry that we didn't have before",
+    "start": 1106
+  },
+  {
+    "text": "was an ability to directly\ninvoke application code",
+    "start": 1108
+  },
+  {
+    "text": "behind an API as a service.",
+    "start": 1111
+  },
+  {
+    "text": "Now, today there are over\n140 different services",
+    "start": 1114
+  },
+  {
+    "text": "that can invoke Lambda\nfunctions on your behalf,",
+    "start": 1116
+  },
+  {
+    "text": "and there's three ways that they do that;",
+    "start": 1118
+  },
+  {
+    "text": "synchronously, asynchronously\nor via what we call a stream",
+    "start": 1120
+  },
+  {
+    "text": "or poll-based model,",
+    "start": 1124
+  },
+  {
+    "text": "otherwise known as event source mappings.",
+    "start": 1125
+  },
+  {
+    "text": "Now use the different services, again,",
+    "start": 1127
+  },
+  {
+    "text": "do this on your behalf,",
+    "start": 1129
+  },
+  {
+    "text": "and you can also use the API directly",
+    "start": 1130
+  },
+  {
+    "text": "to invoke these functions.",
+    "start": 1133
+  },
+  {
+    "text": "Then one of the things that\nwe did based on feedback",
+    "start": 1134
+  },
+  {
+    "text": "and hearing from our\ncustomers for many years",
+    "start": 1137
+  },
+  {
+    "text": "was back in April of 2022,",
+    "start": 1139
+  },
+  {
+    "text": "we announced Lambda function URLs.",
+    "start": 1141
+  },
+  {
+    "text": "So this gives you the ability\nto invoke a Lambda function",
+    "start": 1144
+  },
+  {
+    "text": "directly from HTTP endpoint,",
+    "start": 1146
+  },
+  {
+    "text": "essentially looking very\nsimilar to a webhook.",
+    "start": 1148
+  },
+  {
+    "text": "So you've got a couple different ways now",
+    "start": 1150
+  },
+  {
+    "text": "that you can invoke Lambda functions,",
+    "start": 1152
+  },
+  {
+    "text": "again, integrated with the\nplatform via its API directly",
+    "start": 1154
+  },
+  {
+    "text": "or via the webhook model.",
+    "start": 1157
+  },
+  {
+    "text": "Now when it comes to thinking\nabout performance in Lambda,",
+    "start": 1160
+  },
+  {
+    "text": "we kinda say that there's\none kind of primary knob",
+    "start": 1162
+  },
+  {
+    "text": "that you can turn, and again,\nmaybe to lean a little bit",
+    "start": 1165
+  },
+  {
+    "text": "on Werner's joke from\nhis keynote earlier today",
+    "start": 1167
+  },
+  {
+    "text": "of kinda cranking the\nknob for a performance,",
+    "start": 1169
+  },
+  {
+    "text": "essentially what we do is\nwe give you the ability",
+    "start": 1172
+  },
+  {
+    "text": "to configure the memory\nof a Lambda function,",
+    "start": 1173
+  },
+  {
+    "text": "and what comes with that is\na proportional amount of CPU",
+    "start": 1175
+  },
+  {
+    "text": "and then essentially\nnetworking throughput.",
+    "start": 1178
+  },
+  {
+    "text": "So today you can configure\nLambda functions anywhere",
+    "start": 1180
+  },
+  {
+    "text": "from 128 megabytes up to 10 gigabytes,",
+    "start": 1182
+  },
+  {
+    "text": "and again, that gives you this\nproportional amount of CPU",
+    "start": 1185
+  },
+  {
+    "text": "and network bandwidth.",
+    "start": 1188
+  },
+  {
+    "text": "Now, customers often ask or\nthey're trying to understand",
+    "start": 1189
+  },
+  {
+    "text": "when they are performance-bound,",
+    "start": 1192
+  },
+  {
+    "text": "again, how do I get more access to CPU?",
+    "start": 1195
+  },
+  {
+    "text": "And again, that is the\nprimary way that you do it.",
+    "start": 1196
+  },
+  {
+    "text": "This is an example here,",
+    "start": 1199
+  },
+  {
+    "text": "this diagram is not entirely accurate,",
+    "start": 1201
+  },
+  {
+    "text": "it doesn't completely go\nlinearly as you scale,",
+    "start": 1203
+  },
+  {
+    "text": "there are some stepping actions to it,",
+    "start": 1205
+  },
+  {
+    "text": "but essentially as you\nincrease the amount of memory,",
+    "start": 1207
+  },
+  {
+    "text": "you then of course get that\nproportion amount of CPU,",
+    "start": 1210
+  },
+  {
+    "text": "and so at 10 gigabytes\nyou get up to six cores.",
+    "start": 1212
+  },
+  {
+    "text": "Now, technically before this",
+    "start": 1215
+  },
+  {
+    "text": "we start exposing the cores to you,",
+    "start": 1216
+  },
+  {
+    "text": "but essentially what we're\ndoing behind the scenes",
+    "start": 1218
+  },
+  {
+    "text": "is we're limiting the power of those cores",
+    "start": 1220
+  },
+  {
+    "text": "up until you get up to the\nmaximum memory configuration.",
+    "start": 1223
+  },
+  {
+    "text": "And so you do end up again at some point",
+    "start": 1226
+  },
+  {
+    "text": "with six cores that you can make use of,",
+    "start": 1228
+  },
+  {
+    "text": "but the key aspect of this that\nmakes it successful for you",
+    "start": 1230
+  },
+  {
+    "text": "is that your code has\nto support the ability",
+    "start": 1232
+  },
+  {
+    "text": "to run across the cores.",
+    "start": 1234
+  },
+  {
+    "text": "So technically a Lambda function tops out",
+    "start": 1235
+  },
+  {
+    "text": "at a single core performance",
+    "start": 1237
+  },
+  {
+    "text": "somewhere between about 1.5\nand 1.8 gigabytes of memory,",
+    "start": 1239
+  },
+  {
+    "text": "and so if your core, if\nyour application code",
+    "start": 1242
+  },
+  {
+    "text": "is not multi-threaded,",
+    "start": 1244
+  },
+  {
+    "text": "that's where you're gonna see\nbasically the maximum payoff",
+    "start": 1246
+  },
+  {
+    "text": "in terms of CPU performance.",
+    "start": 1248
+  },
+  {
+    "text": "Again, you might need\nthe additional memory",
+    "start": 1250
+  },
+  {
+    "text": "for your function for other\nneeds, but when it comes to CPU",
+    "start": 1252
+  },
+  {
+    "text": "that's gonna kinda be where you top off.",
+    "start": 1255
+  },
+  {
+    "text": "So ways to think about this, right?",
+    "start": 1258
+  },
+  {
+    "text": "Let's assume that I have\ntwo different functions,",
+    "start": 1260
+  },
+  {
+    "text": "one is configured for\ntwo gigabytes of memory,",
+    "start": 1262
+  },
+  {
+    "text": "it runs for one second,",
+    "start": 1264
+  },
+  {
+    "text": "another one is configured\nfor one gigabyte of memory,",
+    "start": 1266
+  },
+  {
+    "text": "it runs for two seconds.",
+    "start": 1268
+  },
+  {
+    "text": "Effectively these are the exact\nsame when it comes to cost.",
+    "start": 1271
+  },
+  {
+    "text": "So running for half as much\ntime, twice as much memory,",
+    "start": 1275
+  },
+  {
+    "text": "is the same as running for double as long",
+    "start": 1277
+  },
+  {
+    "text": "with half as much memory.",
+    "start": 1279
+  },
+  {
+    "text": "Now how about this one here?",
+    "start": 1281
+  },
+  {
+    "text": "So I have a function that's\nconfigured for 128 megabytes,",
+    "start": 1282
+  },
+  {
+    "text": "it runs for 10 seconds,",
+    "start": 1285
+  },
+  {
+    "text": "and then I have a function\nconfigured for one gigabyte",
+    "start": 1286
+  },
+  {
+    "text": "and it runs for one second.",
+    "start": 1288
+  },
+  {
+    "text": "The answer in this case is\nthat the one that runs for...",
+    "start": 1291
+  },
+  {
+    "text": "the one that has one gigabyte configured,",
+    "start": 1294
+  },
+  {
+    "text": "is the lower cost one, right?",
+    "start": 1296
+  },
+  {
+    "text": "So why is this happening?",
+    "start": 1298
+  },
+  {
+    "text": "Typically as you're\ngetting more CPU power,",
+    "start": 1299
+  },
+  {
+    "text": "you're able then to have your\napplication code run faster,",
+    "start": 1302
+  },
+  {
+    "text": "where do you see this?",
+    "start": 1304
+  },
+  {
+    "text": "Almost any place that you\nhave a Lambda function",
+    "start": 1305
+  },
+  {
+    "text": "calling out to another service.",
+    "start": 1308
+  },
+  {
+    "text": "So a number of years ago,\nHTTPS across the industry,",
+    "start": 1310
+  },
+  {
+    "text": "the TLS certificate bit rates\nincreased from 1,024 to 2,048",
+    "start": 1313
+  },
+  {
+    "text": "to 4,096 that you see\nsometimes these days,",
+    "start": 1318
+  },
+  {
+    "text": "and actually required a linear increase,",
+    "start": 1321
+  },
+  {
+    "text": "or sorry, a logarithmic increase in CPU",
+    "start": 1324
+  },
+  {
+    "text": "in order to handle the\nencryption of the traffic",
+    "start": 1327
+  },
+  {
+    "text": "back and forth between\nthe source of destination.",
+    "start": 1329
+  },
+  {
+    "text": "So even if all your function does",
+    "start": 1331
+  },
+  {
+    "text": "is talk to single HTTPS endpoint,",
+    "start": 1333
+  },
+  {
+    "text": "more memory will give\nyou a faster function.",
+    "start": 1335
+  },
+  {
+    "text": "Now, I said there's\nbasically just one knob",
+    "start": 1339
+  },
+  {
+    "text": "that we give you for\nperformance, it's kind of a lie,",
+    "start": 1341
+  },
+  {
+    "text": "there's another toggle that we give you,",
+    "start": 1343
+  },
+  {
+    "text": "which is the type of CPU",
+    "start": 1345
+  },
+  {
+    "text": "that you can run your Lambda functions on.",
+    "start": 1346
+  },
+  {
+    "text": "So we've launched back in 2014\nwith x86, 64-bit processors,",
+    "start": 1348
+  },
+  {
+    "text": "today we also have Graviton2.",
+    "start": 1354
+  },
+  {
+    "text": "So Graviton2, you do get a\nbetter price performance,",
+    "start": 1356
+  },
+  {
+    "text": "again, you do wanna test your application",
+    "start": 1360
+  },
+  {
+    "text": "depending on what your code does,",
+    "start": 1361
+  },
+  {
+    "text": "whether or not it's gonna\nbe supported on Graviton,",
+    "start": 1363
+  },
+  {
+    "text": "but generally speaking,\nwhen we see customers move",
+    "start": 1365
+  },
+  {
+    "text": "to Graviton, they find success",
+    "start": 1367
+  },
+  {
+    "text": "in being able to all save money",
+    "start": 1369
+  },
+  {
+    "text": "and have functions run faster.",
+    "start": 1370
+  },
+  {
+    "text": "Now you don't have to blindly\nstumble into doing this.",
+    "start": 1373
+  },
+  {
+    "text": "We've got a number of ways\nthat you can explore it,",
+    "start": 1375
+  },
+  {
+    "text": "one is with the Lambda Power Tuning tool,",
+    "start": 1378
+  },
+  {
+    "text": "this is an open source project",
+    "start": 1380
+  },
+  {
+    "text": "that was started by a\nmember of our community",
+    "start": 1382
+  },
+  {
+    "text": "who's now a member of  staff,",
+    "start": 1383
+  },
+  {
+    "text": "but it's been wonderfully\nsupported by the community",
+    "start": 1385
+  },
+  {
+    "text": "for many years, and\nwhat it allows you to do",
+    "start": 1386
+  },
+  {
+    "text": "is take a function configuration",
+    "start": 1389
+  },
+  {
+    "text": "and then punch or push a bunch\nof tests invocations at it,",
+    "start": 1391
+  },
+  {
+    "text": "and then you can change or have it test",
+    "start": 1396
+  },
+  {
+    "text": "for different types of configurations.",
+    "start": 1397
+  },
+  {
+    "text": "So we see here in this diagram",
+    "start": 1399
+  },
+  {
+    "text": "that I've got a number of\ndifferent memory configurations",
+    "start": 1401
+  },
+  {
+    "text": "that it's testing, what\nit can come back basically",
+    "start": 1403
+  },
+  {
+    "text": "and tell me, or I can\ndeduce from the data here",
+    "start": 1405
+  },
+  {
+    "text": "is this is the lowest cost function,",
+    "start": 1407
+  },
+  {
+    "text": "this is the fastest function.",
+    "start": 1410
+  },
+  {
+    "text": "The lowest cost and the fastest\nmay not always be the same,",
+    "start": 1411
+  },
+  {
+    "text": "and so it depends on\nwhat you're looking for.",
+    "start": 1414
+  },
+  {
+    "text": "If I have a synchronous invocation,",
+    "start": 1416
+  },
+  {
+    "text": "I probably care a lot\nmore about performance.",
+    "start": 1417
+  },
+  {
+    "text": "If I have an asynchronous invocation",
+    "start": 1420
+  },
+  {
+    "text": "or one of the event mapping\nor poll-based functions,",
+    "start": 1421
+  },
+  {
+    "text": "I probably care a little\nbit more about cost.",
+    "start": 1424
+  },
+  {
+    "text": "Generally speaking, I'm\nnot looking for things",
+    "start": 1426
+  },
+  {
+    "text": "that are consuming SQS\nto be fast necessarily.",
+    "start": 1428
+  },
+  {
+    "text": "And the same thing goes",
+    "start": 1432
+  },
+  {
+    "text": "for when you're working with Graviton.",
+    "start": 1433
+  },
+  {
+    "text": "So you can basically take your\nfunction, deploy it on x86,",
+    "start": 1434
+  },
+  {
+    "text": "run it through Power Tuning,",
+    "start": 1437
+  },
+  {
+    "text": "you can then take your\nfunction, deploy it on Graviton,",
+    "start": 1439
+  },
+  {
+    "text": "run it through Power Tuning,",
+    "start": 1441
+  },
+  {
+    "text": "and the Power Tuning tool allows\nyou to compare or contrast",
+    "start": 1442
+  },
+  {
+    "text": "those two runs that you have.",
+    "start": 1446
+  },
+  {
+    "text": "And so we can see here that the\nGraviton configured function",
+    "start": 1448
+  },
+  {
+    "text": "ran 27% faster and 41% cheaper\nagain, for the workload",
+    "start": 1452
+  },
+  {
+    "text": "that was used in this test.",
+    "start": 1456
+  },
+  {
+    "text": "And so free and easy tool for you to use",
+    "start": 1457
+  },
+  {
+    "text": "that gives you the ability to test",
+    "start": 1459
+  },
+  {
+    "text": "these different configurations.",
+    "start": 1461
+  },
+  {
+    "text": "We also have another tool inside of AWS,",
+    "start": 1464
+  },
+  {
+    "text": "which is called AWS Compute Optimizer,",
+    "start": 1466
+  },
+  {
+    "text": "this gives you a whole\nbunch of information,",
+    "start": 1468
+  },
+  {
+    "text": "it's constantly kind of\nlooking at your functions",
+    "start": 1469
+  },
+  {
+    "text": "and how they perform over time,",
+    "start": 1471
+  },
+  {
+    "text": "again, it gives you the\nability to kind of look",
+    "start": 1473
+  },
+  {
+    "text": "at the different options\nfor turning down memory",
+    "start": 1475
+  },
+  {
+    "text": "base on performance and what you need.",
+    "start": 1477
+  },
+  {
+    "text": "And so again, another tool\nin the toolbox that you have",
+    "start": 1479
+  },
+  {
+    "text": "for when your functions are\nactually running in production,",
+    "start": 1481
+  },
+  {
+    "text": "to see, hey, does this seem\nlike it's configured well?",
+    "start": 1483
+  },
+  {
+    "text": "Should I think differently\nabout configuring it?",
+    "start": 1486
+  },
+  {
+    "text": "The next thing I wanna talk about here",
+    "start": 1489
+  },
+  {
+    "text": "is the AWS Lambda execution\nenvironment lifecycle,",
+    "start": 1490
+  },
+  {
+    "text": "I'm gonna talk about\neveryone's favorite topic here,",
+    "start": 1494
+  },
+  {
+    "text": "which is cold starts",
+    "start": 1497
+  },
+  {
+    "text": "and I know we've got AJ\nsomewhere in the room",
+    "start": 1498
+  },
+  {
+    "text": "down the front here, who gave a great talk",
+    "start": 1499
+  },
+  {
+    "text": "on demystifying cold\nstarts earlier this week.",
+    "start": 1501
+  },
+  {
+    "text": "So cold starts, what is this?",
+    "start": 1505
+  },
+  {
+    "text": "So I've been talking about cold starts,",
+    "start": 1506
+  },
+  {
+    "text": "I feel like for half of\nmy life here at Amazon,",
+    "start": 1508
+  },
+  {
+    "text": "but essentially what this is",
+    "start": 1511
+  },
+  {
+    "text": "is that when Lambda needs to\ncreate a new worker environment",
+    "start": 1512
+  },
+  {
+    "text": "to run your code, there's a period of time",
+    "start": 1515
+  },
+  {
+    "text": "when we have to bring up that environment",
+    "start": 1517
+  },
+  {
+    "text": "and make it available to you.",
+    "start": 1518
+  },
+  {
+    "text": "Now, there are a couple places",
+    "start": 1520
+  },
+  {
+    "text": "where this happens due\nto actions that you take,",
+    "start": 1521
+  },
+  {
+    "text": "and there's a couple\nplaces where this happens",
+    "start": 1524
+  },
+  {
+    "text": "due to actions that we have to take.",
+    "start": 1525
+  },
+  {
+    "text": "But the real key thing that\nI want you to understand here",
+    "start": 1528
+  },
+  {
+    "text": "is the line that's here in purple,",
+    "start": 1530
+  },
+  {
+    "text": "which is that our data shows",
+    "start": 1532
+  },
+  {
+    "text": "that cold starts impact\nless than a percent",
+    "start": 1534
+  },
+  {
+    "text": "of all production function invokes.",
+    "start": 1536
+  },
+  {
+    "text": "So again, if you have\na production workload",
+    "start": 1539
+  },
+  {
+    "text": "and you have any sort of\nconsistency or normalcy of traffic,",
+    "start": 1541
+  },
+  {
+    "text": "generally speaking, cold\nstarts should be pretty far out",
+    "start": 1544
+  },
+  {
+    "text": "on the tailend of your traffic.",
+    "start": 1547
+  },
+  {
+    "text": "Now, for some of you that are running",
+    "start": 1549
+  },
+  {
+    "text": "against synchronous-based\nworkloads, you've got APIs,",
+    "start": 1550
+  },
+  {
+    "text": "you've got consumers on the\nother end of that maybe,",
+    "start": 1552
+  },
+  {
+    "text": "that 1% might be not acceptable to you",
+    "start": 1554
+  },
+  {
+    "text": "so we'll talk about how you gonna overcome",
+    "start": 1557
+  },
+  {
+    "text": "some of these challenges later today.",
+    "start": 1559
+  },
+  {
+    "text": "Other times that you'll see code starts",
+    "start": 1561
+  },
+  {
+    "text": "if you deploy new function versions,",
+    "start": 1563
+  },
+  {
+    "text": "if you deploy new code\nto your Lambda functions,",
+    "start": 1565
+  },
+  {
+    "text": "that's gonna cause us to\nhave to basically swap out",
+    "start": 1567
+  },
+  {
+    "text": "the environments for you,\nand then they'll spin back up",
+    "start": 1569
+  },
+  {
+    "text": "as traffic comes into them.",
+    "start": 1572
+  },
+  {
+    "text": "Again, we'll talk about how\nyou can get past that as well.",
+    "start": 1573
+  },
+  {
+    "text": "On our side, so again, Lambda\nis a managed compute service.",
+    "start": 1577
+  },
+  {
+    "text": "We take care of a bunch of\nthings under the hood for you",
+    "start": 1580
+  },
+  {
+    "text": "and that's part of the\nmagic of what Lambda does,",
+    "start": 1582
+  },
+  {
+    "text": "so from time to time we actually do have",
+    "start": 1585
+  },
+  {
+    "text": "to what we call reap these environments,",
+    "start": 1586
+  },
+  {
+    "text": "take them back away from\nyou for various reasons,",
+    "start": 1588
+  },
+  {
+    "text": "keep the instances fresh,",
+    "start": 1591
+  },
+  {
+    "text": "give the operating system\nvarious code patches,",
+    "start": 1592
+  },
+  {
+    "text": "stuff like that,",
+    "start": 1595
+  },
+  {
+    "text": "again for the managed runtime\nconfigurations of Lambda,",
+    "start": 1595
+  },
+  {
+    "text": "we're taking care of a lot of\nthese things on your behalf",
+    "start": 1598
+  },
+  {
+    "text": "and so we have to take\ncare of those things.",
+    "start": 1601
+  },
+  {
+    "text": "Another is failure, right?",
+    "start": 1603
+  },
+  {
+    "text": "As Werner has always\nsaid for many years now,",
+    "start": 1604
+  },
+  {
+    "text": "everything fails over time,",
+    "start": 1606
+  },
+  {
+    "text": "and so eventually you\nhave a problem potentially",
+    "start": 1608
+  },
+  {
+    "text": "and so again, you could see environments",
+    "start": 1611
+  },
+  {
+    "text": "get kinda swapped out from under you.",
+    "start": 1613
+  },
+  {
+    "text": "Now, if we break down, again,\nhere this functional lifecycle",
+    "start": 1615
+  },
+  {
+    "text": "and we look at where the\ncold start does happen,",
+    "start": 1618
+  },
+  {
+    "text": "so what happens inside of\nthis are a number of things.",
+    "start": 1621
+  },
+  {
+    "text": "One, again, we have to create",
+    "start": 1624
+  },
+  {
+    "text": "that new execution environment.",
+    "start": 1625
+  },
+  {
+    "text": "We basically have to find in\nour pool of resources a host",
+    "start": 1626
+  },
+  {
+    "text": "that we wanna run your code on,",
+    "start": 1629
+  },
+  {
+    "text": "we then have to download\nyour code or the OSI image",
+    "start": 1631
+  },
+  {
+    "text": "if you're using container packaging,",
+    "start": 1633
+  },
+  {
+    "text": "we have to then kick up your runtime,",
+    "start": 1635
+  },
+  {
+    "text": "again, whether it's a managed runtime,",
+    "start": 1637
+  },
+  {
+    "text": "a custom runtime or the OSI image,",
+    "start": 1638
+  },
+  {
+    "text": "and then we have to run",
+    "start": 1641
+  },
+  {
+    "text": "what's called your\nfunction pre-handler code.",
+    "start": 1642
+  },
+  {
+    "text": "Then after that point,\nyour function is warm",
+    "start": 1645
+  },
+  {
+    "text": "and it's ready to execute",
+    "start": 1647
+  },
+  {
+    "text": "upon the event that's been sent into it.",
+    "start": 1649
+  },
+  {
+    "text": "Now basically, in a managed\nruntime world on Lambda,",
+    "start": 1652
+  },
+  {
+    "text": "this is where there's\nkind of a demarcation here",
+    "start": 1656
+  },
+  {
+    "text": "between what you can control\nand what you can't control.",
+    "start": 1658
+  },
+  {
+    "text": "And so essentially everything that comes",
+    "start": 1661
+  },
+  {
+    "text": "before the init of the runtime is on us.",
+    "start": 1663
+  },
+  {
+    "text": "The Lambda team spends a lot\nof time over the years here,",
+    "start": 1665
+  },
+  {
+    "text": "shaving down milliseconds,\nnanoseconds, improving jitter",
+    "start": 1668
+  },
+  {
+    "text": "and trying to make everything that comes",
+    "start": 1672
+  },
+  {
+    "text": "on our side of this line here\nfaster and faster and faster.",
+    "start": 1673
+  },
+  {
+    "text": "Let's talk a little bit",
+    "start": 1678
+  },
+  {
+    "text": "how the composure of a Lambda\nfunction impacts things.",
+    "start": 1679
+  },
+  {
+    "text": "So this is some kind of\nexample pseudo code here,",
+    "start": 1681
+  },
+  {
+    "text": "nothing really kind of\namazing going on here",
+    "start": 1684
+  },
+  {
+    "text": "although Julian did beat me up",
+    "start": 1686
+  },
+  {
+    "text": "for having a dash in a function",
+    "start": 1688
+  },
+  {
+    "text": "and saying that that wasn't clean Python,",
+    "start": 1690
+  },
+  {
+    "text": "so this is apparently clean Python,",
+    "start": 1694
+  },
+  {
+    "text": "but what we see here is I've\ngot kinda two sections here",
+    "start": 1696
+  },
+  {
+    "text": "that are part of my\ninitialization of my function,",
+    "start": 1698
+  },
+  {
+    "text": "this is code that's gonna\nrun in that init period",
+    "start": 1700
+  },
+  {
+    "text": "during a cold start before\nmy actual invocation,",
+    "start": 1703
+  },
+  {
+    "text": "and then have my handler function,",
+    "start": 1707
+  },
+  {
+    "text": "again, the handler function\nis where we look to execute",
+    "start": 1708
+  },
+  {
+    "text": "your business logic and\nwe pass the event into",
+    "start": 1710
+  },
+  {
+    "text": "during an actual event invoke,",
+    "start": 1714
+  },
+  {
+    "text": "and then if you follow\na best practice of ours,",
+    "start": 1716
+  },
+  {
+    "text": "one of the things that\nwe encourage you to do",
+    "start": 1718
+  },
+  {
+    "text": "is to take your kinda core business logic,",
+    "start": 1720
+  },
+  {
+    "text": "not have that in the handler,",
+    "start": 1722
+  },
+  {
+    "text": "but have it in separate functions\nor separate parts of code",
+    "start": 1724
+  },
+  {
+    "text": "inside of your application,",
+    "start": 1727
+  },
+  {
+    "text": "some of you will wrap up\nyour own business logic",
+    "start": 1729
+  },
+  {
+    "text": "into other packages\nthat you might include,",
+    "start": 1731
+  },
+  {
+    "text": "some of you might use layers\nand containers for this,",
+    "start": 1733
+  },
+  {
+    "text": "and it really helps with\nportability, testing,",
+    "start": 1736
+  },
+  {
+    "text": "keeping the handler nice",
+    "start": 1739
+  },
+  {
+    "text": "and kinda short and clean and concise,",
+    "start": 1740
+  },
+  {
+    "text": "and so again, a general\nkind of best practice",
+    "start": 1742
+  },
+  {
+    "text": "that we recommend overall for Lambda.",
+    "start": 1743
+  },
+  {
+    "text": "Now, there are some\nthings that you could do",
+    "start": 1747
+  },
+  {
+    "text": "to help make the init be faster,\nagain, for your functions,",
+    "start": 1748
+  },
+  {
+    "text": "one here is that you\nonly really wanna import",
+    "start": 1752
+  },
+  {
+    "text": "the things that you need,",
+    "start": 1754
+  },
+  {
+    "text": "so some of the various SDKs libraries",
+    "start": 1756
+  },
+  {
+    "text": "that you might be using will\nallow you to selectively import",
+    "start": 1758
+  },
+  {
+    "text": "just certain aspects.",
+    "start": 1761
+  },
+  {
+    "text": "So don't import a huge, huge library",
+    "start": 1763
+  },
+  {
+    "text": "that's got tens of\nthousands of lines of code",
+    "start": 1765
+  },
+  {
+    "text": "if you only really need\na small subset of that.",
+    "start": 1766
+  },
+  {
+    "text": "Another thing that you can do",
+    "start": 1769
+  },
+  {
+    "text": "is basically to lazy\ninitialize various libraries",
+    "start": 1770
+  },
+  {
+    "text": "based on need.",
+    "start": 1773
+  },
+  {
+    "text": "So you might have something\nwhere inside of a function,",
+    "start": 1774
+  },
+  {
+    "text": "let's say that I have potentially\ntwo different logic paths",
+    "start": 1777
+  },
+  {
+    "text": "inside of my function, one might use S3,",
+    "start": 1780
+  },
+  {
+    "text": "one might use DynamoDB,",
+    "start": 1782
+  },
+  {
+    "text": "I can essentially at the\nneeded time inside of my code,",
+    "start": 1784
+  },
+  {
+    "text": "decide to further\ninitialize those aspects.",
+    "start": 1787
+  },
+  {
+    "text": "Again, with the way that Lambda works,",
+    "start": 1790
+  },
+  {
+    "text": "once they've been initialized\nin a warm environment,",
+    "start": 1792
+  },
+  {
+    "text": "that will stick around going forward.",
+    "start": 1794
+  },
+  {
+    "text": "So again, it depends on\nwhat you're trying to do.",
+    "start": 1796
+  },
+  {
+    "text": "Are you looking to get\nthrough init really fast,",
+    "start": 1798
+  },
+  {
+    "text": "are you looking to get\nthrough Lambda invocations",
+    "start": 1800
+  },
+  {
+    "text": "really fast, that's something\nthat you should check.",
+    "start": 1802
+  },
+  {
+    "text": "Someone should wake up\n'cause their alarm went off",
+    "start": 1805
+  },
+  {
+    "text": "and I'm sorry if I put you to sleep now.",
+    "start": 1806
+  },
+  {
+    "text": "Now, again, we've got a\nbunch of other guidance here",
+    "start": 1810
+  },
+  {
+    "text": "for what to think about in\nthat init prehandler code,",
+    "start": 1813
+  },
+  {
+    "text": "again, I'm not gonna go\nbullet point by bullet point",
+    "start": 1816
+  },
+  {
+    "text": "through this, but this is stuff",
+    "start": 1818
+  },
+  {
+    "text": "that you kinda wanna loosely be aware of,",
+    "start": 1820
+  },
+  {
+    "text": "don't load it if you don't need it,",
+    "start": 1822
+  },
+  {
+    "text": "again, we see lots of people\nbringing lots of tools",
+    "start": 1823
+  },
+  {
+    "text": "and things into their Lambda\nfunctions, lots of excess code,",
+    "start": 1825
+  },
+  {
+    "text": "try to keep that as minimal as you can,",
+    "start": 1828
+  },
+  {
+    "text": "try to lazy initialize shared libraries,",
+    "start": 1830
+  },
+  {
+    "text": "try to think about how\nyou establish connections.",
+    "start": 1832
+  },
+  {
+    "text": "So sometimes establishing\nconnections in init makes sense,",
+    "start": 1834
+  },
+  {
+    "text": "sometimes you're better off waiting",
+    "start": 1837
+  },
+  {
+    "text": "for during the first kind\nof invoking your function",
+    "start": 1838
+  },
+  {
+    "text": "and connecting at the time of need",
+    "start": 1840
+  },
+  {
+    "text": "and then also reestablishing connections",
+    "start": 1842
+  },
+  {
+    "text": "inside your handler, think\nabout how you use state",
+    "start": 1844
+  },
+  {
+    "text": "during your function.",
+    "start": 1846
+  },
+  {
+    "text": "So sometimes people like\nto bring state way early",
+    "start": 1847
+  },
+  {
+    "text": "and then they maybe don't\nneed it for every invoke,",
+    "start": 1850
+  },
+  {
+    "text": "and so it kind of sits around again",
+    "start": 1852
+  },
+  {
+    "text": "and can slow them down early on,",
+    "start": 1853
+  },
+  {
+    "text": "and then we'll talk a little bit more here",
+    "start": 1855
+  },
+  {
+    "text": "about provisioned concurrency\nand SnapStart in a bit,",
+    "start": 1857
+  },
+  {
+    "text": "but these are ways to effectively pre-warm",
+    "start": 1859
+  },
+  {
+    "text": "or pre-initialize your functions.",
+    "start": 1861
+  },
+  {
+    "text": "Now X-Ray can help you identify this",
+    "start": 1864
+  },
+  {
+    "text": "as well as a number of other tools",
+    "start": 1866
+  },
+  {
+    "text": "that we have here in the\nindustry, partners of AWS's,",
+    "start": 1867
+  },
+  {
+    "text": "so we see here, as I've highlighted,",
+    "start": 1870
+  },
+  {
+    "text": "where the initialization is,\nI could go further with X-Ray",
+    "start": 1872
+  },
+  {
+    "text": "and actually tool inside\nof my Lambda functions,",
+    "start": 1875
+  },
+  {
+    "text": "the individual things that\nare happening inside of it",
+    "start": 1878
+  },
+  {
+    "text": "so that I get really good deep data",
+    "start": 1880
+  },
+  {
+    "text": "on what's happening inside\nof an initialization,",
+    "start": 1881
+  },
+  {
+    "text": "and again, I think this is something",
+    "start": 1884
+  },
+  {
+    "text": "that is part of your testing environments,",
+    "start": 1885
+  },
+  {
+    "text": "it's part of you testing your functions,",
+    "start": 1887
+  },
+  {
+    "text": "you really wanna measure this\nto understand the impact.",
+    "start": 1889
+  },
+  {
+    "text": "Now, there are a couple other variations",
+    "start": 1893
+  },
+  {
+    "text": "of the Lambda function\nlifecycle that we see,",
+    "start": 1895
+  },
+  {
+    "text": "one is if you use a\ncapability called extensions,",
+    "start": 1897
+  },
+  {
+    "text": "extensions give you the\nability to plug in code",
+    "start": 1900
+  },
+  {
+    "text": "that exists outside of the\nactual execution of your function",
+    "start": 1903
+  },
+  {
+    "text": "and respond to events or things",
+    "start": 1906
+  },
+  {
+    "text": "that are happening inside your function.",
+    "start": 1907
+  },
+  {
+    "text": "So we have many partners here at AWS",
+    "start": 1909
+  },
+  {
+    "text": "that are released extensions\nthat allow you to do things",
+    "start": 1911
+  },
+  {
+    "text": "like inspect an event,\ninspect performance,",
+    "start": 1913
+  },
+  {
+    "text": "look at what's happening, say,\non the wire over the network,",
+    "start": 1916
+  },
+  {
+    "text": "provide things like\naccess to parameter stores",
+    "start": 1919
+  },
+  {
+    "text": "or key value stores for various things,",
+    "start": 1922
+  },
+  {
+    "text": "different logging tools\nand agents and so forth.",
+    "start": 1924
+  },
+  {
+    "text": "When you have those in your code,",
+    "start": 1927
+  },
+  {
+    "text": "it shifts the optimization\nline over a bit.",
+    "start": 1928
+  },
+  {
+    "text": "It shifts that line of\nshared responsibility",
+    "start": 1931
+  },
+  {
+    "text": "because the extension performance\nthen becomes something",
+    "start": 1933
+  },
+  {
+    "text": "that the third-party partner",
+    "start": 1936
+  },
+  {
+    "text": "or your team has to think about.",
+    "start": 1938
+  },
+  {
+    "text": "And so that's something\nthat you end up owning",
+    "start": 1939
+  },
+  {
+    "text": "and we have seen some\nof these partners need",
+    "start": 1941
+  },
+  {
+    "text": "to tweak things over time",
+    "start": 1942
+  },
+  {
+    "text": "where the extension hasn't\nbeen as optimized as it could.",
+    "start": 1944
+  },
+  {
+    "text": "The next model that we have\nis what we see that happens",
+    "start": 1948
+  },
+  {
+    "text": "with SnapStart for Java function.",
+    "start": 1951
+  },
+  {
+    "text": "So SnapStart was released last\nyear, and what SnapStart does",
+    "start": 1952
+  },
+  {
+    "text": "is it basically goes and it\ncompletes the full invoke",
+    "start": 1956
+  },
+  {
+    "text": "of your code for you ahead of time,",
+    "start": 1959
+  },
+  {
+    "text": "and then it takes a snapshot\nor effectively like an image",
+    "start": 1961
+  },
+  {
+    "text": "of that running, of that\nexecution environment,",
+    "start": 1964
+  },
+  {
+    "text": "and then makes it available going forward",
+    "start": 1967
+  },
+  {
+    "text": "for your Lambda function.",
+    "start": 1969
+  },
+  {
+    "text": "And so basically then what it does",
+    "start": 1970
+  },
+  {
+    "text": "is for every new invoke that happens",
+    "start": 1972
+  },
+  {
+    "text": "for a function with SnapStart,",
+    "start": 1974
+  },
+  {
+    "text": "it starts from that\npre-inited environment.",
+    "start": 1976
+  },
+  {
+    "text": "And so this could be\na really great benefit",
+    "start": 1979
+  },
+  {
+    "text": "for Java-based functions,",
+    "start": 1981
+  },
+  {
+    "text": "the only language that\nwill support init today,",
+    "start": 1982
+  },
+  {
+    "text": "it's also a language that\nhistorically has struggled",
+    "start": 1984
+  },
+  {
+    "text": "within init performance.",
+    "start": 1986
+  },
+  {
+    "text": "Now, SnapStart again,",
+    "start": 1988
+  },
+  {
+    "text": "I'm pretty much just encouraging customers",
+    "start": 1990
+  },
+  {
+    "text": "that are using Java just to use it.",
+    "start": 1992
+  },
+  {
+    "text": "It works really, really well,",
+    "start": 1993
+  },
+  {
+    "text": "the couple of nuances of\nthings you wanna think about",
+    "start": 1995
+  },
+  {
+    "text": "how you connect to databases\nbecause that will be frozen",
+    "start": 1996
+  },
+  {
+    "text": "in the image then",
+    "start": 1999
+  },
+  {
+    "text": "that the rest of the\nenvironment we use over time,",
+    "start": 2000
+  },
+  {
+    "text": "but beyond that, there's no\nadditional cost for this,",
+    "start": 2002
+  },
+  {
+    "text": "there's no other tooling that\nyou need to use for this,",
+    "start": 2005
+  },
+  {
+    "text": "there's no special\npackaging you need to do,",
+    "start": 2007
+  },
+  {
+    "text": "nothing changes in your CI/CD pipelines,",
+    "start": 2009
+  },
+  {
+    "text": "you basically toggle it in the config",
+    "start": 2011
+  },
+  {
+    "text": "and it helps make your Java functions",
+    "start": 2013
+  },
+  {
+    "text": "much, much, much, much\nfaster on that init.",
+    "start": 2015
+  },
+  {
+    "text": "Now, there are other optimization\nthings that you could do",
+    "start": 2019
+  },
+  {
+    "text": "across pretty much all the\ndifferent runtimes that we have,",
+    "start": 2022
+  },
+  {
+    "text": "and there's a bunch of talks\nthat have happened this week",
+    "start": 2024
+  },
+  {
+    "text": "covering optimizations inside of Lambda",
+    "start": 2027
+  },
+  {
+    "text": "and general kinda coding best practices,",
+    "start": 2029
+  },
+  {
+    "text": "and what I would say\nis that a lot of these",
+    "start": 2031
+  },
+  {
+    "text": "are just general best practices,\neither SDK best practices",
+    "start": 2032
+  },
+  {
+    "text": "or again, best practices\nfor the given runtime",
+    "start": 2037
+  },
+  {
+    "text": "that you're working with.",
+    "start": 2039
+  },
+  {
+    "text": "Now, one really cool hack",
+    "start": 2041
+  },
+  {
+    "text": "that I like to see every now and then,",
+    "start": 2043
+  },
+  {
+    "text": "this is a super secret\ntrick that I've learned",
+    "start": 2044
+  },
+  {
+    "text": "over a couple decades of working in IT,",
+    "start": 2047
+  },
+  {
+    "text": "is upgrade your stuff.",
+    "start": 2050
+  },
+  {
+    "text": "So one of the best things\nthat you could do sometimes,",
+    "start": 2051
+  },
+  {
+    "text": "one of the cheapest, easiest,\nlike dumbest, laziest win",
+    "start": 2054
+  },
+  {
+    "text": "is like just run the latest\nversion of something.",
+    "start": 2057
+  },
+  {
+    "text": "And there's been a lot of\nexamples over the year,",
+    "start": 2060
+  },
+  {
+    "text": "removing a minor version on a runtime,",
+    "start": 2062
+  },
+  {
+    "text": "gets you a performance win\nand you're like, \"Oh my God,",
+    "start": 2064
+  },
+  {
+    "text": "all I did was deploy a new\nversion and I'm saving money",
+    "start": 2067
+  },
+  {
+    "text": "and my stuff runs faster,\"\nand that's awesome.",
+    "start": 2070
+  },
+  {
+    "text": "And so keep on top of version updates,",
+    "start": 2073
+  },
+  {
+    "text": "keep on top of your dependency updates.",
+    "start": 2075
+  },
+  {
+    "text": "Like yes, Dependabot can be\nannoying for security things,",
+    "start": 2077
+  },
+  {
+    "text": "but there's a lot of stuff that happens,",
+    "start": 2080
+  },
+  {
+    "text": "especially when you're including\ncode, where minor tweaks,",
+    "start": 2082
+  },
+  {
+    "text": "minor new versions, whatever it might be,",
+    "start": 2084
+  },
+  {
+    "text": "could lead to graphs like this",
+    "start": 2087
+  },
+  {
+    "text": "where you see a major drop off",
+    "start": 2088
+  },
+  {
+    "text": "just by moving to a new runtime,",
+    "start": 2090
+  },
+  {
+    "text": "and so I love to see wins like this.",
+    "start": 2092
+  },
+  {
+    "text": "Now one thing that isn't\nnecessarily a performance win",
+    "start": 2095
+  },
+  {
+    "text": "but can help logically\ninside your functions,",
+    "start": 2098
+  },
+  {
+    "text": "how you think about logging,",
+    "start": 2100
+  },
+  {
+    "text": "and we've just had a bunch\nof new stuff come out",
+    "start": 2102
+  },
+  {
+    "text": "with logging here in\nthe last couple weeks,",
+    "start": 2104
+  },
+  {
+    "text": "both pre-re:Invent and\nthen during this week here",
+    "start": 2106
+  },
+  {
+    "text": "and certain observability tools,",
+    "start": 2110
+  },
+  {
+    "text": "one of the things that you\ncould do is now have the ability",
+    "start": 2112
+  },
+  {
+    "text": "to control log levels for\nyour Lambda functions,",
+    "start": 2115
+  },
+  {
+    "text": "now, not necessarily a performance thing,",
+    "start": 2117
+  },
+  {
+    "text": "but definitely a cost thing\nthat we see with Lambda,",
+    "start": 2118
+  },
+  {
+    "text": "people who are aggressively logging,",
+    "start": 2121
+  },
+  {
+    "text": "it's gonna lead to higher cost.",
+    "start": 2122
+  },
+  {
+    "text": "So now you can set the log\nlevel, control the log format",
+    "start": 2124
+  },
+  {
+    "text": "and the outputs of those,\nyou also have the ability",
+    "start": 2127
+  },
+  {
+    "text": "to use the infrequent access\nlog class in CloudWatch,",
+    "start": 2129
+  },
+  {
+    "text": "again, it's gonna help you save money",
+    "start": 2133
+  },
+  {
+    "text": "and just make overall things better.",
+    "start": 2135
+  },
+  {
+    "text": "Now, one thing that I'm\nalso a huge, huge fan of",
+    "start": 2139
+  },
+  {
+    "text": "is the Powertools for Lambda,",
+    "start": 2141
+  },
+  {
+    "text": "this basically helps\nautomate a whole bunch",
+    "start": 2143
+  },
+  {
+    "text": "of best practices\nguidance in your function,",
+    "start": 2145
+  },
+  {
+    "text": "how you think about\ncoding for your functions,",
+    "start": 2148
+  },
+  {
+    "text": "how you think about how you\nhandle and process events,",
+    "start": 2149
+  },
+  {
+    "text": "that team has been cranking on full steam,",
+    "start": 2153
+  },
+  {
+    "text": "they became an official team inside of AWS",
+    "start": 2155
+  },
+  {
+    "text": "under Andrea  earlier this year,",
+    "start": 2157
+  },
+  {
+    "text": "who's an incredible member\nof our team here at AWS,",
+    "start": 2159
+  },
+  {
+    "text": "and so the Powertools are something",
+    "start": 2162
+  },
+  {
+    "text": "that we're seeing really great\nadoption of inside of AWS,",
+    "start": 2163
+  },
+  {
+    "text": "outside of AWS, and it's\nkind of just best practices",
+    "start": 2166
+  },
+  {
+    "text": "in a box and so I definitely encourage you",
+    "start": 2169
+  },
+  {
+    "text": "to look at Powertools.",
+    "start": 2170
+  },
+  {
+    "text": "The last thing I'll talk about here",
+    "start": 2174
+  },
+  {
+    "text": "is another thing that you can do,",
+    "start": 2175
+  },
+  {
+    "text": "is turn on the CloudWatch Lambda Insights,",
+    "start": 2177
+  },
+  {
+    "text": "Lambda Insights gives you more data",
+    "start": 2179
+  },
+  {
+    "text": "about how your Lambda functions perform,",
+    "start": 2181
+  },
+  {
+    "text": "now, this is good for testing\nand good for production",
+    "start": 2183
+  },
+  {
+    "text": "and good for diagnosing things,",
+    "start": 2186
+  },
+  {
+    "text": "maybe you don't wanna\nkeep it on all the time,",
+    "start": 2187
+  },
+  {
+    "text": "you are gonna be paying for this data",
+    "start": 2189
+  },
+  {
+    "text": "that CloudWatch collects,",
+    "start": 2190
+  },
+  {
+    "text": "but it gives you a bunch\nof metrics and information",
+    "start": 2192
+  },
+  {
+    "text": "that you wouldn't otherwise get",
+    "start": 2193
+  },
+  {
+    "text": "with the default CloudWatch\nmetrics for Lambda functions,",
+    "start": 2195
+  },
+  {
+    "text": "such as the CPU usage, the network usage,",
+    "start": 2198
+  },
+  {
+    "text": "and it can also then in those\ncases when you see those,",
+    "start": 2201
+  },
+  {
+    "text": "help you think about, okay,\nI should tune up memory,",
+    "start": 2203
+  },
+  {
+    "text": "I should think about my\nconfiguration for functions",
+    "start": 2206
+  },
+  {
+    "text": "a little differently.",
+    "start": 2207
+  },
+  {
+    "text": "Now, we've got a great\nlearning guide to this",
+    "start": 2209
+  },
+  {
+    "text": "on Serverless Land, cost\noptimization for AWS Lambda,",
+    "start": 2211
+  },
+  {
+    "text": "a whole bunch of stuff in here",
+    "start": 2215
+  },
+  {
+    "text": "that can help you thinking about cost",
+    "start": 2216
+  },
+  {
+    "text": "and cost, again, very\nmuch aligns to performance",
+    "start": 2218
+  },
+  {
+    "text": "in this world.",
+    "start": 2220
+  },
+  {
+    "text": "So let's tell you another\nfun topic here, concurrency,",
+    "start": 2223
+  },
+  {
+    "text": "concurrency is basically the number",
+    "start": 2225
+  },
+  {
+    "text": "of your execution environments",
+    "start": 2228
+  },
+  {
+    "text": "that are running at any point in time.",
+    "start": 2229
+  },
+  {
+    "text": "And this is definitely another topic",
+    "start": 2231
+  },
+  {
+    "text": "that I find that people have\nstruggled with over the years,",
+    "start": 2233
+  },
+  {
+    "text": "they're not talking about a\nper second rate typically,",
+    "start": 2235
+  },
+  {
+    "text": "but concurrency in Lambda,",
+    "start": 2237
+  },
+  {
+    "text": "again, works a little bit different.",
+    "start": 2239
+  },
+  {
+    "text": "One of the other aspects here about Lambda",
+    "start": 2241
+  },
+  {
+    "text": "is that a Lambda worker environment\nor execution environment",
+    "start": 2242
+  },
+  {
+    "text": "can only process a single\nevent at a time, right?",
+    "start": 2245
+  },
+  {
+    "text": "We do not today support the ability",
+    "start": 2248
+  },
+  {
+    "text": "for you to have multiple\nevents inside of that.",
+    "start": 2249
+  },
+  {
+    "text": "Now, this is different\nif you're using Lambda",
+    "start": 2252
+  },
+  {
+    "text": "to process things like SQS\nmessages where we do batching.",
+    "start": 2254
+  },
+  {
+    "text": "So batching still comes\nthrough a single event,",
+    "start": 2258
+  },
+  {
+    "text": "but again, it's not multiple\nevents in individual messages.",
+    "start": 2261
+  },
+  {
+    "text": "So again, regardless of invocation model,",
+    "start": 2264
+  },
+  {
+    "text": "regardless of everything",
+    "start": 2266
+  },
+  {
+    "text": "that might be sitting in front of it,",
+    "start": 2267
+  },
+  {
+    "text": "you do have, again, a single environment",
+    "start": 2268
+  },
+  {
+    "text": "processing a single\neffectively request or event",
+    "start": 2270
+  },
+  {
+    "text": "at any point in time.",
+    "start": 2273
+  },
+  {
+    "text": "So we think about this, let's\ntake a scale of time here",
+    "start": 2275
+  },
+  {
+    "text": "in a window, I have a function",
+    "start": 2278
+  },
+  {
+    "text": "that has just gotten an invocation,",
+    "start": 2280
+  },
+  {
+    "text": "it's gonna have that\nlittle bit of cold start",
+    "start": 2282
+  },
+  {
+    "text": "go through my init code,",
+    "start": 2284
+  },
+  {
+    "text": "and then it's going to\nexecute and run my logic,",
+    "start": 2284
+  },
+  {
+    "text": "and so again, this is only\nprocessing that single request.",
+    "start": 2288
+  },
+  {
+    "text": "So all of a sudden I start\nto get more requests in",
+    "start": 2291
+  },
+  {
+    "text": "because that first environment\nis essentially locked",
+    "start": 2294
+  },
+  {
+    "text": "on that first event, what does it do?",
+    "start": 2296
+  },
+  {
+    "text": "It causes some cold starts,",
+    "start": 2297
+  },
+  {
+    "text": "these new environments are\nspun up, and so we see here",
+    "start": 2299
+  },
+  {
+    "text": "that I have these two new\nfunction invocations that came in,",
+    "start": 2301
+  },
+  {
+    "text": "they both cause a cold start",
+    "start": 2304
+  },
+  {
+    "text": "and then they start processing the event.",
+    "start": 2306
+  },
+  {
+    "text": "While those three are still running,",
+    "start": 2309
+  },
+  {
+    "text": "I get two more that come in,",
+    "start": 2310
+  },
+  {
+    "text": "again, all three of\nthose first environments",
+    "start": 2312
+  },
+  {
+    "text": "are still basically busy or tied up,",
+    "start": 2314
+  },
+  {
+    "text": "and so essentially I now\nhave two more environments",
+    "start": 2316
+  },
+  {
+    "text": "that have to go through that cold start",
+    "start": 2318
+  },
+  {
+    "text": "and begin invoking the\nevent that's coming to it,",
+    "start": 2320
+  },
+  {
+    "text": "however, I can see here that at some point",
+    "start": 2325
+  },
+  {
+    "text": "my first environment becomes free.",
+    "start": 2327
+  },
+  {
+    "text": "And so another invoke comes in",
+    "start": 2329
+  },
+  {
+    "text": "and the Lambda service behind\nthe scenes is able to say,",
+    "start": 2331
+  },
+  {
+    "text": "\"Aha, I have an environment\nthat's already warmed",
+    "start": 2334
+  },
+  {
+    "text": "and up and running, I'm gonna\npass the event to that.\"",
+    "start": 2336
+  },
+  {
+    "text": "And so essentially here now\nwe now have effectively,",
+    "start": 2338
+  },
+  {
+    "text": "depending on where you're\nlooking on this timeline,",
+    "start": 2342
+  },
+  {
+    "text": "three concurrency, four\nconcurrency and so on.",
+    "start": 2345
+  },
+  {
+    "text": "And so eventually as more\nof these events come in,",
+    "start": 2348
+  },
+  {
+    "text": "the service says, \"I have\nwarmed environments,\"",
+    "start": 2350
+  },
+  {
+    "text": "we keep warmed environments\naround for a period of time",
+    "start": 2352
+  },
+  {
+    "text": "based on idleness, based\non scale of your function,",
+    "start": 2355
+  },
+  {
+    "text": "a number of other factors,",
+    "start": 2357
+  },
+  {
+    "text": "and again, without some\nof the other things",
+    "start": 2359
+  },
+  {
+    "text": "I'll talk about here in a moment,",
+    "start": 2360
+  },
+  {
+    "text": "you really don't get to control this,",
+    "start": 2361
+  },
+  {
+    "text": "it's something that we take care of",
+    "start": 2362
+  },
+  {
+    "text": "and try to optimize on your behalf.",
+    "start": 2364
+  },
+  {
+    "text": "And so as we see events seven,\neight, nine and 10 come in,",
+    "start": 2366
+  },
+  {
+    "text": "they're able to use these\nwarmed environments,",
+    "start": 2369
+  },
+  {
+    "text": "however, nine had come in",
+    "start": 2371
+  },
+  {
+    "text": "during a time when there\nwas no environment free,",
+    "start": 2373
+  },
+  {
+    "text": "and so again, that caused an init.",
+    "start": 2376
+  },
+  {
+    "text": "So in thinking about how\nconcurrency actually works",
+    "start": 2380
+  },
+  {
+    "text": "over a period of time here,",
+    "start": 2383
+  },
+  {
+    "text": "and this is kind of a loose\nscale of time, what we see here",
+    "start": 2384
+  },
+  {
+    "text": "is that during the time\nperiod for point one,",
+    "start": 2387
+  },
+  {
+    "text": "I have one concurrency,",
+    "start": 2390
+  },
+  {
+    "text": "during the time period two,\nstill have one concurrency,",
+    "start": 2392
+  },
+  {
+    "text": "and eventually at time point\nthree, still one concurrency.",
+    "start": 2394
+  },
+  {
+    "text": "But then as this expands over time,",
+    "start": 2398
+  },
+  {
+    "text": "you see again, where these\nfunction environments are active,",
+    "start": 2399
+  },
+  {
+    "text": "where they're being utilized,",
+    "start": 2402
+  },
+  {
+    "text": "is how you think about the concurrency",
+    "start": 2404
+  },
+  {
+    "text": "at that point in time.",
+    "start": 2405
+  },
+  {
+    "text": "So again, this is not necessarily",
+    "start": 2407
+  },
+  {
+    "text": "a request per second type of model,",
+    "start": 2408
+  },
+  {
+    "text": "this is just a point in time way",
+    "start": 2410
+  },
+  {
+    "text": "of thinking about what's\nhappening with my functions.",
+    "start": 2412
+  },
+  {
+    "text": "Now, one thing that can happen",
+    "start": 2417
+  },
+  {
+    "text": "that you might see from time to time",
+    "start": 2418
+  },
+  {
+    "text": "if you're using tools like X-Ray",
+    "start": 2419
+  },
+  {
+    "text": "or other observability tools,\nis you might see a disconnect",
+    "start": 2421
+  },
+  {
+    "text": "in between a cold start\nand a function invocation",
+    "start": 2425
+  },
+  {
+    "text": "inside of an environment.",
+    "start": 2429
+  },
+  {
+    "text": "And so one thing that\ncould actually happen",
+    "start": 2430
+  },
+  {
+    "text": "is we see up top here that environment,",
+    "start": 2431
+  },
+  {
+    "text": "the worker environment on that top level",
+    "start": 2435
+  },
+  {
+    "text": "for the first function\ncame in, did its init,",
+    "start": 2436
+  },
+  {
+    "text": "did its invocation,\nand then at some point,",
+    "start": 2439
+  },
+  {
+    "text": "I got a second invocation that came in.",
+    "start": 2442
+  },
+  {
+    "text": "And the first environment was tied up,",
+    "start": 2444
+  },
+  {
+    "text": "and so we started to do a cold start",
+    "start": 2446
+  },
+  {
+    "text": "for a new worker environment.",
+    "start": 2448
+  },
+  {
+    "text": "However, before that init finished,",
+    "start": 2449
+  },
+  {
+    "text": "the first function\nenvironment became free again",
+    "start": 2452
+  },
+  {
+    "text": "and it said, \"I'm\navailable for an invoke,\"",
+    "start": 2454
+  },
+  {
+    "text": "and so behind the scenes\nwe sent the invoke",
+    "start": 2457
+  },
+  {
+    "text": "to that first worker.",
+    "start": 2459
+  },
+  {
+    "text": "Now, at this point, the second\nworker becomes available",
+    "start": 2460
+  },
+  {
+    "text": "at some point in time\nfor a future invocation,",
+    "start": 2463
+  },
+  {
+    "text": "but if you're using tools\nlike X-Ray, you might see then",
+    "start": 2466
+  },
+  {
+    "text": "that you had a cold start\nand then you had no execution",
+    "start": 2469
+  },
+  {
+    "text": "that happened for a really\nlong period of time,",
+    "start": 2473
+  },
+  {
+    "text": "and then all of a sudden\nyou see the actual invoke",
+    "start": 2475
+  },
+  {
+    "text": "of the Lambda function\nhappen kind of detached.",
+    "start": 2478
+  },
+  {
+    "text": "And so this shows up as a\ngap in tools like X-Ray,",
+    "start": 2481
+  },
+  {
+    "text": "but again, know that what happened here",
+    "start": 2484
+  },
+  {
+    "text": "is that we're optimizing",
+    "start": 2485
+  },
+  {
+    "text": "for the performance of your application.",
+    "start": 2486
+  },
+  {
+    "text": "And so we're basically giving",
+    "start": 2488
+  },
+  {
+    "text": "the freshest worker environment\nof the invoke when we can.",
+    "start": 2489
+  },
+  {
+    "text": "Now, talking a little bit here about TPS,",
+    "start": 2495
+  },
+  {
+    "text": "TPS starts to play a role",
+    "start": 2496
+  },
+  {
+    "text": "when you talk about\ndownstream systems, right?",
+    "start": 2498
+  },
+  {
+    "text": "If I'm talking to a relational database,",
+    "start": 2500
+  },
+  {
+    "text": "I only have so much capacity and ability",
+    "start": 2502
+  },
+  {
+    "text": "to work with that database,",
+    "start": 2504
+  },
+  {
+    "text": "or maybe I have a third-party\nAPI that I'm working with,",
+    "start": 2505
+  },
+  {
+    "text": "again, I might be constrained",
+    "start": 2508
+  },
+  {
+    "text": "by some aspects of that third-party,",
+    "start": 2509
+  },
+  {
+    "text": "effectively transaction per second",
+    "start": 2511
+  },
+  {
+    "text": "are relativity against the\nconcurrency that you have",
+    "start": 2513
+  },
+  {
+    "text": "and the time that it takes\nyour functions to run.",
+    "start": 2517
+  },
+  {
+    "text": "So we could see here that\nif I have 10 invocations",
+    "start": 2519
+  },
+  {
+    "text": "and they each take a second to run,",
+    "start": 2522
+  },
+  {
+    "text": "effectively I have 10 TPS.",
+    "start": 2524
+  },
+  {
+    "text": "Then if my functions took half as long,",
+    "start": 2527
+  },
+  {
+    "text": "I would be able to fit up to\n20 of them in that time period.",
+    "start": 2529
+  },
+  {
+    "text": "And so again, I don't actually have",
+    "start": 2532
+  },
+  {
+    "text": "more than 10 concurrency, it's\njust that that 10 concurrency",
+    "start": 2534
+  },
+  {
+    "text": "is working faster because\nit takes a shorter duration.",
+    "start": 2537
+  },
+  {
+    "text": "And so again, performance here\nas a factor of concurrency,",
+    "start": 2540
+  },
+  {
+    "text": "the time duration of\nyour function is running",
+    "start": 2543
+  },
+  {
+    "text": "and that's what leads to the combination",
+    "start": 2545
+  },
+  {
+    "text": "of what looks like TPS.",
+    "start": 2547
+  },
+  {
+    "text": "So if I have a downstream\nservice that I'm talking to",
+    "start": 2549
+  },
+  {
+    "text": "and they're gonna maybe start\nthrottling me back at 15 TPS,",
+    "start": 2552
+  },
+  {
+    "text": "I then have to think about that",
+    "start": 2556
+  },
+  {
+    "text": "as a factor of the amount of concurrency",
+    "start": 2557
+  },
+  {
+    "text": "that I wanna allow to go\nto that downstream service.",
+    "start": 2559
+  },
+  {
+    "text": "And so we have options for\nhow you can control this,",
+    "start": 2563
+  },
+  {
+    "text": "we have a concept called\nreserved concurrency,",
+    "start": 2565
+  },
+  {
+    "text": "this allows me basically\nto set a threshold",
+    "start": 2567
+  },
+  {
+    "text": "of how much concurrency I\nwanna allow a function to have.",
+    "start": 2570
+  },
+  {
+    "text": "And again, this can gimme the ability",
+    "start": 2572
+  },
+  {
+    "text": "to protect downstream services\nwithout having to worry",
+    "start": 2573
+  },
+  {
+    "text": "about overwhelming or causing errors",
+    "start": 2576
+  },
+  {
+    "text": "down to that other service\nthat I might be talking to,",
+    "start": 2579
+  },
+  {
+    "text": "and again, there's a bunch of\ncool things that you could do",
+    "start": 2582
+  },
+  {
+    "text": "with treating it as like an off switch",
+    "start": 2585
+  },
+  {
+    "text": "in case of times when\nyou've got downstream issues",
+    "start": 2587
+  },
+  {
+    "text": "or impacts.",
+    "start": 2589
+  },
+  {
+    "text": "Now, one thing that we do have in Lambda",
+    "start": 2592
+  },
+  {
+    "text": "that can help you avoid cold starts",
+    "start": 2594
+  },
+  {
+    "text": "is a capability called\nprovisioned concurrency.",
+    "start": 2597
+  },
+  {
+    "text": "What provisioned concurrency\ndoes is it comes in",
+    "start": 2600
+  },
+  {
+    "text": "and you configure it for a\ncertain value, and then we go",
+    "start": 2602
+  },
+  {
+    "text": "and we effectively prewarm\nthose environments for you",
+    "start": 2604
+  },
+  {
+    "text": "and we try to keep those\nwarmed environments available",
+    "start": 2607
+  },
+  {
+    "text": "for you always.",
+    "start": 2609
+  },
+  {
+    "text": "So if we have, say, we need to reap",
+    "start": 2610
+  },
+  {
+    "text": "or take back a worker environment",
+    "start": 2613
+  },
+  {
+    "text": "or a piece of hardware\nfails, we'll then go back",
+    "start": 2614
+  },
+  {
+    "text": "and re-preprovision\nthose functions for you.",
+    "start": 2617
+  },
+  {
+    "text": "And so we see here that you\nconfigured your function,",
+    "start": 2620
+  },
+  {
+    "text": "you turned on provisioned\nconcurrency for concurrency of 10,",
+    "start": 2622
+  },
+  {
+    "text": "we go then and run all those inits.",
+    "start": 2625
+  },
+  {
+    "text": "So you see all those\ninits happen in parallel,",
+    "start": 2626
+  },
+  {
+    "text": "at some point your events come in",
+    "start": 2629
+  },
+  {
+    "text": "and they land on those\nalready warmed environments",
+    "start": 2630
+  },
+  {
+    "text": "and so you won't see a cold start",
+    "start": 2633
+  },
+  {
+    "text": "in front of those environments.",
+    "start": 2634
+  },
+  {
+    "text": "Now again, you are setting\nthis initially for a value,",
+    "start": 2636
+  },
+  {
+    "text": "so you're setting it for 10.",
+    "start": 2639
+  },
+  {
+    "text": "So if I had an 11th request\ncome in at this point in time",
+    "start": 2641
+  },
+  {
+    "text": "and all my workers are busy,",
+    "start": 2644
+  },
+  {
+    "text": "that's then going to just be",
+    "start": 2645
+  },
+  {
+    "text": "an on-demand effectively invoke",
+    "start": 2646
+  },
+  {
+    "text": "and that would cause a cold\nstart for that function.",
+    "start": 2648
+  },
+  {
+    "text": "One of the other cool things that we do",
+    "start": 2651
+  },
+  {
+    "text": "with provisioned concurrency,",
+    "start": 2652
+  },
+  {
+    "text": "is it does have a slightly\ndifferent cost model for it",
+    "start": 2654
+  },
+  {
+    "text": "but if you use it really, really well,",
+    "start": 2657
+  },
+  {
+    "text": "you actually save money\nwith provisioned concurrency",
+    "start": 2659
+  },
+  {
+    "text": "over the on-demand pay model for Lambda.",
+    "start": 2662
+  },
+  {
+    "text": "And so we see, and it does\nvary slightly by region,",
+    "start": 2665
+  },
+  {
+    "text": "but somewhere around about 65%\nutilization of your function,",
+    "start": 2668
+  },
+  {
+    "text": "at least in this case US-east-1\nor 60% US-east-1 these days,",
+    "start": 2673
+  },
+  {
+    "text": "when you've utilized at least 60%",
+    "start": 2677
+  },
+  {
+    "text": "of your provisioned currency\nfor a given function,",
+    "start": 2679
+  },
+  {
+    "text": "it actually becomes cheaper",
+    "start": 2682
+  },
+  {
+    "text": "for you to run that Lambda\nfunction versus the on-demand.",
+    "start": 2683
+  },
+  {
+    "text": "So again, this is both a\ncost and a performance knob",
+    "start": 2686
+  },
+  {
+    "text": "that we give you for\nyour Lambda functions.",
+    "start": 2688
+  },
+  {
+    "text": "And so you can kind of think\nof how we could apply this",
+    "start": 2692
+  },
+  {
+    "text": "on top of our workload,",
+    "start": 2694
+  },
+  {
+    "text": "let's assume that we have\nsome concept of the traffic",
+    "start": 2696
+  },
+  {
+    "text": "that's gonna come to our application",
+    "start": 2698
+  },
+  {
+    "text": "that's backed by Lambda\nat some point in time,",
+    "start": 2699
+  },
+  {
+    "text": "we've looked at this workload,",
+    "start": 2702
+  },
+  {
+    "text": "what we could do is essentially\nestablish a baseline",
+    "start": 2704
+  },
+  {
+    "text": "of provisioned concurrency",
+    "start": 2706
+  },
+  {
+    "text": "that we always wanna have\nconfigured for this function,",
+    "start": 2708
+  },
+  {
+    "text": "we could then use tools like auto-scaling",
+    "start": 2711
+  },
+  {
+    "text": "to actually turn up and\ndown provision concurrency",
+    "start": 2713
+  },
+  {
+    "text": "against that cost demand.",
+    "start": 2716
+  },
+  {
+    "text": "And so in so far as as\nlong as this environment",
+    "start": 2717
+  },
+  {
+    "text": "is at least 60% utilized, again,\nUS-east-1, I'm saving money",
+    "start": 2720
+  },
+  {
+    "text": "and increasing the performance\neffectively in my application",
+    "start": 2724
+  },
+  {
+    "text": "by removing cold starts from it.",
+    "start": 2727
+  },
+  {
+    "text": "And so again, you wanna\nkeep on top of this,",
+    "start": 2731
+  },
+  {
+    "text": "it would be a mistake for me",
+    "start": 2734
+  },
+  {
+    "text": "to set the provisioned\nconcurrency for this application",
+    "start": 2735
+  },
+  {
+    "text": "at 100, which is kind\nof at the top bar here",
+    "start": 2738
+  },
+  {
+    "text": "'cause then I might have\nenvironments for periods of the day",
+    "start": 2740
+  },
+  {
+    "text": "that we're not getting invoked,",
+    "start": 2742
+  },
+  {
+    "text": "and you really do wanna\ntry to find this model",
+    "start": 2744
+  },
+  {
+    "text": "where you can leverage again,\nthe ability to either set",
+    "start": 2746
+  },
+  {
+    "text": "a baseline that covers the majority",
+    "start": 2748
+  },
+  {
+    "text": "of your traffic over time,",
+    "start": 2749
+  },
+  {
+    "text": "or again, fluctuates based\non the need of the day.",
+    "start": 2752
+  },
+  {
+    "text": "Now, another thing to talk about",
+    "start": 2756
+  },
+  {
+    "text": "when we talk about concurrency",
+    "start": 2757
+  },
+  {
+    "text": "is also how fast Lambda\nfunctions can scale over time.",
+    "start": 2758
+  },
+  {
+    "text": "Now, previously we had a model\nof account concurrency quota",
+    "start": 2762
+  },
+  {
+    "text": "where based on a given Region,",
+    "start": 2766
+  },
+  {
+    "text": "you had a total amount of concurrency",
+    "start": 2767
+  },
+  {
+    "text": "and then you had a burst\nrate inside of that.",
+    "start": 2769
+  },
+  {
+    "text": "We've kind of gone now and\nchanged the burst model,",
+    "start": 2771
+  },
+  {
+    "text": "so this came out just\nabout two weeks ago now,",
+    "start": 2773
+  },
+  {
+    "text": "and this applies to basically\nall functions that exist.",
+    "start": 2777
+  },
+  {
+    "text": "So now what you end up with",
+    "start": 2780
+  },
+  {
+    "text": "is a maximum increase in\nconcurrency of 1,000 instances",
+    "start": 2781
+  },
+  {
+    "text": "or 1,000 worker environments,",
+    "start": 2785
+  },
+  {
+    "text": "over a period of 10\nseconds for every function.",
+    "start": 2787
+  },
+  {
+    "text": "To help visualize this\na little bit better,",
+    "start": 2790
+  },
+  {
+    "text": "I'll show you the old model that we had.",
+    "start": 2792
+  },
+  {
+    "text": "So previously and burst\nrate depended on the Region,",
+    "start": 2794
+  },
+  {
+    "text": "what you had is an initial burst rate,",
+    "start": 2797
+  },
+  {
+    "text": "so in many Regions we had\ninitial burst rate of 3,000,",
+    "start": 2799
+  },
+  {
+    "text": "so that means you could go\nfrom zero workers to 3,000",
+    "start": 2802
+  },
+  {
+    "text": "pretty much almost instantaneously,",
+    "start": 2805
+  },
+  {
+    "text": "and then we had this kind\nof stepping scale over time",
+    "start": 2807
+  },
+  {
+    "text": "that we could add 500 per minute to that",
+    "start": 2809
+  },
+  {
+    "text": "inside of your account.",
+    "start": 2812
+  },
+  {
+    "text": "So basically what it looked like",
+    "start": 2813
+  },
+  {
+    "text": "is that at some point\nin time over 12 minutes,",
+    "start": 2815
+  },
+  {
+    "text": "you could get to 10,000 staying requests.",
+    "start": 2817
+  },
+  {
+    "text": "This is starting at zero, right?",
+    "start": 2820
+  },
+  {
+    "text": "For production workload,",
+    "start": 2821
+  },
+  {
+    "text": "you're typically not starting at zero",
+    "start": 2822
+  },
+  {
+    "text": "unless you're doing things\nlike deploying a new function,",
+    "start": 2824
+  },
+  {
+    "text": "which is using provisioned concurrency.",
+    "start": 2826
+  },
+  {
+    "text": "With the new model, it looks like this.",
+    "start": 2829
+  },
+  {
+    "text": "So what we're able to do,\nis actually in 90 seconds,",
+    "start": 2832
+  },
+  {
+    "text": "get to that 10,000 concurrency.",
+    "start": 2836
+  },
+  {
+    "text": "Essentially this is the fastest way at AWS",
+    "start": 2838
+  },
+  {
+    "text": "to get a whole lot of compute\npower behind an application",
+    "start": 2841
+  },
+  {
+    "text": "and it got faster with this.",
+    "start": 2844
+  },
+  {
+    "text": "So again, really interesting change,",
+    "start": 2846
+  },
+  {
+    "text": "a lot of interesting stuff with scale",
+    "start": 2848
+  },
+  {
+    "text": "happening behind the scenes.",
+    "start": 2850
+  },
+  {
+    "text": "With this I'm gonna hand\nit back off to Julian",
+    "start": 2852
+  },
+  {
+    "text": "to take us home.",
+    "start": 2853
+  },
+  {
+    "text": "- Thanks, Chris,",
+    "start": 2855
+  },
+  {
+    "text": "wow, I love our Lambda,\nso flexible and scalable,",
+    "start": 2856
+  },
+  {
+    "text": "anybody like Lambda?",
+    "start": 2859
+  },
+  {
+    "text": "- [Audience] Woo.",
+    "start": 2860
+  },
+  {
+    "text": "- Excellent, you can run your\ncode in the best possible way,",
+    "start": 2861
+  },
+  {
+    "text": "well-architected way.",
+    "start": 2865
+  },
+  {
+    "text": "So in this section, I'm going to talk",
+    "start": 2867
+  },
+  {
+    "text": "about the software lifecycle.",
+    "start": 2868
+  },
+  {
+    "text": "You have your services,\nyou have your code,",
+    "start": 2870
+  },
+  {
+    "text": "well, how does this all fit\ntogether from your workstation",
+    "start": 2871
+  },
+  {
+    "text": "out into the world?",
+    "start": 2874
+  },
+  {
+    "text": "Now if you are building\nserverless applications,",
+    "start": 2876
+  },
+  {
+    "text": "just please use a framework,",
+    "start": 2878
+  },
+  {
+    "text": "it's gonna make your life so much easier,",
+    "start": 2879
+  },
+  {
+    "text": "there's serverless-specific\ninfrastructures,",
+    "start": 2881
+  },
+  {
+    "text": "code ones to define your cloud resources,",
+    "start": 2883
+  },
+  {
+    "text": "from AWS we've got AWS SAM, the\nServerless Application Model",
+    "start": 2885
+  },
+  {
+    "text": "and also you can use CDK",
+    "start": 2888
+  },
+  {
+    "text": "which allows you to build CloudFormation",
+    "start": 2890
+  },
+  {
+    "text": "in familiar programming languages,",
+    "start": 2891
+  },
+  {
+    "text": "both generate CloudFormation.",
+    "start": 2893
+  },
+  {
+    "text": "There are a number of\ngreat third-party tools",
+    "start": 2895
+  },
+  {
+    "text": "from here and even others,",
+    "start": 2897
+  },
+  {
+    "text": "but you really want to\nbe using a framework",
+    "start": 2899
+  },
+  {
+    "text": "to build your serverless applications",
+    "start": 2900
+  },
+  {
+    "text": "and get into the habits\nof starting rather...",
+    "start": 2902
+  },
+  {
+    "text": "in with infrastructure's code\nrather than in the console.",
+    "start": 2905
+  },
+  {
+    "text": "But if like me visual is your thing,",
+    "start": 2909
+  },
+  {
+    "text": "also have a look at Application Composer,",
+    "start": 2911
+  },
+  {
+    "text": "which you can now also\njump to from the Lambda",
+    "start": 2913
+  },
+  {
+    "text": "and Step Functions console,",
+    "start": 2915
+  },
+  {
+    "text": "and announced today in Werner's keynote,",
+    "start": 2917
+  },
+  {
+    "text": "it's also available in\nyour IDE with VS Code.",
+    "start": 2918
+  },
+  {
+    "text": "And this has got a great\ndrag and drop interface",
+    "start": 2921
+  },
+  {
+    "text": "to build applications.",
+    "start": 2923
+  },
+  {
+    "text": "And not just serverless ones,",
+    "start": 2924
+  },
+  {
+    "text": "it works with all CloudFormation resources",
+    "start": 2926
+  },
+  {
+    "text": "and you can import existing stacks",
+    "start": 2928
+  },
+  {
+    "text": "to see what they look like,",
+    "start": 2930
+  },
+  {
+    "text": "which is great for understanding\nwhat you already have.",
+    "start": 2932
+  },
+  {
+    "text": "It actually syncs with\nyour local file system",
+    "start": 2934
+  },
+  {
+    "text": "so you can build visually\nin the console or IDE,",
+    "start": 2936
+  },
+  {
+    "text": "and then generate the\ninfrastructure's code",
+    "start": 2939
+  },
+  {
+    "text": "at the same time.",
+    "start": 2941
+  },
+  {
+    "text": "Two for one best practices\nbuilt in, isn't that good?",
+    "start": 2943
+  },
+  {
+    "text": "And you don't also have\nto start from scratch.",
+    "start": 2947
+  },
+  {
+    "text": "As with Serverless Workflows,",
+    "start": 2949
+  },
+  {
+    "text": "we've got the Serverless\npatterns collection",
+    "start": 2950
+  },
+  {
+    "text": "on serverlessland.com,",
+    "start": 2952
+  },
+  {
+    "text": "more than 700 to sample\ninfrastructures code patterns",
+    "start": 2953
+  },
+  {
+    "text": "across many languages,\nacross many services,",
+    "start": 2957
+  },
+  {
+    "text": "and with different service integrations.",
+    "start": 2959
+  },
+  {
+    "text": "And I'm sure there's likely\none for your user case",
+    "start": 2961
+  },
+  {
+    "text": "which you can just copy and\nuse in your applications,",
+    "start": 2963
+  },
+  {
+    "text": "and because it's all open source,",
+    "start": 2966
+  },
+  {
+    "text": "you can even submit your own",
+    "start": 2967
+  },
+  {
+    "text": "and why not help out your\nfellow other builders?",
+    "start": 2968
+  },
+  {
+    "text": "So a traditional developer workflow",
+    "start": 2972
+  },
+  {
+    "text": "is often done on your local\nmachine to get fast feedback",
+    "start": 2974
+  },
+  {
+    "text": "while you're developing your applications.",
+    "start": 2977
+  },
+  {
+    "text": "And then developers then think,",
+    "start": 2979
+  },
+  {
+    "text": "well, they need to have\ntheir entire app locally",
+    "start": 2980
+  },
+  {
+    "text": "and run everything locally.",
+    "start": 2982
+  },
+  {
+    "text": "However, when you're\nbuilding cloud applications,",
+    "start": 2984
+  },
+  {
+    "text": "this works slightly differently",
+    "start": 2986
+  },
+  {
+    "text": "because sure you've got\ncode that you're developing,",
+    "start": 2987
+  },
+  {
+    "text": "there's also a lot of other\nstuff that you're connecting to,",
+    "start": 2989
+  },
+  {
+    "text": "integrations with other services.",
+    "start": 2991
+  },
+  {
+    "text": "You're gonna be sending\nmessages and events,",
+    "start": 2993
+  },
+  {
+    "text": "or maybe connecting to other APIs",
+    "start": 2996
+  },
+  {
+    "text": "or talking to other databases.",
+    "start": 2998
+  },
+  {
+    "text": "And so it can be tempting",
+    "start": 3000
+  },
+  {
+    "text": "to try to emulate all\nthese things locally,",
+    "start": 3001
+  },
+  {
+    "text": "to build all these services\nlocally on your laptop",
+    "start": 3005
+  },
+  {
+    "text": "so you can do everything,\nbut this is hard.",
+    "start": 3007
+  },
+  {
+    "text": "This is really gonna be hard\nto get everything working",
+    "start": 3010
+  },
+  {
+    "text": "and also critically to\nkeep things up-to-date.",
+    "start": 3012
+  },
+  {
+    "text": "So try avoid doing this if you can.",
+    "start": 3014
+  },
+  {
+    "text": "Now locally, you can do some stuff.",
+    "start": 3017
+  },
+  {
+    "text": "So sparingly you can use some\nmock frameworks, for example,",
+    "start": 3018
+  },
+  {
+    "text": "so if you've got some complex logic",
+    "start": 3021
+  },
+  {
+    "text": "and you want to do some testing for that,",
+    "start": 3023
+  },
+  {
+    "text": "you can mock your event payloads",
+    "start": 3025
+  },
+  {
+    "text": "so you can then provide that\ninput and check your outputs",
+    "start": 3027
+  },
+  {
+    "text": "and that's a really good thing to do.",
+    "start": 3030
+  },
+  {
+    "text": "But ideally, we want\nthe best of both worlds.",
+    "start": 3032
+  },
+  {
+    "text": "We do want this sort of\nlocal quick iteration",
+    "start": 3034
+  },
+  {
+    "text": "and also in the cloud,",
+    "start": 3036
+  },
+  {
+    "text": "you wanna iterate locally\non your business logic,",
+    "start": 3038
+  },
+  {
+    "text": "and then also run your\ncode in a cloud environment",
+    "start": 3040
+  },
+  {
+    "text": "as quickly as possible.",
+    "start": 3042
+  },
+  {
+    "text": "And so SAM has SAM Accelerate,",
+    "start": 3044
+  },
+  {
+    "text": "which helps you with just this.",
+    "start": 3045
+  },
+  {
+    "text": "While you're developing, you\ncan iterate against the cloud",
+    "start": 3047
+  },
+  {
+    "text": "with the speed of local development",
+    "start": 3050
+  },
+  {
+    "text": "and CDK Watch also does a similar thing.",
+    "start": 3052
+  },
+  {
+    "text": "And this allows you really cleverly",
+    "start": 3055
+  },
+  {
+    "text": "to work in your local IDE",
+    "start": 3056
+  },
+  {
+    "text": "and sync the changes to cloud resources.",
+    "start": 3057
+  },
+  {
+    "text": "It actually really quickly updates code,",
+    "start": 3059
+  },
+  {
+    "text": "to test against other\nresources in the cloud",
+    "start": 3062
+  },
+  {
+    "text": "without waiting for\nCloudFormation to deploy.",
+    "start": 3064
+  },
+  {
+    "text": "And also you can use SAM\nlogs to get aggregated logs",
+    "start": 3067
+  },
+  {
+    "text": "and traces directly in your terminal,",
+    "start": 3070
+  },
+  {
+    "text": "so you don't have to\njump into the console,",
+    "start": 3071
+  },
+  {
+    "text": "and this makes what developers\ncall the inner loop,",
+    "start": 3073
+  },
+  {
+    "text": "really super quick using\nboth cloud and cloud...",
+    "start": 3076
+  },
+  {
+    "text": "Sorry, both cloud and local resources.",
+    "start": 3079
+  },
+  {
+    "text": "And this really does change",
+    "start": 3082
+  },
+  {
+    "text": "the way you build service\napplications in the cloud,",
+    "start": 3083
+  },
+  {
+    "text": "giving you the best of both worlds,",
+    "start": 3085
+  },
+  {
+    "text": "fast local development experience",
+    "start": 3087
+  },
+  {
+    "text": "and using real cloud resources.",
+    "start": 3089
+  },
+  {
+    "text": "Now, just linking back\nto those DORA metrics",
+    "start": 3092
+  },
+  {
+    "text": "I was talking about earlier,",
+    "start": 3094
+  },
+  {
+    "text": "about getting things\ninto production quicker.",
+    "start": 3096
+  },
+  {
+    "text": "Now, remember, we both want\nboth speed and we want quality.",
+    "start": 3098
+  },
+  {
+    "text": "Well, automated testing\nis the way to get there.",
+    "start": 3103
+  },
+  {
+    "text": "Good testing is an\ninvestment in that speed",
+    "start": 3105
+  },
+  {
+    "text": "and in that quality\nand they'll help ensure",
+    "start": 3108
+  },
+  {
+    "text": "that your systems are developed\nefficiently, accurately,",
+    "start": 3110
+  },
+  {
+    "text": "and of course with high quality.",
+    "start": 3113
+  },
+  {
+    "text": "You want to have good test coverage",
+    "start": 3116
+  },
+  {
+    "text": "from your code all the way\nthrough your CI/CD pipelines,",
+    "start": 3117
+  },
+  {
+    "text": "so you can confidently get\nfeatures into production.",
+    "start": 3120
+  },
+  {
+    "text": "Now, there of course, there\nare a number of places",
+    "start": 3124
+  },
+  {
+    "text": "where tests are important,",
+    "start": 3126
+  },
+  {
+    "text": "you should of course unit\ntest your Lambda function code",
+    "start": 3127
+  },
+  {
+    "text": "when developing locally, and\nthen automatically in the cloud",
+    "start": 3129
+  },
+  {
+    "text": "through your pipelines.",
+    "start": 3132
+  },
+  {
+    "text": "You can use test harnesses,",
+    "start": 3133
+  },
+  {
+    "text": "these are super useful to generate inputs",
+    "start": 3134
+  },
+  {
+    "text": "and then to receive the outputs.",
+    "start": 3136
+  },
+  {
+    "text": "And then you want to be\ntesting service integrations",
+    "start": 3138
+  },
+  {
+    "text": "in the cloud as quickly as possible.",
+    "start": 3140
+  },
+  {
+    "text": "Maybe you're gonna define\nsome integration tests,",
+    "start": 3142
+  },
+  {
+    "text": "maybe you're gonna pick\ntwo or three services",
+    "start": 3145
+  },
+  {
+    "text": "and then develop your\nfull end-to-end testing",
+    "start": 3146
+  },
+  {
+    "text": "for all application.",
+    "start": 3148
+  },
+  {
+    "text": "And then of course you want to move",
+    "start": 3150
+  },
+  {
+    "text": "towards also testing in\nproduction to prioritize speed,",
+    "start": 3151
+  },
+  {
+    "text": "this isn't only testing in production,",
+    "start": 3154
+  },
+  {
+    "text": "this is also testing in production.",
+    "start": 3155
+  },
+  {
+    "text": "So you can use things\nlike canary deployments",
+    "start": 3157
+  },
+  {
+    "text": "and this allows you to\ndevelop things locally,",
+    "start": 3159
+  },
+  {
+    "text": "push it to the cloud and\nintroduce changes more slowly",
+    "start": 3163
+  },
+  {
+    "text": "in defined increments,",
+    "start": 3166
+  },
+  {
+    "text": "rather than having a big\nbang all-at-once approach.",
+    "start": 3167
+  },
+  {
+    "text": "Feature Flags also help you\nto introduce code effectively,",
+    "start": 3170
+  },
+  {
+    "text": "and then back out really quickly\nif you do have a problem.",
+    "start": 3174
+  },
+  {
+    "text": "And observability, this is absolutely key.",
+    "start": 3176
+  },
+  {
+    "text": "Observability tooling is super critical",
+    "start": 3179
+  },
+  {
+    "text": "to measure what's happening,",
+    "start": 3182
+  },
+  {
+    "text": "and also understand if\nthings are changing.",
+    "start": 3183
+  },
+  {
+    "text": "And a good rollback procedures then",
+    "start": 3185
+  },
+  {
+    "text": "allow you to reduce the risk\nand also increase your agility.",
+    "start": 3186
+  },
+  {
+    "text": "Again, another jumping off\npoint, plenty of more information",
+    "start": 3190
+  },
+  {
+    "text": "to talk about testing, more\nthan we've got time for today,",
+    "start": 3194
+  },
+  {
+    "text": "so Dan Fox and some other experts",
+    "start": 3196
+  },
+  {
+    "text": "have written a superb learning\nguide on serverlessland.com,",
+    "start": 3198
+  },
+  {
+    "text": "which has loads of information",
+    "start": 3201
+  },
+  {
+    "text": "and the link is in the resources page,",
+    "start": 3203
+  },
+  {
+    "text": "and there are examples for\nvarious programming languages,",
+    "start": 3204
+  },
+  {
+    "text": "super helpful.",
+    "start": 3207
+  },
+  {
+    "text": "But again, let's just switch",
+    "start": 3209
+  },
+  {
+    "text": "and look a little bit about ops again.",
+    "start": 3210
+  },
+  {
+    "text": "The biggest barrier to agility\nwhen building applications,",
+    "start": 3212
+  },
+  {
+    "text": "is often a lack of time spent\non the things that matters.",
+    "start": 3215
+  },
+  {
+    "text": "CIOs want development teams\nto focus on innovation",
+    "start": 3218
+  },
+  {
+    "text": "and move with speed,",
+    "start": 3221
+  },
+  {
+    "text": "but today what are most developers doing?",
+    "start": 3223
+  },
+  {
+    "text": "They're spending a lot of time",
+    "start": 3225
+  },
+  {
+    "text": "on operations and maintenance.",
+    "start": 3226
+  },
+  {
+    "text": "So then you ask the question,\nwhat does ops actually do",
+    "start": 3229
+  },
+  {
+    "text": "in a serverless world?",
+    "start": 3231
+  },
+  {
+    "text": "Well, I think there's a lot.",
+    "start": 3233
+  },
+  {
+    "text": "With serverless, the\noperational management required",
+    "start": 3234
+  },
+  {
+    "text": "to run and scale applications\nis handled with you",
+    "start": 3236
+  },
+  {
+    "text": "by AWS and the cloud, so not\nonly is no ops not a reality,",
+    "start": 3239
+  },
+  {
+    "text": "operators are actually\nmore important than ever.",
+    "start": 3243
+  },
+  {
+    "text": "But ops are different but the\nrole isn't any less important.",
+    "start": 3245
+  },
+  {
+    "text": "But the cool thing is, it\nactually becomes less manual,",
+    "start": 3248
+  },
+  {
+    "text": "it's more strategic,",
+    "start": 3251
+  },
+  {
+    "text": "taking on a wider role\nwithin the organization",
+    "start": 3252
+  },
+  {
+    "text": "so you can actually operate\nsafely and with speed.",
+    "start": 3255
+  },
+  {
+    "text": "And there are two approaches\nto ops, there's free for all.",
+    "start": 3259
+  },
+  {
+    "text": "Now of course, this isn't a reality",
+    "start": 3261
+  },
+  {
+    "text": "for production applications,\nbut that at the extreme end,",
+    "start": 3263
+  },
+  {
+    "text": "it lets devs go as fast as\nthey can, but they won't do it",
+    "start": 3266
+  },
+  {
+    "text": "the way one goes as quickly as they can.",
+    "start": 3270
+  },
+  {
+    "text": "But obviously that's gonna risk bad code,",
+    "start": 3271
+  },
+  {
+    "text": "you're gonna have poor code going out,",
+    "start": 3273
+  },
+  {
+    "text": "you're gonna have reliability issues",
+    "start": 3275
+  },
+  {
+    "text": "and it could be as bad\nas even in legal issues.",
+    "start": 3276
+  },
+  {
+    "text": "But then on the other end of the spectrum,",
+    "start": 3279
+  },
+  {
+    "text": "you've got everything\nbeing centrally controlled.",
+    "start": 3280
+  },
+  {
+    "text": "You've got a central team",
+    "start": 3283
+  },
+  {
+    "text": "that is gonna take control\nof the release pipeline,",
+    "start": 3284
+  },
+  {
+    "text": "maybe it's gonna do all the\nprovisioning of the resources,",
+    "start": 3286
+  },
+  {
+    "text": "it's gonna handle all the security",
+    "start": 3289
+  },
+  {
+    "text": "and all of the troubleshooting.",
+    "start": 3290
+  },
+  {
+    "text": "It's gonna be lower risk, of course,",
+    "start": 3292
+  },
+  {
+    "text": "because it's very understandable,",
+    "start": 3293
+  },
+  {
+    "text": "but it's obviously gonna be a lot slower",
+    "start": 3295
+  },
+  {
+    "text": "due to the dependencies and the time lags.",
+    "start": 3297
+  },
+  {
+    "text": "So we actually wanted both ways.",
+    "start": 3300
+  },
+  {
+    "text": "We wanted fast to get features\nout, really fast iteration,",
+    "start": 3302
+  },
+  {
+    "text": "but we also wanted it to be safe",
+    "start": 3306
+  },
+  {
+    "text": "with a low risk to the business",
+    "start": 3307
+  },
+  {
+    "text": "and this is why we use\nthis concept of guardrails.",
+    "start": 3308
+  },
+  {
+    "text": "And these are processes and practices",
+    "start": 3312
+  },
+  {
+    "text": "that reduce both the occurrence and impact",
+    "start": 3314
+  },
+  {
+    "text": "of undesirable application behavior,",
+    "start": 3316
+  },
+  {
+    "text": "and these are rules that define,\nrules that you can define",
+    "start": 3318
+  },
+  {
+    "text": "to stop the bad stuff happening,",
+    "start": 3322
+  },
+  {
+    "text": "and obviously, you wanna\nexpress them as code.",
+    "start": 3323
+  },
+  {
+    "text": "Now, there are many examples,",
+    "start": 3327
+  },
+  {
+    "text": "things like enforcing your pipelines",
+    "start": 3329
+  },
+  {
+    "text": "and maybe not making things public,",
+    "start": 3330
+  },
+  {
+    "text": "logging and tracing, looking at that,",
+    "start": 3333
+  },
+  {
+    "text": "whether you need access to\na VPC, tags, log groups,",
+    "start": 3334
+  },
+  {
+    "text": "encryption settings,\na whole bunch of stuff",
+    "start": 3338
+  },
+  {
+    "text": "in the list here, and these\nare things you want to ensure",
+    "start": 3340
+  },
+  {
+    "text": "that actually gets done.",
+    "start": 3342
+  },
+  {
+    "text": "And these need to be\nchecked at various stages.",
+    "start": 3345
+  },
+  {
+    "text": "As much as you can, of course,",
+    "start": 3347
+  },
+  {
+    "text": "while building your application,\nthe so-called shift lift,",
+    "start": 3348
+  },
+  {
+    "text": "but also you wanna catch those",
+    "start": 3350
+  },
+  {
+    "text": "to be able to catch those things early on",
+    "start": 3352
+  },
+  {
+    "text": "but also at various stages\nduring your automated pipeline",
+    "start": 3354
+  },
+  {
+    "text": "and while your apps are running.",
+    "start": 3357
+  },
+  {
+    "text": "And so you have proactive controls",
+    "start": 3359
+  },
+  {
+    "text": "which you can use to\ncheck and block resources",
+    "start": 3361
+  },
+  {
+    "text": "before they're deployed,\nand you can use linting",
+    "start": 3363
+  },
+  {
+    "text": "and CloudFormation Guard, super useful.",
+    "start": 3365
+  },
+  {
+    "text": "AWS Config if you haven't\nused that, is super helpful",
+    "start": 3367
+  },
+  {
+    "text": "to get a view of your cloud resources,",
+    "start": 3370
+  },
+  {
+    "text": "and you can define the rules",
+    "start": 3372
+  },
+  {
+    "text": "to check the compliance of those resources",
+    "start": 3373
+  },
+  {
+    "text": "before they're actually\ndeployed into production.",
+    "start": 3375
+  },
+  {
+    "text": "And then on the other side,",
+    "start": 3377
+  },
+  {
+    "text": "you've got the detective controls\nwhile your app is running",
+    "start": 3378
+  },
+  {
+    "text": "to ensure that your app\nstill stays in compliance,",
+    "start": 3381
+  },
+  {
+    "text": "checking for vulnerabilities\nand config issues",
+    "start": 3383
+  },
+  {
+    "text": "on a continual basis.",
+    "start": 3385
+  },
+  {
+    "text": "And AWS Config is still helpful,",
+    "start": 3387
+  },
+  {
+    "text": "and you can also use the\ncool Amazon Inspector,",
+    "start": 3389
+  },
+  {
+    "text": "for ongoing vulnerability management.",
+    "start": 3391
+  },
+  {
+    "text": "Again, another jumping off thing,",
+    "start": 3393
+  },
+  {
+    "text": "lots of learning guides\ninformation on this,",
+    "start": 3395
+  },
+  {
+    "text": "implementing governance in depth",
+    "start": 3397
+  },
+  {
+    "text": "for serverless applications,",
+    "start": 3399
+  },
+  {
+    "text": "the link is in the resources page,",
+    "start": 3400
+  },
+  {
+    "text": "so I just, you take a look.",
+    "start": 3401
+  },
+  {
+    "text": "Now, DevOps has been superb",
+    "start": 3404
+  },
+  {
+    "text": "to foster organizational collaboration,",
+    "start": 3406
+  },
+  {
+    "text": "but we're asking a lot\nfor developers to take on",
+    "start": 3408
+  },
+  {
+    "text": "more and more in building applications,",
+    "start": 3411
+  },
+  {
+    "text": "particularly when we're\nbuilding serverless applications",
+    "start": 3412
+  },
+  {
+    "text": "and we're using application constructs",
+    "start": 3414
+  },
+  {
+    "text": "rather than as infrastructure primitives.",
+    "start": 3416
+  },
+  {
+    "text": "And giving developers full...",
+    "start": 3418
+  },
+  {
+    "text": "giving developers' teams\nfull control over everything",
+    "start": 3420
+  },
+  {
+    "text": "is intimidating and it's gonna be complex,",
+    "start": 3423
+  },
+  {
+    "text": "especially with the governance.",
+    "start": 3425
+  },
+  {
+    "text": "And so the concept of platform\nengineering recognizes that",
+    "start": 3427
+  },
+  {
+    "text": "and a lot of the operational\nand governance issues",
+    "start": 3430
+  },
+  {
+    "text": "actually don't need to be surfaced",
+    "start": 3432
+  },
+  {
+    "text": "to the developers directly,",
+    "start": 3434
+  },
+  {
+    "text": "and you absolutely want to\nincrease developer productivity",
+    "start": 3435
+  },
+  {
+    "text": "and the pace of software delivery.",
+    "start": 3438
+  },
+  {
+    "text": "Developers wanna get their stuff done",
+    "start": 3440
+  },
+  {
+    "text": "using self-service enablement",
+    "start": 3442
+  },
+  {
+    "text": "and great tooling to work\nwith your applications.",
+    "start": 3443
+  },
+  {
+    "text": "A central platform team",
+    "start": 3446
+  },
+  {
+    "text": "can provide some of the best practices",
+    "start": 3447
+  },
+  {
+    "text": "across your whole organization,",
+    "start": 3449
+  },
+  {
+    "text": "to manage and to govern and\nto run your applications.",
+    "start": 3450
+  },
+  {
+    "text": "But I also wanna caution\nyou just a little bit",
+    "start": 3454
+  },
+  {
+    "text": "from building one huge\nplatform to rule them all.",
+    "start": 3456
+  },
+  {
+    "text": "The job of a platform team",
+    "start": 3459
+  },
+  {
+    "text": "should not be about building a platform,",
+    "start": 3460
+  },
+  {
+    "text": "it should be about enablement",
+    "start": 3462
+  },
+  {
+    "text": "and integrating other platforms.",
+    "start": 3464
+  },
+  {
+    "text": "And you probably wanna have\nmaybe many teams doing this,",
+    "start": 3465
+  },
+  {
+    "text": "enabling many platforms\nthat your devs can use,",
+    "start": 3467
+  },
+  {
+    "text": "from security platforms,\nlogging platforms, dev tooling,",
+    "start": 3470
+  },
+  {
+    "text": "and to integrate with other things.",
+    "start": 3473
+  },
+  {
+    "text": "You want your platform\nteams to work closely",
+    "start": 3475
+  },
+  {
+    "text": "with your dev teams,",
+    "start": 3476
+  },
+  {
+    "text": "to understand how the platforms\nare being actually used",
+    "start": 3477
+  },
+  {
+    "text": "within the business, to better\nenable people to use it.",
+    "start": 3480
+  },
+  {
+    "text": "Unless if you don't do that,",
+    "start": 3482
+  },
+  {
+    "text": "it's just gonna become\nanother isolated silo",
+    "start": 3484
+  },
+  {
+    "text": "and probably a very expensive one.",
+    "start": 3486
+  },
+  {
+    "text": "And here are just some\nexamples of the kind of things",
+    "start": 3489
+  },
+  {
+    "text": "that platform teams can get involved with",
+    "start": 3491
+  },
+  {
+    "text": "to help your developers\nworking, look at all this list.",
+    "start": 3492
+  },
+  {
+    "text": "Observability, CI/CD pipelines,\ndeployment strategies,",
+    "start": 3495
+  },
+  {
+    "text": "cost management, security,",
+    "start": 3497
+  },
+  {
+    "text": "so if anybody says that\nserverless doesn't require ops,",
+    "start": 3500
+  },
+  {
+    "text": "they certainly dunno what\nthey're talking about",
+    "start": 3502
+  },
+  {
+    "text": "and you're can send them my\nway, I'll tell them what to do.",
+    "start": 3504
+  },
+  {
+    "text": "So in our time today, we\nsaid we would cover a lot,",
+    "start": 3508
+  },
+  {
+    "text": "is everybody still okay, still breathing?",
+    "start": 3510
+  },
+  {
+    "text": "Good, good, well, you\nprobably need some time",
+    "start": 3513
+  },
+  {
+    "text": "to digest this all, so that\njust was part of the plan",
+    "start": 3515
+  },
+  {
+    "text": "and what we thought.",
+    "start": 3517
+  },
+  {
+    "text": "So we've got this resources link,",
+    "start": 3518
+  },
+  {
+    "text": "we talked about how\nServerless lets you focus",
+    "start": 3520
+  },
+  {
+    "text": "and concentrate on your customers,",
+    "start": 3522
+  },
+  {
+    "text": "first of all, how you can build",
+    "start": 3524
+  },
+  {
+    "text": "with great service-full serverless,",
+    "start": 3525
+  },
+  {
+    "text": "connecting different services together,",
+    "start": 3527
+  },
+  {
+    "text": "obviously the awesome power of Lambda",
+    "start": 3529
+  },
+  {
+    "text": "that Chris was talking about",
+    "start": 3531
+  },
+  {
+    "text": "and then talking about the whole\nsoftware delivery lifecycle",
+    "start": 3532
+  },
+  {
+    "text": "and how you can get\nthings into productions.",
+    "start": 3535
+  },
+  {
+    "text": "But of course, we haven't even started,",
+    "start": 3537
+  },
+  {
+    "text": "we don't have another hour.",
+    "start": 3538
+  },
+  {
+    "text": "There are many more best practices",
+    "start": 3539
+  },
+  {
+    "text": "and optimizations available,\nthe link to resources page",
+    "start": 3541
+  },
+  {
+    "text": "includes all the links\nin this presentation",
+    "start": 3543
+  },
+  {
+    "text": "and a whole bunch more,",
+    "start": 3545
+  },
+  {
+    "text": "so we'd suggest you have\na look at that as well.",
+    "start": 3546
+  },
+  {
+    "text": "Of course, you can\ncontinue your AWS learning,",
+    "start": 3548
+  },
+  {
+    "text": "you can do Skill Builders\nand Ramp-Up Guides",
+    "start": 3550
+  },
+  {
+    "text": "and digital badges, just some cool things",
+    "start": 3552
+  },
+  {
+    "text": "you can learn more about\nServerless development,",
+    "start": 3555
+  },
+  {
+    "text": "and of course we mentioned\nit a few times today,",
+    "start": 3557
+  },
+  {
+    "text": "ServerlessLand.com, your best resources",
+    "start": 3558
+  },
+  {
+    "text": "for all things Serverless on AWS.",
+    "start": 3560
+  },
+  {
+    "text": "So with a deep breath, from Chris and I,",
+    "start": 3563
+  },
+  {
+    "text": "we really appreciate you joining us today,",
+    "start": 3565
+  },
+  {
+    "text": "it's your fourth day of re:Invent,",
+    "start": 3568
+  },
+  {
+    "text": "you've still survived this far,",
+    "start": 3569
+  },
+  {
+    "text": "hopefully we've given you\nsome things to think about,",
+    "start": 3571
+  },
+  {
+    "text": "and also, if you really\nlike deep technical content,",
+    "start": 3573
+  },
+  {
+    "text": "please rate in the\nsurvey in the mobile app,",
+    "start": 3576
+  },
+  {
+    "text": "five-star rating,",
+    "start": 3578
+  },
+  {
+    "text": "it lets us know that you're\nabsolutely hungry for more,",
+    "start": 3579
+  },
+  {
+    "text": "and our contact details are here",
+    "start": 3582
+  },
+  {
+    "text": "and we will be around a bit in the foyer",
+    "start": 3583
+  },
+  {
+    "text": "if you do have any questions,\nenjoy the rest of your day.",
+    "start": 3585
+  }
+]
