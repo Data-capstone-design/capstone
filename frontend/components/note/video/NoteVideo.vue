@@ -3,7 +3,6 @@
     <div v-if="loading" class="v-Loading q-pa-md">
       <q-card flat class="column full-width full-height" >
         <q-skeleton square style="flex:1"/>
-
         <q-card-section>
           <q-skeleton type="text" height="35px"  class="text-subtitle1" />
           <q-skeleton type="text" height="35px"  width="80%" class="text-subtitle1" />
@@ -19,8 +18,6 @@
 <script setup lang="ts">
 import {onBeforeUnmount, onMounted} from "vue";
 import {useVideoStore} from "~/stores/videoStore";
-import {useCommentaryStore} from "~/stores/commentaryStore";
-import {useIndexStore} from "~/stores/indexStore";
 import {NoteStatus, useNoteStore} from "~/stores/noteStore";
 import {useEventSource} from "~/composables/useEventSource";
 
@@ -41,7 +38,6 @@ const loadYouTubeAPI = (): Promise<void> => {
       tag.src = "https://www.youtube.com/iframe_api";
       const firstScriptTag = document.getElementsByTagName("script")[0];
       firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-
       window.onYouTubeIframeAPIReady = () => {
         resolve();
       };
@@ -105,6 +101,7 @@ window.addEventListener('resize', () => videoStore.setPlayerSize(window.innerWid
   position: relative;
   aspect-ratio: 16 / 9;
 }
+
 .v-Loading {
   position: absolute;
   top: 0;

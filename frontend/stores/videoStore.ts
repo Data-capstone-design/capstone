@@ -11,13 +11,14 @@ export interface VideoStore {
     setPlayerSize: (windowWidth: number) => void;
     setVideoId: (videoId: string) => void;
     getPlayerHeight: () => number;
-    seekToTime: (seconds: number) => void
+    seekToTime: (seconds: number) => void;
+    resetStore: () => void;
 }
 
 export const useVideoStore = defineStore('video', (): VideoStore => {
-    const videoPlayer = ref<any> (null);
+    const videoPlayer = ref<any>(null);
     const videoId = ref<string>('')
-    const videoHeight = ref<number> (0)
+    const videoHeight = ref<number>(0)
 
     const setPlayer = (player: any): void => {
         videoPlayer.value = player;
@@ -25,13 +26,13 @@ export const useVideoStore = defineStore('video', (): VideoStore => {
 
     const getPlayer = () => videoPlayer.value;
 
-    const setVideoId = (vId: string) : void => {
+    const setVideoId = (vId: string): void => {
         videoId.value = vId;
     }
 
     const getVideoId = (): string => videoId.value;
 
-    const getCurrentVideoTime = () :number => {
+    const getCurrentVideoTime = (): number => {
         return videoPlayer.value.getCurrentTime();
     }
 
@@ -51,6 +52,12 @@ export const useVideoStore = defineStore('video', (): VideoStore => {
 
     const getPlayerHeight = () => videoHeight.value;
 
+    const resetStore = () => {
+        videoPlayer.value = null;
+        videoId.value = '';
+        videoHeight.value = 0;
+    }
+
     return {
         videoPlayer,
         videoId,
@@ -62,6 +69,7 @@ export const useVideoStore = defineStore('video', (): VideoStore => {
         getCurrentVideoTime,
         setPlayerSize,
         getPlayerHeight,
-        seekToTime
+        seekToTime,
+        resetStore
     }
 })

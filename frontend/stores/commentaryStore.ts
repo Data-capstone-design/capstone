@@ -14,7 +14,8 @@ interface CommentaryStore {
     setIsCommentaryFollowingVideo: (followingVideo: boolean) => void;
     setScrollableCommentaries: () => void;
     getCurrentCommentaryTime: () => number;
-    addCommentary: (startTime: number, content: string) => Promise<void>
+    addCommentary: (startTime: number, content: string) => Promise<void>;
+    resetStore: () => void;
 }
 
 export const useCommentaryStore = defineStore('commentary', (): CommentaryStore => {
@@ -86,6 +87,13 @@ export const useCommentaryStore = defineStore('commentary', (): CommentaryStore 
         return totalCommentaries[targetCommentaryIndex].startTime
     }
 
+    const resetStore = (): void => {
+        isGenerateCommentariesCompleted.value = false;
+        isCommentaryFollowingVideo.value = false;
+        commentaries.value = [];
+        totalCommentaries.length = 0;
+    }
+
     return {
         isCommentaryFollowingVideo,
         isGenerateCommentariesCompleted,
@@ -97,6 +105,7 @@ export const useCommentaryStore = defineStore('commentary', (): CommentaryStore 
         updateCommentaries,
         setIsCommentaryFollowingVideo,
         setScrollableCommentaries,
-        getCurrentCommentaryTime
+        getCurrentCommentaryTime,
+        resetStore
     };
 })

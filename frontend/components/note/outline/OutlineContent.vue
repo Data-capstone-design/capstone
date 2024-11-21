@@ -1,6 +1,6 @@
 <template>
   <div class="i-Scroller">
-    <div v-for="(noteIndex, i) in indexStore.getNoteIndex()" :key="i" class="q-mb-lg q-pl-xs">
+    <div v-for="(noteIndex, i) in outline" :key="i" class="q-mb-lg q-pl-xs">
       <div class="q-mb-xs text-h6" >
       </div>
       <div class="flex items-center">
@@ -26,13 +26,15 @@
 </template>
 
 <script setup lang="ts">
-import {useIndexStore} from "~/stores/indexStore";
+import {useOutlineStore} from "~/stores/outlineStore";
 import { useFormatTime } from "~/composables/useFormatTime"
 import {useVideoStore} from "~/stores/videoStore";
 
 const videoStore = useVideoStore();
-const indexStore = useIndexStore();
+const outlineStore = useOutlineStore();
 const { formatTime } = useFormatTime();
+
+const outline = computed(() => outlineStore.getNoteOutline());
 </script>
 
 <style scoped>

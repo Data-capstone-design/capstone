@@ -41,20 +41,19 @@ import {KnowledgeLevel} from "~/types/commentary";
 import {navigateTo} from "#app";
 
 const youtubeUrl = ref("");
-const videoStore = useVideoStore();
 const noteStore = useNoteStore();
 
-const selectedLevel = ref<KnowledgeLevel>(KnowledgeLevel.BEGINNER);
+const selectedLevel = ref<KnowledgeLevel>(KnowledgeLevel.BASIC);
 const checkboxStates = reactive({
-  [KnowledgeLevel.BEGINNER]: true,
+  [KnowledgeLevel.BASIC]: true,
   [KnowledgeLevel.INTERMEDIATE]: false,
-  [KnowledgeLevel.EXPERT]: false
+  [KnowledgeLevel.ADVANCED]: false
 });
 
 const knowledgeLevels = [
-  {value: KnowledgeLevel.BEGINNER, label: "전혀 몰라요"},
+  {value: KnowledgeLevel.BASIC, label: "전혀 몰라요"},
   {value: KnowledgeLevel.INTERMEDIATE, label: "어느정도 지식이 있어요"},
-  {value: KnowledgeLevel.EXPERT, label: "전문가에요"}
+  {value: KnowledgeLevel.ADVANCED, label: "전문가에요"}
 ];
 
 const selectCheckbox = (checkedLevel: KnowledgeLevel): void => {
