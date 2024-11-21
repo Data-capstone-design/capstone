@@ -38,7 +38,7 @@ import {useVideoStore} from "~/stores/videoStore";
 const {syncTabs} = useTabSync();
 
 definePageMeta({
-  middleware: "check-video-url"
+  middleware: "check-note-info"
 });
 
 const videoStore = useVideoStore();
@@ -49,7 +49,6 @@ const indexHeight = ref<number>(0);
 
 // `100vh - videoHeight - headerHeight`을 계산하여 indexHeight에 반영하는 함수
 const updateIndexHeight = () => {
-  console.log("호출됌")
   const viewportHeight = window.innerHeight;
   indexHeight.value = viewportHeight - videoHeight.value - 150;
 };
