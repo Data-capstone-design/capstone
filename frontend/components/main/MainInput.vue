@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import {useVideoStore} from "~/stores/videoStore";
-import {useNoteStore} from "~/stores/noteStore";
+import {NoteStatus, useNoteStore} from "~/stores/noteStore";
 import {KnowledgeLevel} from "~/types/commentary";
 import {navigateTo} from "#app";
 
@@ -79,8 +79,9 @@ const handleSubmit = async (): Promise<void> => {
     const trimmedUrl = youtubeUrl.value.split("&")[0];
     const videoId = extractVideoId(trimmedUrl) as string;
     const userLevel = selectedLevel.value;
-    await noteStore.createNote(videoId, userLevel);
-    videoStore.setVideoId(videoId);
+    const response = await noteStore.fetchNoteStatus(videoId,userLevel);
+    const { noteStatus } = response.data;
+    noteStore.setNoteInfo(videoId, userLevel, noteStatus);
     navigateTo("/note");
   }
 };
