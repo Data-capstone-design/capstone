@@ -12,49 +12,42 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class SseEventSender {
     private final SseEmitterManager sseEmitterManager;
 
-    public void sendConnectEvent(String connectId)   {
-        try {
-            SseEmitter emitter = sseEmitterManager.getEmitter(connectId);
-            var event = SseEmitter.event()
-                    .name("connect")
-                    .data("send connect event");
-            emitter.send(event);
-            log.info("emitter sent first event connectId: {}", connectId);
-        } catch (IOException e) {
-            log.error("SseEmitter error", e);
-        }
+    public void sendConnectEvent(String noteId, String sessionId) {
+        sendEvent(noteId, sessionId, "connect", "send connect event");
     }
 
-    public void sendNoteContentEvent(String connectId, String data)   {
-        try {
-            SseEmitter emitter = sseEmitterManager.getEmitter(connectId);
-            if (emitter != null) {
-                var event = SseEmitter.event()
-                        .name("commentary")
-                        .data(data);
-                emitter.send(event);
-                log.info("emitter sent comment event");
-            }
-        } catch (IOException e) {
-            log.error("SseEmitter error", e);
-        }
+    public void broadcastNoteCommentaryEvent(String noteId, String data) {
+        broadcastEvent(noteId, "commentary", data);
     }
 
-    public void sendNoteIndexEvent(String connectId, String data) throws IOException {
-        try {
-            SseEmitter emitter = sseEmitterManager.getEmitter(connectId);
+    public void broadcastNoteOutlineEvent(String noteId, String data) {
+        broadcastEvent(noteId, "outline", data);
+    }
 
+    private void sendEvent(String noteId, String sessionId, String eventName, String data) {
+        try {
+            var emitter = sseEmitterManager.getEmitter(noteId, sessionId);
             if (emitter != null) {
-                var event = SseEmitter.event()
-                        .name("index")
-                        .data(data);
+                var event = SseEmitter.event().name(eventName).data(data);
                 emitter.send(event);
-                log.info("emitter sent index event");
+                log.info("Event '{}' sent to sessionId: {}", eventName, sessionId);
             } else {
-                log.warn("emitter not found");
+                log.warn("Emitter not found for noteId: {}, sessionId: {}", noteId, sessionId);
             }
         } catch (IOException e) {
-            log.error("SseEmitter error", e);
+            log.error("Failed to send event '{}' to sessionId: {}", eventName, sessionId, e);
+        }
+    }
+
+    private void broadcastEvent(String noteId, String eventName, String data) {
+        var noteEmitters = sseEmitterManager.getEmittersByNoteId(noteId);
+        if (noteEmitters != null) {
+            for (String sessionId : noteEmitters.keySet()) {
+                sendEvent(noteId, sessionId, eventName, data);
+            }
+        } else {
+            log.warn("No emitters found for noteId: {}", noteId);
         }
     }
 }
+

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class NoteEventPublisher {
     private final NoteInfoProducer noteInfoProducer;
 
-    public void publishCreateNoteEvent(String videoId, UserLevel userLevel) {
-        noteInfoProducer.produce(new NoteInfoDto(videoId, userLevel.name()));
+    public void publishCreateNoteEvent(String videoId, UserLevel userLevel, String noteId) {
+        noteInfoProducer.produce(new NoteInfoDto(videoId, userLevel.name(), noteId));
     }
 }

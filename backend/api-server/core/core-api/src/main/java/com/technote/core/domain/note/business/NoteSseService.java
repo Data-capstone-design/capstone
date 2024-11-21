@@ -12,9 +12,9 @@ public class NoteSseService {
     private final SseEmitterManager sseEmitterManager;
     private final SseEventSender sseEventSender;
 
-    public SseEmitter connect(String connectId) {
-        SseEmitter emitter = sseEmitterManager.addEmiter(connectId);
-        sseEventSender.sendConnectEvent(connectId);
+    public SseEmitter connect(String noteId, String sessionId) {
+        SseEmitter emitter = sseEmitterManager.addEmiter(noteId, sessionId);
+        sseEventSender.sendConnectEvent(noteId, sessionId);
         return emitter;
     }
 }

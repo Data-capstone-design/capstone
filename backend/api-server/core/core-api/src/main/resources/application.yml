@@ -1,0 +1,4 @@
+server:
+  servlet:
+    session:
+      timeout: 20m
