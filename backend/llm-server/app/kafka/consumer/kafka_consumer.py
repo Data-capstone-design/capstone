@@ -18,7 +18,7 @@ async def consume_stt_result(consumer, assistants, producer):
             )
 
             #transcript 저장
-            TextUtils.save_text(stt_result.transcriptionText, stt_result.videoId)
+            TextUtils.save_text(stt_result.transcriptionText, stt_result.noteId)
 
             await message_processor.process_transcript(stt_result)
         except Exception as e:

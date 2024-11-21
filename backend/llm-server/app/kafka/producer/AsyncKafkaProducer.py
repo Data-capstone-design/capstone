@@ -34,12 +34,6 @@ class AsyncKafkaProducer:
             partition (int, optional): 특정 파티션에 메시지를 전송하려면 지정
         """
         try:
-            # 메시지가 dict인 경우 JSON 직렬화
-            if isinstance(message, dict):
-                message = json.dumps(message)
-            elif not isinstance(message, str):
-                raise ValueError("Message must be a string or a dictionary.")
-
             # 메시지를 UTF-8로 인코딩하여 전송
             await self.producer.send_and_wait(topic, message.encode("utf-8"), partition=partition)
             logging.info(f"Sent message to topic '{topic}' with message: {message}")

@@ -11,10 +11,10 @@ class TextUtils:
     """
 
     @staticmethod
-    def initialize_file(video_id):
+    def initialize_file(note_id):
         # 디렉토리 경로와 파일 경로 설정
-        dir_path = f"capstone_storage/{video_id}"
-        file_path = f"{dir_path}/original_{video_id}.txt"
+        dir_path = f"capstone_storage/{note_id}"
+        file_path = f"{dir_path}/original_{note_id}.txt"
 
         # 디렉토리가 없으면 생성
         os.makedirs(dir_path, exist_ok=True)
@@ -23,14 +23,14 @@ class TextUtils:
         with open(file_path, "w") as f:
             pass  # 빈 파일 생성
 
-        logger.info(f"Initialized text file at {file_path} for video_id '{video_id}'.")
+        logger.info(f"Initialized text file at {file_path} for note_id '{note_id}'.")
 
     @staticmethod
-    def save_text(text: str, video_id: str):
+    def save_text(text: str, note_id: str):
         try:
             # 디렉토리 경로와 파일 경로 설정
-            dir_path = f"capstone_storage/{video_id}"
-            file_path = f"{dir_path}/original_{video_id}.txt"
+            dir_path = f"capstone_storage/{note_id}"
+            file_path = f"{dir_path}/original_{note_id}.txt"
 
             # 디렉토리가 없으면 생성
             if not os.path.exists(dir_path):
@@ -51,17 +51,17 @@ class TextUtils:
             return file_path
 
         except OSError as e:
-            logger.exception(f"File operation failed for video_id '{video_id}': {e}")
-            raise RuntimeError(f"Failed to ensure or save file for video_id '{video_id}'") from e
+            logger.exception(f"File operation failed for note_id '{note_id}': {e}")
+            raise RuntimeError(f"Failed to ensure or save file for note_id '{note_id}'") from e
 
         except Exception as e:
-            logger.exception(f"Unexpected error while handling file for video_id '{video_id}': {e}")
+            logger.exception(f"Unexpected error while handling file for note_id '{note_id}': {e}")
             raise
 
     @staticmethod
-    def split_by_toc(video_id, toc_filepath):
+    def split_by_toc(note_id, toc_filepath):
         logger.info(toc_filepath)
-        output_folder = f"capstone_storage/{video_id}/transcription_chunks"
+        output_folder = f"capstone_storage/{note_id}/transcription_chunks"
         os.makedirs(output_folder, exist_ok=True)
         logger.info(f"Output folder '{output_folder}' created or already exists.")
 
@@ -85,7 +85,7 @@ class TextUtils:
             return None
 
         # 분할할 원본 텍스트 데이터 로드 (이전 방식 유지)
-        text_data_path = f"capstone_storage/{video_id}/original_{video_id}.txt"
+        text_data_path = f"capstone_storage/{note_id}/original_{note_id}.txt"
         json_objects = []
 
         with open(text_data_path, 'r', encoding='utf-8') as file:
@@ -115,11 +115,12 @@ class TextUtils:
 
             for text_item in json_objects:
                 text_start = float(text_item.get('start'))
-                if start_time <= text_start <= end_time:
+                if start_time<= text_start < end_time:
+                    logger.debug(f"TOC range: {start_time} to {end_time}, checking text start: {text_start}")
                     segment_content.append(text_item['text'])
 
             if segment_content:
-                output_file = os.path.join(output_folder, f"{video_id}_{index_num}.txt")
+                output_file = os.path.join(output_folder, f"{note_id}_{index_num}.txt")
                 try:
                     with open(output_file, "w", encoding="utf-8") as outfile:
                         outfile.write(
