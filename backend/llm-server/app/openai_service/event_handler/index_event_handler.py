@@ -11,9 +11,9 @@ from app.kafka.kafka_config import LLM_INDEX_EVENTS
 
 
 class IndexEventHandler(AsyncAssistantEventHandler):
-    def __init__(self, video_id, producer):
+    def __init__(self, note_id, producer):
         super().__init__()
-        self.video_id = video_id
+        self.note_id = note_id
         self.producer = producer
         self.kafka_topic = LLM_INDEX_EVENTS
         self.index_data = ""  # 생성된 목차 데이터를 저장할 변수
@@ -32,7 +32,7 @@ class IndexEventHandler(AsyncAssistantEventHandler):
         # 전체 목차 생성이 완료된 시점에서 호출
         logger.info("목차 생성 완료")
         # 디렉터리가 존재하지 않을 경우 생성
-        index_dir = f"capstone_storage/{self.video_id}/index"
+        index_dir = f"capstone_storage/{self.note_id}/index"
         os.makedirs(index_dir, exist_ok=True)
 
         # 생성된 목차와 타임스탬프 정보를 파일로 저장
@@ -46,16 +46,16 @@ class IndexEventHandler(AsyncAssistantEventHandler):
             logger.error(f"목차 파일을 저장하는 중 오류 발생: {e}")
 
         index_message = IndexMessage(
-            videoId = self.video_id,
-            indices = self.index_data,
+            noteId = self.note_id,
+            segments = self.index_data,
         )
 
         # 메시지를 JSON으로 직렬화하여 Kafka에 전송
         try:
             asyncio.create_task(
-                self.producer.send_message(topic=self.kafka_topic, message=index_message.model_dump())
+                self.producer.send_message(topic=self.kafka_topic, message=index_message.model_dump_json())
             )
-            logger.info(f"Kafka에 메시지가 전송되었습니다 video_id: {self.video_id}")
+            logger.info(f"Kafka에 메시지가 전송되었습니다 note_id: {self.note_id}")
         except Exception as e:
             logger.error(f"Kafka에 메시지를 전송하는 중 오류가 발생했습니다: {e}")
 

@@ -2,40 +2,33 @@ from aiokafka import AIOKafkaProducer
 from loguru import logger
 import json
 from pydantic import BaseModel
-
-from app.domain.kafka_message.chunk_transcription_result import TranscriptionResultMessage
-from app.kafka.kafka_config import (
-    KAFKA_BOOTSTRAP_SERVERS,
-    STT_RESULT_TOPIC,
-    ACKS,
-    MAX_BATCH_SIZE,
-    LINGER_MS,
-    RETRY_BACKOFF_MS
-)
+from loguru import logger
 
 
 class AsyncProducer:
-    def __init__(self):
+    def __init__(self, bootstrap_servers):
         """
         AsyncSTTResultProducer 초기화 시 Kafka 설정을 사용해 프로듀서를 구성.
         - 최신 aiokafka 파라미터에 맞춰 설정.
         """
         self.producer = AIOKafkaProducer(
-            bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+            bootstrap_servers=bootstrap_servers,
             value_serializer=lambda v: json.dumps(v).encode('utf-8'),
-            acks=ACKS,
-            max_batch_size=MAX_BATCH_SIZE,
-            linger_ms=LINGER_MS,
-            retry_backoff_ms=RETRY_BACKOFF_MS
         )
 
     async def start(self):
-        """비동기 프로듀서 시작"""
+        """
+        Kafka Producer 시작 메서드
+        """
         await self.producer.start()
+        logger.info("Kafka producer started.")
 
     async def stop(self):
-        """비동기 프로듀서 종료"""
+        """
+        Kafka Producer 종료 메서드
+        """
         await self.producer.stop()
+        logger.info("Kafka producer stopped.")
 
     async def send_message(self, message: BaseModel, topic):
         """

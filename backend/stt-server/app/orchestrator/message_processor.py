@@ -8,8 +8,8 @@ from app.domain.kafka_message.initialize_llm_request_message import InitiateRequ
 
 from app.domain.kafka_message.stt_request_message import SttRequestMessage
 
-from app.domain.kafka_message.stt_message import LlmRequestMessage
-from app.kafka.kafka_config import STT_RESULT_TOPIC, LLM_INITIALIZATION_TOPIC, LLm_REQUEST_EVENTS
+from app.domain.kafka_message.llm_request_message import LlmRequestMessage
+from app.kafka.kafka_config import STT_RESULT_TOPIC, LLM_INITIALIZATION_TOPIC, LLM_REQUEST_EVENTS
 from app.transcription_service.youtube_caption_downloader import *
 from app.domain.kafka_message.chunk_transcription_result import TranscriptionResultMessage
 
@@ -43,7 +43,8 @@ class MessageProcessor:
 
     async def process_message(self, message: SttRequestMessage):
             video_id = message.videoId
-            explanation_level = message.explanationLevel
+            explanation_level = message.userLevel
+            note_id = message.noteId
 
             logger.info("Processing message: {}", message)
 
@@ -73,10 +74,11 @@ class MessageProcessor:
                 llm_request_message = LlmRequestMessage(
                     videoId=video_id,
                     explanationLevel = explanation_level,
+                    noteId = note_id,
                     transcriptionText = caption_text,
                 )
 
-                await self.producer.send_message(llm_request_message, topic=LLm_REQUEST_EVENTS)
+                await self.producer.send_message(llm_request_message, topic=LLM_REQUEST_EVENTS)
             except ValueError as ve:
                 logger.error("ValueError: {}", ve)
             except Exception as e:

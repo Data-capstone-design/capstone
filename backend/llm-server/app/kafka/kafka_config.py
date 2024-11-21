@@ -2,8 +2,8 @@ KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"  # 예: 로컬 호스트에 설치된
 
 #topic
 LLM_REQUEST_EVENTS = "llm_request_events" #STT에서 요청
-LLM_INDEX_EVENTS = "llm_index_events"
-LLM_COMMENTARY_EVENTS = "llm-commentary-events"
+LLM_INDEX_EVENTS = "note-outline-created-events"
+LLM_COMMENTARY_EVENTS = "note-commentary-created-events"
 
 # 메시지의 전송에 대한 확인 수준
 # all: 모든 복제본이 메시지를 확인해야 성공으로 간주

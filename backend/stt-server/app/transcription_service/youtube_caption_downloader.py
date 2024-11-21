@@ -1,6 +1,8 @@
 import asyncio
 import json
 import os
+import re
+
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api._errors import TranscriptsDisabled, VideoUnavailable
 from loguru import logger
@@ -65,11 +67,17 @@ async def download_transcript(video_id, language_code='en', save_dir='transcript
         # 자막 다운로드
         logger.info("Starting transcript download for video ID: {}", video_id)
         transcript = await asyncio.to_thread(selected_transcript.fetch)
+        # 괄호 제거 및 변환
+        filtered_transcript = [
+            {"text": re.sub(r"\([^)]*\)", "", entry["text"]).strip(), "start": round(entry["start"])}
+            for entry in transcript
+            if re.sub(r"\([^)]*\)", "", entry["text"]).strip()  # 괄호 제거 후 빈 텍스트 필터링
+        ]
         # JSON 배열 형식으로 저장
         file_name = f"{video_id}_{language_code}.json"
         file_path = os.path.join(save_dir, file_name)
         with open(file_path, 'w', encoding='utf-8') as f:
-            json.dump(transcript, f, ensure_ascii=False, indent=2)
+            json.dump(filtered_transcript, f, ensure_ascii=False, indent=2)
 
         logger.info("Transcript successfully saved to {}", file_path)
         return file_path
