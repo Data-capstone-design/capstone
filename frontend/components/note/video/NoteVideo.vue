@@ -21,19 +21,16 @@ import {onBeforeUnmount, onMounted} from "vue";
 import {useVideoStore} from "~/stores/videoStore";
 import {useCommentaryStore} from "~/stores/commentaryStore";
 import {useIndexStore} from "~/stores/indexStore";
-
-import { v4 as uuidv4 } from "uuid";
-
-definePageMeta({
-  middleware: "check-video-url",
-});
+import {NoteStatus, useNoteStore} from "~/stores/noteStore";
+import {useEventSource} from "~/composables/useEventSource";
 
 const videoStore = useVideoStore();
-const commentaryStore = useCommentaryStore();
-const indexStore = useIndexStore();
+const noteStore = useNoteStore();
+const {startAutoDisplayCommentary, stopAutoDisplayCommentary} = useAutoDisplayCommentary();
+const { connectSse } = useEventSource();
 
 const loading = ref<boolean>(true);
-const {startAutoDisplayCommentary, stopAutoDisplayCommentary} = useAutoDisplayCommentary();
+let eventSource: EventSource | null = null;
 
 const loadYouTubeAPI = (): Promise<void> => {
   return new Promise<void>((resolve) => {
@@ -53,7 +50,7 @@ const loadYouTubeAPI = (): Promise<void> => {
 };
 
 const initializePlayer = (): void => {
-  const videoId = videoStore.getVideoId();
+  const videoId = noteStore.getNoteInfo().videoId;
   const videoPlayer = new window.YT.Player("player", {
     videoId,
     events: {
@@ -70,47 +67,31 @@ const onPlayerReady = async (event: any) => {
   loading.value = false;
 };
 
-let eventSource: EventSource;
-
-
 onMounted(async () => {
   await loadYouTubeAPI();
   initializePlayer();
+  const { videoId, userLevel, status } = noteStore.getNoteInfo()
 
-  const videoId = videoStore.getVideoId();
-  const clientId = uuidv4();
-  const url = '/api/sse'
-  // `http://localhost:8080/sse/connect/${videoId}?clientId=${clientId}`
-  eventSource = new EventSource(url);
-  eventSource.addEventListener("connect", () => {
-    console.log("서버와 연결")
-  })
-
-  eventSource.addEventListener("commentary", async (e: any) => {
-    const data = JSON.parse(e.data);
-    const { startTime, content } = data;
-    await commentaryStore.addCommentary(startTime, content);
-  });
-
-  eventSource.addEventListener("index", (e: any) => {
-    const data = JSON.parse(e.data);
-    const { noteIndex } = data;
-    indexStore.setNoteIndices(noteIndex);
-  });
-
-  eventSource.onerror = (error) => {
-    console.error("Error receiving SSE:", error);
-  };
-
-  eventSource.addEventListener("close", ()=> {
-    eventSource.close();
-  })
+  if(status == NoteStatus.NOT_EXIST) {
+    const response = await noteStore.fetchCreateNote(videoId,userLevel);
+    const { noteId } = response.data;
+    eventSource = connectSse(noteId);
+  }
+  else if(status == NoteStatus.IN_PROGRESS) {
+    const response = await noteStore.fetchNote(videoId, userLevel);
+    console.log(response);
+    // eventSource = connectSse(noteId);
+  }
+  else if (status == NoteStatus.COMPLETE) {
+    const response = await noteStore.fetchNote(videoId, userLevel);
+    console.log(response);
+    // 결과를 렌더링해야함
+  }
 });
 
 onBeforeUnmount(() => {
   stopAutoDisplayCommentary();
   if (eventSource) {
-    console.log("eventSource close");
     eventSource.close()
   }
 });
