@@ -1,12 +1,10 @@
+import asyncio
 import json
 import os
 
-import asyncio
-from typing import override, Text
-
 from loguru import logger
-from aiokafka import AIOKafkaProducer
-from openai import AssistantEventHandler, AsyncAssistantEventHandler
+from openai import AsyncAssistantEventHandler
+from typing_extensions import override, Text
 
 from app.domain.kafka_message.llm_result_message import LLMResultMessage
 from app.kafka.kafka_config import LLM_COMMENTARY_EVENTS
