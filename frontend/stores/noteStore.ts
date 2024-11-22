@@ -1,5 +1,5 @@
 import {$fetch} from "ofetch";
-import type {Reactive} from "vue";
+import type {Reactive, Ref} from "vue";
 
 export enum NoteStatus {
     COMPLETE = 'COMPLETE',
@@ -7,7 +7,16 @@ export enum NoteStatus {
     NOT_EXIST = 'NOT_EXIST'
 }
 
+// IN_PROGRESS 상태일 때 목차가 생성중인지, 해설이 생성중인지 렌더링하는 함수
+export enum NoteGenerateStatus {
+    WAITING = '대기중 입니다',
+    OUTLINE_GENERATING='목차 생성중 입니다',
+    COMMENTARY_GENERATING = '해설 생성중 입니다',
+    COMPLETE_GENERATED = '생성 완료'
+}
+
 export interface NoteStore {
+    noteGenerateStatus: Ref<NoteGenerateStatus>;
     noteInfo: Reactive<{ videoId: string, userLevel: string }>;
     fetchCreateNote: (videoId: string, userLevel: string) => Promise<any>;
     fetchNoteStatus: (videoId: string, userLevel: string) => Promise<any>;
@@ -15,6 +24,7 @@ export interface NoteStore {
     setNoteInfo: (videoId: string, userLevel: string, status: string) => void;
     getNoteInfo: () => NoteInfo;
     resetStore: () => void;
+    setNoteGenerateStatus: (generateStatus: NoteGenerateStatus) => void;
 }
 
 export interface NoteInfo {
@@ -24,6 +34,7 @@ export interface NoteInfo {
 }
 
 export const useNoteStore = defineStore('note', (): NoteStore => {
+    const noteGenerateStatus = ref<NoteGenerateStatus>(NoteGenerateStatus.WAITING);
     const noteInfo = reactive<NoteInfo>({
         videoId: '',
         userLevel: '',
@@ -68,6 +79,10 @@ export const useNoteStore = defineStore('note', (): NoteStore => {
         });
     }
 
+    const setNoteGenerateStatus = (generateStatus: NoteGenerateStatus) => {
+        noteGenerateStatus.value = generateStatus;
+    }
+
     const setNoteInfo = (videoId: string, userLevel: string, status: string): void => {
         noteInfo.videoId = videoId;
         noteInfo.status = status;
@@ -83,12 +98,14 @@ export const useNoteStore = defineStore('note', (): NoteStore => {
     }
 
     return {
+        noteGenerateStatus,
         noteInfo,
         fetchCreateNote,
         fetchNoteStatus,
         setNoteInfo,
         getNoteInfo,
         fetchNote,
+        setNoteGenerateStatus,
         resetStore
     }
 });
