@@ -59,7 +59,6 @@ async def consume_request(consumer, processor):
             request = SttRequestMessage.model_validate(msg.value)
             await processor.process_message(request)
 
-
     except Exception as e:
         logger.error(f"STT 결과물 소비 중 오류 발생: {e}")
     finally:

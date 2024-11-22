@@ -3,8 +3,8 @@ from typing import List
 from pydantic import BaseModel
 
 class Segment(BaseModel):
-    start_time: str
-    index: str
+    startTime: int
+    title: str
     summary: str
 
 class IndexMessage(BaseModel):

@@ -1,7 +1,9 @@
 import asyncio
 import json
 import os
-from typing import override
+import re
+
+from typing_extensions import override
 
 from loguru import logger
 from openai import AssistantEventHandler, AsyncAssistantEventHandler
@@ -48,7 +50,7 @@ class IndexEventHandler(AsyncAssistantEventHandler):
         logger.info(type(self.index_data))
         index_message = IndexMessage(
             noteId = self.note_id,
-            segments = json.loads(self.index_data),
+            segments = json.loads(re.sub(r"```json|```", "", self.index_data)),
         )
 
         # 메시지를 JSON으로 직렬화하여 Kafka에 전송
