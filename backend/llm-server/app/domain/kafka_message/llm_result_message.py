@@ -4,5 +4,6 @@ from pydantic import BaseModel
 
 class LLMResultMessage(BaseModel):
     noteId: str
-    indexId: int
+    startTime: int
+    commentaryOrder: int
     content: str

@@ -1,4 +1,6 @@
 import asyncio
+import json
+import re
 
 from app.domain.kafka_message.llm_request_message import LlmRequestMessage
 from app.openai_service.event_handler.enhanced_event_handler import EnhancedExplanationEventHandler
@@ -39,6 +41,7 @@ class MessageProcessor:
         self.explanation_assistant = assistants.explanation_assistant
         self.explanation_level = request_message.explanationLevel.value
         self.producer = producer
+        self.start_times = []
 
     async def create_indices(self, thread):
         logger.info(f"목차 생성 시작 | Thread ID: {thread.id}")
@@ -115,17 +118,17 @@ class MessageProcessor:
 
         logger.info(f"피드백 생성 완료 | Thread ID: {thread.id} | 청크: {chunk_index}/{self.total_chunks}")
 
-    async def create_enhanced_explanations(self, results):
+    async def create_enhanced_explanations(self, results, outline_start_times):
         logger.info("피드백 반영 설명문 텍스트 병렬 생성 시작")
-        tasks = [self.create_enhanced_chunk_explanation(thread, idx) for idx, thread in
+        tasks = [self.create_enhanced_chunk_explanation(thread, idx, outline_start_times[idx-1]) for idx, thread in
                  enumerate(results,start=1)]
 
         await asyncio.gather(*tasks)
         logger.info("모든 피드백 반영 설명문 생성 작업이 완료되었습니다.")
 
-    async def create_enhanced_chunk_explanation(self, thread, chunk_index):
+    async def create_enhanced_chunk_explanation(self, thread, chunk_index, outline_start_time):
         enhanced_explanation_event_handler = EnhancedExplanationEventHandler(
-            thread_id=thread.id, note_id=self.note_id, chunk_index=chunk_index, kafka_producer=self.producer
+            thread_id=thread.id, note_id=self.note_id,outline_start_time=outline_start_time ,chunk_index=chunk_index, kafka_producer=self.producer
         )
 
         logger.info(f"피드백 반영 설명문 생성 시작 | Thread ID: {thread.id} | 청크: {chunk_index}/{self.total_chunks}")
@@ -146,10 +149,14 @@ class MessageProcessor:
         # 목차로 텍스트 파일 분할
         index_path = f"capstone_storage/{message.noteId}/index/index.txt"
         logger.info(index_path)
+        index_file = await read_text_file(index_path)
+        index_json = json.loads(re.sub(r"```json|```", "", index_file))
+        outline_start_time_list = [outline['startTime'] for outline in index_json ]
+        logger.info(outline_start_time_list)
         transcription_chunks_path = TextUtils.split_by_toc(note_id=message.noteId, toc_filepath=index_path)
         # 목차별 설명문 생성
         chunk_resource_list = await self.create_explanations(transcription_chunks_path)
         # 목차별 설명문 피드백 수행
         await self.create_feedbacks_for_explanations(chunk_resource_list)
         # 목차별 피드백 반영 설명문 생성
-        await self.create_enhanced_explanations(chunk_resource_list)
+        await self.create_enhanced_explanations(chunk_resource_list, outline_start_time_list)

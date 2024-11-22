@@ -105,9 +105,9 @@ class TextUtils:
 
         # TOC 항목에 따른 텍스트 분할 및 저장
         for i, toc_item in enumerate(toc_data):
-            start_time = float(toc_item['start_time'])
-            end_time = float(toc_data[i + 1]['start_time']) if i + 1 < len(toc_data) else sys.float_info.max
-            title = toc_item['index']
+            start_time = float(toc_item['startTime'])
+            end_time = float(toc_data[i + 1]['startTime']) if i + 1 < len(toc_data) else sys.float_info.max
+            title = toc_item['title']
             summary = toc_item.get('summary', "")
             index_num = i + 1
 

@@ -1,26 +1,28 @@
+import asyncio
+import json
 import os
 
-import asyncio
-from typing import override, Text
-
 from loguru import logger
-from aiokafka import AIOKafkaProducer
-from openai import AssistantEventHandler, AsyncAssistantEventHandler
+from openai import AsyncAssistantEventHandler
+from typing_extensions import override, Text
 
 from app.domain.kafka_message.llm_result_message import LLMResultMessage
+from app.kafka.kafka_config import LLM_COMMENTARY_EVENTS
 
 
 #정의한 메시지로 메시지 교체하고 로깅 추가
 class EnhancedExplanationEventHandler(AsyncAssistantEventHandler):
-    def __init__(self, thread_id, note_id ,chunk_index=None, kafka_producer=None,
-                 kafka_topic="explanation_stream"):
+    def __init__(self, thread_id, note_id, outline_start_time ,chunk_index=None, kafka_producer=None,
+                 kafka_topic=LLM_COMMENTARY_EVENTS):
         super().__init__()
         self.thread_id = thread_id
         self.note_id = note_id
         self.chunk_index = chunk_index
+        self.outline_start_time = outline_start_time
         self.enhanced_explanation_data = ""
         self.kafka_producer = kafka_producer
         self.kafka_topic = kafka_topic
+
 
     @override
     async def on_text_created(self, text: Text):
@@ -47,11 +49,14 @@ class EnhancedExplanationEventHandler(AsyncAssistantEventHandler):
         except Exception as e:
             logger.error(f"설명문을 저장하는 데 실패했습니다: {e}")
 
+        json_explanation_data = json.loads(self.enhanced_explanation_data)
+
         # LLMResultMessage 형식의 메시지 생성
         complete_message = LLMResultMessage(
             noteId=self.note_id,
-            indexId=self.chunk_index,
-            content=self.enhanced_explanation_data
+            startTime=int(self.outline_start_time),
+            commentaryOrder=self.chunk_index-1,
+            content=json_explanation_data["explanation"],
         )
 
         # 메시지를 JSON으로 직렬화하여 Kafka에 전송

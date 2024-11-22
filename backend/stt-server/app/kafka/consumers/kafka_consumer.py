@@ -1,5 +1,7 @@
 from loguru import logger
 
+from app.domain.kafka_message.stt_request_message import SttRequestMessage
+
 
 # async def consume():
 #     # Kafka consumer 초기화
@@ -54,9 +56,8 @@ async def consume_request(consumer, processor):
             # STTChunkResultMessage 클래스를 사용하여 메시지 파싱
             logger.info(f"request message consume: {msg.value}")
 
-            request = msg.value
+            request = SttRequestMessage.model_validate(msg.value)
             await processor.process_message(request)
-
 
     except Exception as e:
         logger.error(f"STT 결과물 소비 중 오류 발생: {e}")
