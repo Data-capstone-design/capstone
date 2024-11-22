@@ -43,7 +43,6 @@ export const useCommentaryStore = defineStore('commentary', (): CommentaryStore 
 
     const setScrollableCommentaries = () => {
         if(commentaries.value.length == AUTO_DISPLAY_COMMENTARY_SIZE) {
-            commentaries.value = [];
             commentaries.value = totalCommentaries;
         }
     }

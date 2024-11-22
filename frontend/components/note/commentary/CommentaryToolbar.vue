@@ -1,11 +1,20 @@
 <template>
   <header class="fixed-header flex justify-between mb-2">
-    <VideoControls/>
-    <NoteControls/>
+    <VideoControls v-if="isNoteGenerateCompleted"/>
+    <NoteControls v-if="isNoteGenerateCompleted"/>
+    <div class="text-center full-width" v-else>
+      {{noteGenerateStatus}} . . .
+    </div>
   </header>
 </template>
 
 <script setup lang="ts">
+import { NoteGenerateStatus, useNoteStore} from "~/stores/noteStore";
+
+const noteStore = useNoteStore();
+
+const noteGenerateStatus = computed(()=> noteStore.noteGenerateStatus);
+const isNoteGenerateCompleted = computed(()=> noteStore.noteGenerateStatus == NoteGenerateStatus.COMPLETE_GENERATED)
 </script>
 
 <style scoped>

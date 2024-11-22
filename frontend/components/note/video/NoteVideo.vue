@@ -1,12 +1,12 @@
 <template>
   <section class="video-container">
     <div v-if="loading" class="v-Loading q-pa-md">
-      <q-card flat class="column full-width full-height" >
+      <q-card flat class="column full-width full-height">
         <q-skeleton square style="flex:1"/>
         <q-card-section>
-          <q-skeleton type="text" height="35px"  class="text-subtitle1" />
-          <q-skeleton type="text" height="35px"  width="80%" class="text-subtitle1" />
-          <q-skeleton type="text" height="35px" class="text-caption" />
+          <q-skeleton type="text" height="35px" class="text-subtitle1"/>
+          <q-skeleton type="text" height="35px" width="80%" class="text-subtitle1"/>
+          <q-skeleton type="text" height="35px" class="text-caption"/>
         </q-card-section>
       </q-card>
     </div>
@@ -18,13 +18,19 @@
 <script setup lang="ts">
 import {onBeforeUnmount, onMounted} from "vue";
 import {useVideoStore} from "~/stores/videoStore";
-import {NoteStatus, useNoteStore} from "~/stores/noteStore";
+import {NoteGenerateStatus, NoteStatus, useNoteStore} from "~/stores/noteStore";
 import {useEventSource} from "~/composables/useEventSource";
+import {useCommentaryStore} from "~/stores/commentaryStore";
+import {useOutlineStore} from "~/stores/outlineStore";
+import {type Commentary} from "~/types/commentary";
 
 const videoStore = useVideoStore();
 const noteStore = useNoteStore();
+const commentaryStore = useCommentaryStore();
+const outlineStore = useOutlineStore();
 const {startAutoDisplayCommentary, stopAutoDisplayCommentary} = useAutoDisplayCommentary();
-const { connectSse } = useEventSource();
+const {connectSse} = useEventSource();
+
 
 const loading = ref<boolean>(true);
 let eventSource: EventSource | null = null;
@@ -66,22 +72,36 @@ const onPlayerReady = async (event: any) => {
 onMounted(async () => {
   await loadYouTubeAPI();
   initializePlayer();
-  const { videoId, userLevel, status } = noteStore.getNoteInfo()
+  const {videoId, userLevel, status} = noteStore.getNoteInfo()
 
-  if(status == NoteStatus.NOT_EXIST) {
-    const response = await noteStore.fetchCreateNote(videoId,userLevel);
-    const { noteId } = response.data;
+  if (status == NoteStatus.NOT_EXIST) {
+    const response = await noteStore.fetchCreateNote(videoId, userLevel);
+    const {noteId} = response.data;
+    eventSource = connectSse(noteId);
+
+  } else if (status == NoteStatus.IN_PROGRESS) {
+    const response = await noteStore.fetchNote(videoId, userLevel);
+    const {noteId, outline, commentaries} = response.data;
+
+    if (outline.length) {
+      noteStore.setNoteGenerateStatus(NoteGenerateStatus.COMMENTARY_GENERATING);
+      outlineStore.setNoteOutline(outline);
+      for (const commentary of commentaries) {
+        await commentaryStore.addCommentary(commentary.startTime, commentary.htmlContent);
+      }
+    } else {
+      noteStore.setNoteGenerateStatus(NoteGenerateStatus.OUTLINE_GENERATING);
+    }
     eventSource = connectSse(noteId);
   }
-  else if(status == NoteStatus.IN_PROGRESS) {
-    const response = await noteStore.fetchNote(videoId, userLevel);
-    console.log(response);
-    // eventSource = connectSse(noteId);
-  }
+
   else if (status == NoteStatus.COMPLETE) {
     const response = await noteStore.fetchNote(videoId, userLevel);
-    console.log(response);
-    // 결과를 렌더링해야함
+    const { outline, commentaries} = response.data;
+    outlineStore.setNoteOutline(outline);
+    for (const commentary of commentaries) {
+      await commentaryStore.addCommentary(commentary.startTime, commentary.htmlContent);
+    }
   }
 });
 
