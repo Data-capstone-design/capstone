@@ -55,6 +55,7 @@ class EnhancedExplanationEventHandler(AsyncAssistantEventHandler):
         complete_message = LLMResultMessage(
             noteId=self.note_id,
             startTime=int(self.outline_start_time),
+            commentaryOrder=self.chunk_index-1,
             content=json_explanation_data["explanation"],
         )
 
