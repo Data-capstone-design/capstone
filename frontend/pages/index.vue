@@ -6,6 +6,13 @@
 </template>
 
 <script setup lang="ts">
+import { useResetStore } from '~/composables/useResetStore';
+
+const { resetAllStore } = useResetStore();
+
+onMounted(() => {
+  resetAllStore();
+})
 </script>
 
 <style>

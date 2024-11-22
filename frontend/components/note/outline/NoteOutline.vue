@@ -6,8 +6,8 @@
 </template>
 
 <script setup lang="ts">
-import IndexTitle from "~/components/note/index/IndexTitle.vue";
-import IndexContent from "~/components/note/index/IndexContent.vue";
+import IndexTitle from "~/components/note/outline/OutlineTitle.vue";
+import IndexContent from "~/components/note/outline/OutlineContent.vue";
 </script>
 
 <style scoped>

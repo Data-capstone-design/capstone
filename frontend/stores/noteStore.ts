@@ -1,5 +1,5 @@
-import {$fetch } from "ofetch";
-import type {Reactive, Ref} from "vue";
+import {$fetch} from "ofetch";
+import type {Reactive} from "vue";
 
 export enum NoteStatus {
     COMPLETE = 'COMPLETE',
@@ -8,12 +8,13 @@ export enum NoteStatus {
 }
 
 export interface NoteStore {
-    noteInfo: Reactive<{ videoId: string, userLevel: string }>
-    fetchCreateNote: (videoId: string, userLevel: string) => Promise<any>
-    fetchNoteStatus: (videoId: string, userLevel: string) => Promise<any>
-    fetchNote: (videoId: string, userLevel: string) => Promise<any>
-    setNoteInfo: (videoId: string, userLevel: string, status: string) => void
-    getNoteInfo: () => NoteInfo
+    noteInfo: Reactive<{ videoId: string, userLevel: string }>;
+    fetchCreateNote: (videoId: string, userLevel: string) => Promise<any>;
+    fetchNoteStatus: (videoId: string, userLevel: string) => Promise<any>;
+    fetchNote: (videoId: string, userLevel: string) => Promise<any>;
+    setNoteInfo: (videoId: string, userLevel: string, status: string) => void;
+    getNoteInfo: () => NoteInfo;
+    resetStore: () => void;
 }
 
 export interface NoteInfo {
@@ -27,18 +28,18 @@ export const useNoteStore = defineStore('note', (): NoteStore => {
         videoId: '',
         userLevel: '',
         status: ''
-    })
+    });
     const config = useRuntimeConfig();
 
     const fetchCreateNote = async (videoId: string, userLevel: string): Promise<any> => {
-        return $fetch<void>('/notes',{
+        return $fetch<void>('/notes', {
             method: 'POST',
             baseURL: config.public.apiBaseUrl,
             body: {
                 videoId,
                 userLevel
             },
-            onResponse: ({ request, response, options }) => {
+            onResponse: ({request, response, options}) => {
                 const statusCode = response.status;
                 console.log(statusCode);
             }
@@ -75,13 +76,20 @@ export const useNoteStore = defineStore('note', (): NoteStore => {
 
     const getNoteInfo = () => noteInfo;
 
+    const resetStore = () => {
+        noteInfo.videoId = '';
+        noteInfo.userLevel = '';
+        noteInfo.status = '';
+    }
+
     return {
         noteInfo,
         fetchCreateNote,
         fetchNoteStatus,
         setNoteInfo,
         getNoteInfo,
-        fetchNote
+        fetchNote,
+        resetStore
     }
 });
 

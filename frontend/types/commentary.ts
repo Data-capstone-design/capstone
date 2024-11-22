@@ -1,7 +1,7 @@
 export enum KnowledgeLevel {
-    BEGINNER = "BEGINNER",
+    BASIC = "BASIC",
     INTERMEDIATE = "INTERMEDIATE",
-    EXPERT = "EXPERT"
+    ADVANCED = "ADVANCED"
 }
 
 export interface Commentary {
