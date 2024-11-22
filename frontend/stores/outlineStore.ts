@@ -7,7 +7,7 @@ export interface NoteOutlineItem {
 export const useOutlineStore = defineStore('index', () => {
     const noteOutline = ref<NoteOutlineItem[]>([]);
 
-    const setNoteIndices = (indices: NoteOutlineItem[]) => {
+    const setNoteOutline = (indices: NoteOutlineItem[]) => {
         noteOutline.value = indices;
     }
 
@@ -19,7 +19,7 @@ export const useOutlineStore = defineStore('index', () => {
 
     return {
         noteOutline,
-        setNoteIndices,
+        setNoteOutline,
         getNoteOutline,
         resetStore
     };

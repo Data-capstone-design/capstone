@@ -1,0 +1,4330 @@
+[
+  {
+    "text": "- We commonly think about serverless",
+    "start": 4
+  },
+  {
+    "text": "as something that helps us not have",
+    "start": 7
+  },
+  {
+    "text": "to worry about infrastructure.",
+    "start": 9
+  },
+  {
+    "text": "But what if serverless was also a way",
+    "start": 11
+  },
+  {
+    "text": "to reduce the amount of application code",
+    "start": 14
+  },
+  {
+    "text": "that we need to write?",
+    "start": 17
+  },
+  {
+    "text": "What if we could replace application code",
+    "start": 18
+  },
+  {
+    "text": "that we would need to write and maintain?",
+    "start": 21
+  },
+  {
+    "text": "What if we can replace\nthat with automation code",
+    "start": 23
+  },
+  {
+    "text": "and use the same language to do that?",
+    "start": 26
+  },
+  {
+    "text": "And along the way,",
+    "start": 29
+  },
+  {
+    "text": "we make our applications more\nrobust and more scalable.",
+    "start": 30
+  },
+  {
+    "text": "Well, that's what we're\ngonna talk about today",
+    "start": 34
+  },
+  {
+    "text": "'cause that is refactoring to serverless.",
+    "start": 36
+  },
+  {
+    "text": "- And just to make sure you\nare on the right session,",
+    "start": 40
+  },
+  {
+    "text": "today we are not talking about\napplication modernization",
+    "start": 43
+  },
+  {
+    "text": "and the six hours of cloud\nmigration, like replatforming.",
+    "start": 47
+  },
+  {
+    "text": "Today, we'll talk about",
+    "start": 51
+  },
+  {
+    "text": "how you can take your existing\nserverless applications",
+    "start": 52
+  },
+  {
+    "text": "and make them even more serverless native.",
+    "start": 56
+  },
+  {
+    "text": "- And as you would've\nguessed, this is Sindhu.",
+    "start": 60
+  },
+  {
+    "text": "She's a senior solution architect helping",
+    "start": 62
+  },
+  {
+    "text": "our strategic customers in\nthe education tech vertical.",
+    "start": 65
+  },
+  {
+    "text": "- And this is Gregor.",
+    "start": 69
+  },
+  {
+    "text": "He's a senior principal evangelist",
+    "start": 70
+  },
+  {
+    "text": "and working with our serverless team.",
+    "start": 73
+  },
+  {
+    "text": "- So let's talk about automation.",
+    "start": 76
+  },
+  {
+    "text": "When we think about automation,",
+    "start": 79
+  },
+  {
+    "text": "usually we have a picture\nlike this in mind, right?",
+    "start": 81
+  },
+  {
+    "text": "Like an assembly line",
+    "start": 84
+  },
+  {
+    "text": "that helps us avoid manual\nsteps and helps us avoid toil.",
+    "start": 86
+  },
+  {
+    "text": "And that's great, right?",
+    "start": 91
+  },
+  {
+    "text": "Because on an assembly line,",
+    "start": 92
+  },
+  {
+    "text": "you can build things much faster\nthan you could do by hand.",
+    "start": 93
+  },
+  {
+    "text": "But this is also 100 years ago.",
+    "start": 97
+  },
+  {
+    "text": "So in cloud, automation actually\nplays a much bigger role",
+    "start": 101
+  },
+  {
+    "text": "than just avoiding toil.",
+    "start": 106
+  },
+  {
+    "text": "- Cloud automation is much more",
+    "start": 109
+  },
+  {
+    "text": "than reducing manual steps and toil.",
+    "start": 111
+  },
+  {
+    "text": "In fact, that is reflected in the language",
+    "start": 114
+  },
+  {
+    "text": "that we use to describe our automation.",
+    "start": 116
+  },
+  {
+    "text": "We started off with\nobject-oriented language,",
+    "start": 118
+  },
+  {
+    "text": "with syntaxes like YAML and JSON",
+    "start": 122
+  },
+  {
+    "text": "to describe our infrastructure.",
+    "start": 124
+  },
+  {
+    "text": "But we see now more people adopt",
+    "start": 126
+  },
+  {
+    "text": "our familiar programming\nlanguages using tooling",
+    "start": 129
+  },
+  {
+    "text": "like AWS CDK,",
+    "start": 132
+  },
+  {
+    "text": "which is short for cloud development kit.",
+    "start": 134
+  },
+  {
+    "text": "So who here has used AWS\nCDK? A show of hands.",
+    "start": 137
+  },
+  {
+    "text": "- Yeah, not bad.",
+    "start": 142
+  },
+  {
+    "text": "- I see quite a few hands.",
+    "start": 143
+  },
+  {
+    "text": "So if you haven't used AWS CDK,",
+    "start": 145
+  },
+  {
+    "text": "it is a framework that allows you",
+    "start": 149
+  },
+  {
+    "text": "to write your infrastructure\nas actual code,",
+    "start": 152
+  },
+  {
+    "text": "using familiar languages\nlike TypeScript or Python.",
+    "start": 156
+  },
+  {
+    "text": "Because it is object oriented,",
+    "start": 160
+  },
+  {
+    "text": "it allows you to write\nhigher-level abstractions,",
+    "start": 163
+  },
+  {
+    "text": "like VPC or a cluster within that VPC.",
+    "start": 167
+  },
+  {
+    "text": "Now, a web-based application\nis a common use case.",
+    "start": 171
+  },
+  {
+    "text": "And so we have in the AWS\nCDK a construct for that.",
+    "start": 176
+  },
+  {
+    "text": "So your network load\nbalance Fargate service",
+    "start": 181
+  },
+  {
+    "text": "will help you provision\nthe load balance service,",
+    "start": 185
+  },
+  {
+    "text": "and just with one construct.",
+    "start": 188
+  },
+  {
+    "text": "It's as simple as that.",
+    "start": 191
+  },
+  {
+    "text": "And because of using this\nhigher-level construct,",
+    "start": 193
+  },
+  {
+    "text": "your CDK code is much\nmore compact and readable.",
+    "start": 196
+  },
+  {
+    "text": "So this would have translated",
+    "start": 200
+  },
+  {
+    "text": "into over 400 lines of code",
+    "start": 202
+  },
+  {
+    "text": "if you would have written\nin CloudFormation.",
+    "start": 204
+  },
+  {
+    "text": "Now, because it's also using\nobject-oriented language,",
+    "start": 208
+  },
+  {
+    "text": "you have editor support,",
+    "start": 211
+  },
+  {
+    "text": "with inline documentation\nand auto complete.",
+    "start": 213
+  },
+  {
+    "text": "We used TypeScript in this example,",
+    "start": 217
+  },
+  {
+    "text": "but CDK also supports five\nother programming languages.",
+    "start": 220
+  },
+  {
+    "text": "- So as we've seen,",
+    "start": 224
+  },
+  {
+    "text": "automation plays a much\nbigger role in the cloud.",
+    "start": 226
+  },
+  {
+    "text": "And you could even go as far as saying,",
+    "start": 230
+  },
+  {
+    "text": "without automation, the cloud would look",
+    "start": 232
+  },
+  {
+    "text": "a lot more like just another data center.",
+    "start": 235
+  },
+  {
+    "text": "And we have very nice data centers,",
+    "start": 238
+  },
+  {
+    "text": "but usually customers don't ask us",
+    "start": 240
+  },
+  {
+    "text": "to build another data center for them.",
+    "start": 242
+  },
+  {
+    "text": "So cloud has become\nreally an essential part,",
+    "start": 244
+  },
+  {
+    "text": "or automation has become\na really essential part",
+    "start": 248
+  },
+  {
+    "text": "about what we're doing in the cloud.",
+    "start": 250
+  },
+  {
+    "text": "Now, as an architect,",
+    "start": 253
+  },
+  {
+    "text": "I always like to break things down",
+    "start": 254
+  },
+  {
+    "text": "and understand better the nuances.",
+    "start": 257
+  },
+  {
+    "text": "So let's do this for automation as well.",
+    "start": 259
+  },
+  {
+    "text": "'Cause automation in the\ncloud does actually quite",
+    "start": 262
+  },
+  {
+    "text": "a few things.",
+    "start": 265
+  },
+  {
+    "text": "We commonly think about it as\nprovisioning resources, right?",
+    "start": 266
+  },
+  {
+    "text": "And that's great,",
+    "start": 269
+  },
+  {
+    "text": "but by themselves the resources\ndon't really do much, right?",
+    "start": 270
+  },
+  {
+    "text": "I use a very simple example here of some,",
+    "start": 274
+  },
+  {
+    "text": "you know, EC2 instances, load\nbalancer, API gateway, right?",
+    "start": 276
+  },
+  {
+    "text": "You need to deploy code\nonto these instances,",
+    "start": 279
+  },
+  {
+    "text": "but then you still have\njust disconnected pieces.",
+    "start": 282
+  },
+  {
+    "text": "You also need to compose.",
+    "start": 285
+  },
+  {
+    "text": "You need to configure what talks to what",
+    "start": 287
+  },
+  {
+    "text": "so that these resources actually\nmake a working application.",
+    "start": 290
+  },
+  {
+    "text": "And then last but not least,",
+    "start": 295
+  },
+  {
+    "text": "you surely have some\nconfiguration settings.",
+    "start": 296
+  },
+  {
+    "text": "You might have a primary\nand a secondary database.",
+    "start": 299
+  },
+  {
+    "text": "You might change logging levels, right?",
+    "start": 301
+  },
+  {
+    "text": "There's configuration on top as well.",
+    "start": 303
+  },
+  {
+    "text": "So when we talk about cloud automation,",
+    "start": 305
+  },
+  {
+    "text": "it's no longer just\nprovisioning, but it really spans",
+    "start": 307
+  },
+  {
+    "text": "across all of those\nfour different aspects.",
+    "start": 310
+  },
+  {
+    "text": "- And today we are talking\nabout serverless application,",
+    "start": 315
+  },
+  {
+    "text": "so that changes our picture a little bit.",
+    "start": 318
+  },
+  {
+    "text": "Infrastructure provisioning\nis already done for you,",
+    "start": 321
+  },
+  {
+    "text": "and deployment is as easy\nas placing your ZIP file",
+    "start": 324
+  },
+  {
+    "text": "in a bucket.",
+    "start": 328
+  },
+  {
+    "text": "So when we talk about serverless,",
+    "start": 329
+  },
+  {
+    "text": "the two aspects that come more important",
+    "start": 332
+  },
+  {
+    "text": "is composition and configuration.",
+    "start": 334
+  },
+  {
+    "text": "Composition connects\nloosely coupled components",
+    "start": 339
+  },
+  {
+    "text": "into a single working application.",
+    "start": 342
+  },
+  {
+    "text": "It's also very closely\nrelated to granularity,",
+    "start": 346
+  },
+  {
+    "text": "whether you wrote two Lambda functions",
+    "start": 350
+  },
+  {
+    "text": "or a bunch of functions.",
+    "start": 352
+  },
+  {
+    "text": "The more functions you have,",
+    "start": 354
+  },
+  {
+    "text": "the more important the\ndependencies between them become.",
+    "start": 357
+  },
+  {
+    "text": "And these components are connected",
+    "start": 362
+  },
+  {
+    "text": "by services like Amazon\nSQS, SNS, or EventBridge,",
+    "start": 364
+  },
+  {
+    "text": "which then you have to configure",
+    "start": 370
+  },
+  {
+    "text": "so that you can either route\nthe message, transform,",
+    "start": 373
+  },
+  {
+    "text": "or filter out messages.",
+    "start": 377
+  },
+  {
+    "text": "- So both elements that\nSindhu mentioned here,",
+    "start": 380
+  },
+  {
+    "text": "they really have nothing to\ndo with infrastructure, right?",
+    "start": 382
+  },
+  {
+    "text": "This is application and topology.",
+    "start": 386
+  },
+  {
+    "text": "So we could even think about it",
+    "start": 389
+  },
+  {
+    "text": "that our slogan infrastructure as code",
+    "start": 391
+  },
+  {
+    "text": "in a serverless environment,",
+    "start": 394
+  },
+  {
+    "text": "which by definition doesn't concern itself",
+    "start": 395
+  },
+  {
+    "text": "with infrastructure because we do that,",
+    "start": 399
+  },
+  {
+    "text": "that we really, when we use automation,",
+    "start": 401
+  },
+  {
+    "text": "it is really application\narchitecture as code.",
+    "start": 403
+  },
+  {
+    "text": "What's the granularity?\nWhat talks too loud?",
+    "start": 407
+  },
+  {
+    "text": "Is that synchronous, asynchronous?",
+    "start": 410
+  },
+  {
+    "text": "Those are aspects of your\napplication architecture",
+    "start": 412
+  },
+  {
+    "text": "that you can now program.",
+    "start": 416
+  },
+  {
+    "text": "And you can program them",
+    "start": 418
+  },
+  {
+    "text": "in object-oriented languages with CDK.",
+    "start": 419
+  },
+  {
+    "text": "So now we could say this is\nreally application architecture",
+    "start": 421
+  },
+  {
+    "text": "as actual code.\n- Code.",
+    "start": 425
+  },
+  {
+    "text": "- And that leads to some\ninteresting insights.",
+    "start": 428
+  },
+  {
+    "text": "So let's recap very quickly.",
+    "start": 432
+  },
+  {
+    "text": "You have application code and\nautomation code side by side.",
+    "start": 434
+  },
+  {
+    "text": "You can use the same\nlanguage to do either one.",
+    "start": 437
+  },
+  {
+    "text": "So the question should be,",
+    "start": 442
+  },
+  {
+    "text": "can you do similar things on both sides?",
+    "start": 444
+  },
+  {
+    "text": "And the answer is yes.",
+    "start": 447
+  },
+  {
+    "text": "And the answer is actually you\ncan replace application code",
+    "start": 450
+  },
+  {
+    "text": "with automation code.",
+    "start": 454
+  },
+  {
+    "text": "That brings us to what refactoring",
+    "start": 456
+  },
+  {
+    "text": "to serverless is all about.",
+    "start": 458
+  },
+  {
+    "text": "Now, refactoring is not a new term.",
+    "start": 460
+  },
+  {
+    "text": "We borrowed that from Martin Fowler.",
+    "start": 462
+  },
+  {
+    "text": "He wrote a book about this\nabout quarter century,",
+    "start": 464
+  },
+  {
+    "text": "like almost 25 years ago.",
+    "start": 467
+  },
+  {
+    "text": "And that is about improving the structure",
+    "start": 469
+  },
+  {
+    "text": "and the design of your application",
+    "start": 472
+  },
+  {
+    "text": "without changing the functionality.",
+    "start": 475
+  },
+  {
+    "text": "So refactoring is not\nabout feature releases,",
+    "start": 477
+  },
+  {
+    "text": "it's about making the\nstructure of your code better.",
+    "start": 479
+  },
+  {
+    "text": "And people use this frequently",
+    "start": 483
+  },
+  {
+    "text": "in the context of test-driven development.",
+    "start": 484
+  },
+  {
+    "text": "Like, people call this the red,",
+    "start": 486
+  },
+  {
+    "text": "green, refactor development, right?",
+    "start": 489
+  },
+  {
+    "text": "You write a test with a specification",
+    "start": 490
+  },
+  {
+    "text": "of what the application should do.",
+    "start": 493
+  },
+  {
+    "text": "You haven't implemented that yet,",
+    "start": 495
+  },
+  {
+    "text": "so the test will be red.",
+    "start": 496
+  },
+  {
+    "text": "Then you implement the\nfunction, it goes green.",
+    "start": 497
+  },
+  {
+    "text": "And then you look at your code,",
+    "start": 500
+  },
+  {
+    "text": "and you improve your\ncode as a refactoring.",
+    "start": 501
+  },
+  {
+    "text": "And you do this in a continuous cycle.",
+    "start": 504
+  },
+  {
+    "text": "So a lot of development\ntools support this.",
+    "start": 506
+  },
+  {
+    "text": "Coming back to our world, right,",
+    "start": 509
+  },
+  {
+    "text": "the serverless cloud world,",
+    "start": 511
+  },
+  {
+    "text": "we can also feel that we also feel",
+    "start": 512
+  },
+  {
+    "text": "that we can improve the\nstructure of our application",
+    "start": 514
+  },
+  {
+    "text": "without changing the functionality.",
+    "start": 518
+  },
+  {
+    "text": "And we do that mainly by\nreplacing application code",
+    "start": 521
+  },
+  {
+    "text": "with automation code,\nspecifically CDK code.",
+    "start": 525
+  },
+  {
+    "text": "How that works we best\nshow with a simple example.",
+    "start": 529
+  },
+  {
+    "text": "- Yeah, we talked about\nrefactoring to serverless.",
+    "start": 532
+  },
+  {
+    "text": "So let's look at an example.",
+    "start": 535
+  },
+  {
+    "text": "On your left you have a\nsimple lambda function.",
+    "start": 537
+  },
+  {
+    "text": "It's executing some code,",
+    "start": 541
+  },
+  {
+    "text": "and at the end it's sending\nthe result to an SQSQ.",
+    "start": 543
+  },
+  {
+    "text": "So what's wrong with this code?",
+    "start": 548
+  },
+  {
+    "text": "It's a trick question.\nThere's nothing wrong.",
+    "start": 553
+  },
+  {
+    "text": "This works absolutely fine.",
+    "start": 556
+  },
+  {
+    "text": "Then why would you want to refactor this?",
+    "start": 558
+  },
+  {
+    "text": "Well, if you see,",
+    "start": 561
+  },
+  {
+    "text": "the Lambda function is\nmixing your business logic",
+    "start": 563
+  },
+  {
+    "text": "with your application\ntopology and integration.",
+    "start": 568
+  },
+  {
+    "text": "Which event is sent where\nis buried in that code.",
+    "start": 572
+  },
+  {
+    "text": "Say, in future, you want to\nchange from SQS to an SNS.",
+    "start": 577
+  },
+  {
+    "text": "You'll have to find the application code,",
+    "start": 582
+  },
+  {
+    "text": "make that change.",
+    "start": 584
+  },
+  {
+    "text": "Thanks to serverless, we can do better.",
+    "start": 587
+  },
+  {
+    "text": "So let's look at how we\ncan refactor this example.",
+    "start": 590
+  },
+  {
+    "text": "On the top is now the\nrefactored application code.",
+    "start": 596
+  },
+  {
+    "text": "It's using Lambda Destination.",
+    "start": 599
+  },
+  {
+    "text": "Lambda Destination is a feature",
+    "start": 602
+  },
+  {
+    "text": "by which Lambda runtime can\nsend the function's result",
+    "start": 605
+  },
+  {
+    "text": "to another AWS service, like SQS,",
+    "start": 611
+  },
+  {
+    "text": "SNS, EventBridge, or even\nanother Lambda function.",
+    "start": 615
+  },
+  {
+    "text": "And all of this without\nwriting application code.",
+    "start": 620
+  },
+  {
+    "text": "So your function as...",
+    "start": 625
+  },
+  {
+    "text": "Oh, it has-\n- So I'm not clicking.",
+    "start": 627
+  },
+  {
+    "text": "Can we stop moving slides?",
+    "start": 630
+  },
+  {
+    "text": "Okay, thank you.",
+    "start": 632
+  },
+  {
+    "text": "Let's go back. Sorry.\n- Let's go back.",
+    "start": 635
+  },
+  {
+    "text": "- [Gregor] I'm not\ntouching. Sorry, go ahead.",
+    "start": 636
+  },
+  {
+    "text": "- [Sindhu] Okay, where were we?",
+    "start": 639
+  },
+  {
+    "text": "So now look at this example on your...",
+    "start": 641
+  },
+  {
+    "text": "You are looking at Lambda Destinations.",
+    "start": 644
+  },
+  {
+    "text": "As we said, Lambda Destinations\ncan now send a message",
+    "start": 646
+  },
+  {
+    "text": "without you actually writing the code.",
+    "start": 650
+  },
+  {
+    "text": "So your function on the\ntop has become small.",
+    "start": 652
+  },
+  {
+    "text": "Less code, which means less maintenance.",
+    "start": 657
+  },
+  {
+    "text": "And where is that topology?",
+    "start": 661
+  },
+  {
+    "text": "The topology is in your\nautomation code at the bottom.",
+    "start": 663
+  },
+  {
+    "text": "What this means is, let's go\nback to that same scenario,",
+    "start": 668
+  },
+  {
+    "text": "if you are changing your SQS to SNS,",
+    "start": 671
+  },
+  {
+    "text": "that change will come\nin the automation code",
+    "start": 675
+  },
+  {
+    "text": "and not the application.",
+    "start": 678
+  },
+  {
+    "text": "So this gives you the benefit",
+    "start": 681
+  },
+  {
+    "text": "of having a clear separation of concern",
+    "start": 684
+  },
+  {
+    "text": "between your business logic\nand application topology.",
+    "start": 688
+  },
+  {
+    "text": "And here you see we are using\nseeing actual references",
+    "start": 692
+  },
+  {
+    "text": "of the services,",
+    "start": 695
+  },
+  {
+    "text": "and not passing in environment\nvariables like CUE URL.",
+    "start": 696
+  },
+  {
+    "text": "So that was a simple\nexample. Let's move on.",
+    "start": 703
+  },
+  {
+    "text": "Take a little bit complex example.",
+    "start": 706
+  },
+  {
+    "text": "What I wanna show you is\nrefactoring not only occurs",
+    "start": 709
+  },
+  {
+    "text": "at the code level,",
+    "start": 714
+  },
+  {
+    "text": "it can also occur at your architecture,",
+    "start": 715
+  },
+  {
+    "text": "within your workflows or orchestrator.",
+    "start": 719
+  },
+  {
+    "text": "So to see that, let's see this example.",
+    "start": 722
+  },
+  {
+    "text": "I have a ride booking app.",
+    "start": 725
+  },
+  {
+    "text": "There are three Lambda functions in orange",
+    "start": 728
+  },
+  {
+    "text": "that handle a customer's booking:",
+    "start": 732
+  },
+  {
+    "text": "your booking service, the payment service,",
+    "start": 734
+  },
+  {
+    "text": "and the driver assignment service.",
+    "start": 738
+  },
+  {
+    "text": "And the coordination between these service",
+    "start": 741
+  },
+  {
+    "text": "is choreographed using\nevents through EventBridge.",
+    "start": 744
+  },
+  {
+    "text": "This is an event-driven architecture.",
+    "start": 750
+  },
+  {
+    "text": "It is scalable and flexible.",
+    "start": 752
+  },
+  {
+    "text": "But you'll notice that\nthe Lambda function plays",
+    "start": 755
+  },
+  {
+    "text": "a very important role\nin this architecture.",
+    "start": 759
+  },
+  {
+    "text": "It needs to pass events as a response",
+    "start": 763
+  },
+  {
+    "text": "so that the next step in\nyour workflow is triggered.",
+    "start": 766
+  },
+  {
+    "text": "Also, our business flow is distributed",
+    "start": 771
+  },
+  {
+    "text": "across these three services,",
+    "start": 775
+  },
+  {
+    "text": "so to manage the transactional\nscope becomes difficult.",
+    "start": 777
+  },
+  {
+    "text": "Say a service goes down.\nNo events get passed.",
+    "start": 783
+  },
+  {
+    "text": "So we can do better.",
+    "start": 787
+  },
+  {
+    "text": "To address this challenge,",
+    "start": 788
+  },
+  {
+    "text": "now let's look at the refactored design.",
+    "start": 790
+  },
+  {
+    "text": "In this refactored design,",
+    "start": 794
+  },
+  {
+    "text": "we replaced the choreography\nwith a step function",
+    "start": 796
+  },
+  {
+    "text": "that acts as an orchestrator.",
+    "start": 801
+  },
+  {
+    "text": "The step function is now going",
+    "start": 804
+  },
+  {
+    "text": "to invoke all the three\nLambdas in a specific order.",
+    "start": 805
+  },
+  {
+    "text": "So now your Lambdas are\nplaying a passive role",
+    "start": 811
+  },
+  {
+    "text": "in this architecture,",
+    "start": 816
+  },
+  {
+    "text": "and you have a complete\nvisibility of your workflow.",
+    "start": 817
+  },
+  {
+    "text": "You can track the status\nof each workflow instance.",
+    "start": 822
+  },
+  {
+    "text": "Now, with architectures,\nthere's always a trade-off.",
+    "start": 827
+  },
+  {
+    "text": "So let's talk about that.",
+    "start": 830
+  },
+  {
+    "text": "Your architecture is now\na little tightly coupled,",
+    "start": 832
+  },
+  {
+    "text": "with a single point of maintenance.",
+    "start": 836
+  },
+  {
+    "text": "Now, this could be good,\nif you want control.",
+    "start": 840
+  },
+  {
+    "text": "However, this could become a bottleneck",
+    "start": 843
+  },
+  {
+    "text": "if your business is constantly evolving,",
+    "start": 846
+  },
+  {
+    "text": "and you need to add or remove services.",
+    "start": 849
+  },
+  {
+    "text": "So that, to summarize, was\nhow to look at refactoring.",
+    "start": 854
+  },
+  {
+    "text": "Let's look at another example, Gregor.",
+    "start": 859
+  },
+  {
+    "text": "- [Gregor] Yeah. So Sindhu\nshowed two examples, right?",
+    "start": 862
+  },
+  {
+    "text": "We didn't change any functionality,",
+    "start": 864
+  },
+  {
+    "text": "but we changed the structure\nof the application.",
+    "start": 866
+  },
+  {
+    "text": "So I have one more example,",
+    "start": 870
+  },
+  {
+    "text": "and that has to do with\none of our favorite words",
+    "start": 871
+  },
+  {
+    "text": "when we talk about distributed systems,",
+    "start": 874
+  },
+  {
+    "text": "and that's the word coupling.",
+    "start": 876
+  },
+  {
+    "text": "Because refactoring to serverless",
+    "start": 878
+  },
+  {
+    "text": "can also help us reduce coupling.",
+    "start": 880
+  },
+  {
+    "text": "So this is based on a real example",
+    "start": 883
+  },
+  {
+    "text": "that I actually took out\nof some workshop code.",
+    "start": 885
+  },
+  {
+    "text": "And again, it sort of starts very simple.",
+    "start": 887
+  },
+  {
+    "text": "It's a Lambda function,",
+    "start": 889
+  },
+  {
+    "text": "and that function does\nsome business logic,",
+    "start": 890
+  },
+  {
+    "text": "but then it writes the results\nto a DynamoDB database,",
+    "start": 892
+  },
+  {
+    "text": "and then it also publishes an event.",
+    "start": 896
+  },
+  {
+    "text": "And again, you will think, okay, that is,",
+    "start": 899
+  },
+  {
+    "text": "ooh, we have the clicker thing again.",
+    "start": 901
+  },
+  {
+    "text": "Do I go back to...",
+    "start": 910
+  },
+  {
+    "text": "Yeah, this was for the people\nthat didn't pay attention.",
+    "start": 911
+  },
+  {
+    "text": "You get the previous slides.",
+    "start": 913
+  },
+  {
+    "text": "See, like, look now.",
+    "start": 914
+  },
+  {
+    "text": "You know, choreography,\norchestration. Okay, good,",
+    "start": 916
+  },
+  {
+    "text": "Good, good, good.",
+    "start": 919
+  },
+  {
+    "text": "- [Sindhu] We'll have a quiz at the end.",
+    "start": 920
+  },
+  {
+    "text": "- [Gregor] Yeah, it's Monday\nfolks, so we can make it.",
+    "start": 921
+  },
+  {
+    "text": "All right, here we were. So there we go.",
+    "start": 924
+  },
+  {
+    "text": "DynamoDB and sending, oh,\nplease, please. Come on.",
+    "start": 926
+  },
+  {
+    "text": "I promise I don't do anything.",
+    "start": 930
+  },
+  {
+    "text": "- [Sindhu] I should take away\nthe clicker from you, Gregor.",
+    "start": 933
+  },
+  {
+    "text": "- [Gregor] Maybe you click. I don't know.",
+    "start": 935
+  },
+  {
+    "text": "Maybe it's me.",
+    "start": 936
+  },
+  {
+    "text": "So anyway, the Lambda\nfunction does two things.",
+    "start": 939
+  },
+  {
+    "text": "The slide will come, right?\n- Oh, right here.",
+    "start": 941
+  },
+  {
+    "text": "- [Gregor] It updates the DynamoDB table,",
+    "start": 942
+  },
+  {
+    "text": "and it sends an event.",
+    "start": 944
+  },
+  {
+    "text": "And same consideration, right?",
+    "start": 946
+  },
+  {
+    "text": "This is code that people write,",
+    "start": 947
+  },
+  {
+    "text": "but it has some issues.",
+    "start": 949
+  },
+  {
+    "text": "For one is, again,",
+    "start": 951
+  },
+  {
+    "text": "you have the topology mixed in your code.",
+    "start": 952
+  },
+  {
+    "text": "The database you could\nconsider something local",
+    "start": 954
+  },
+  {
+    "text": "to the function.",
+    "start": 957
+  },
+  {
+    "text": "So obviously write to the DynamoDB table.",
+    "start": 958
+  },
+  {
+    "text": "But sending the event that has something",
+    "start": 960
+  },
+  {
+    "text": "to do with other functions\nand communicating",
+    "start": 962
+  },
+  {
+    "text": "and mixing the two is\nmaybe not a good idea,",
+    "start": 965
+  },
+  {
+    "text": "because what if the event needs\nto go somewhere else, right?",
+    "start": 967
+  },
+  {
+    "text": "You need to modify your application code.",
+    "start": 970
+  },
+  {
+    "text": "But the more serious issue is probably",
+    "start": 974
+  },
+  {
+    "text": "that you have no transactional integrity",
+    "start": 976
+  },
+  {
+    "text": "across the two things.",
+    "start": 979
+  },
+  {
+    "text": "What if you write to the database,",
+    "start": 980
+  },
+  {
+    "text": "and then you send the event,",
+    "start": 982
+  },
+  {
+    "text": "but for whatever reason\nthe event sending fails?",
+    "start": 983
+  },
+  {
+    "text": "Could be a runtime problem.",
+    "start": 986
+  },
+  {
+    "text": "Could be also a coding problem, right?",
+    "start": 987
+  },
+  {
+    "text": "Then you have your system out of whack.",
+    "start": 989
+  },
+  {
+    "text": "So then you need to retry",
+    "start": 991
+  },
+  {
+    "text": "or undo the database update, right?",
+    "start": 992
+  },
+  {
+    "text": "Immediately you're\nstarting a lot more code",
+    "start": 995
+  },
+  {
+    "text": "than you should actually have to.",
+    "start": 997
+  },
+  {
+    "text": "And as we said before, good job,",
+    "start": 1000
+  },
+  {
+    "text": "we're back on track here.",
+    "start": 1003
+  },
+  {
+    "text": "- Finally there.\n- As we said before,",
+    "start": 1004
+  },
+  {
+    "text": "there is a better way to do this.",
+    "start": 1006
+  },
+  {
+    "text": "- [Sindhu] Okay.",
+    "start": 1009
+  },
+  {
+    "text": "- [Gregor] There's also a better\nway to handle the clicker.",
+    "start": 1010
+  },
+  {
+    "text": "So the better way to do this",
+    "start": 1013
+  },
+  {
+    "text": "is DynamoDB has a feature\ncalled DynamoDB Streams.",
+    "start": 1014
+  },
+  {
+    "text": "And that can actually publish\nan event every time you insert",
+    "start": 1020
+  },
+  {
+    "text": "or update something into the table.",
+    "start": 1024
+  },
+  {
+    "text": "Now, what you can do is\nyou can read that stream",
+    "start": 1026
+  },
+  {
+    "text": "from EventBridge Pipes and\npublish the event that way.",
+    "start": 1029
+  },
+  {
+    "text": "So what happens is that now\nall the application does",
+    "start": 1033
+  },
+  {
+    "text": "is update the table,",
+    "start": 1037
+  },
+  {
+    "text": "and it has no knowledge from\nwhat happens afterwards.",
+    "start": 1039
+  },
+  {
+    "text": "So these two aspects are\ncompletely decoupled,",
+    "start": 1043
+  },
+  {
+    "text": "and that's very nice.",
+    "start": 1045
+  },
+  {
+    "text": "The application knows about the database",
+    "start": 1047
+  },
+  {
+    "text": "that's part of the Lambda function,",
+    "start": 1049
+  },
+  {
+    "text": "and all the event story,",
+    "start": 1050
+  },
+  {
+    "text": "that is done in the background.",
+    "start": 1052
+  },
+  {
+    "text": "And it has retries and cues",
+    "start": 1054
+  },
+  {
+    "text": "and all the other things to make sure",
+    "start": 1055
+  },
+  {
+    "text": "that that stays fully consistent.",
+    "start": 1057
+  },
+  {
+    "text": "Out of curiosity, who has\nactually used EventBridge Pipes?",
+    "start": 1061
+  },
+  {
+    "text": "Ah, okay. More hands.",
+    "start": 1064
+  },
+  {
+    "text": "And we launched last year,",
+    "start": 1066
+  },
+  {
+    "text": "so last year we only had a\nfew hands, understandably.",
+    "start": 1067
+  },
+  {
+    "text": "It's actually a very nice tool",
+    "start": 1069
+  },
+  {
+    "text": "to make these kind of connections, right?",
+    "start": 1071
+  },
+  {
+    "text": "To decouple your application from having",
+    "start": 1074
+  },
+  {
+    "text": "to send these kind of events.",
+    "start": 1077
+  },
+  {
+    "text": "And here we have the code.",
+    "start": 1079
+  },
+  {
+    "text": "I'll be very careful.",
+    "start": 1080
+  },
+  {
+    "text": "So here we have the code, right?",
+    "start": 1085
+  },
+  {
+    "text": "What we had on the left-hand side.",
+    "start": 1087
+  },
+  {
+    "text": "Have some business logic,\nwrite it in the table,",
+    "start": 1089
+  },
+  {
+    "text": "and then send the event.",
+    "start": 1092
+  },
+  {
+    "text": "Looks harmless enough, but\nas we explained, right,",
+    "start": 1093
+  },
+  {
+    "text": "this has issues because you need",
+    "start": 1095
+  },
+  {
+    "text": "to build your whole\ntransactional logic around it.",
+    "start": 1098
+  },
+  {
+    "text": "On the right-hand side,\nlife is much better",
+    "start": 1100
+  },
+  {
+    "text": "because all that code is essentially gone",
+    "start": 1102
+  },
+  {
+    "text": "from the Lambda function,",
+    "start": 1105
+  },
+  {
+    "text": "and the runtime deals with that, right?",
+    "start": 1107
+  },
+  {
+    "text": "Yep, thank you.",
+    "start": 1110
+  },
+  {
+    "text": "The runtime deals with\nthat as it should, right?",
+    "start": 1112
+  },
+  {
+    "text": "This topology, this event\nstuff, the resending of events,",
+    "start": 1114
+  },
+  {
+    "text": "time to live, latency, all\nthese kind of things, right?",
+    "start": 1118
+  },
+  {
+    "text": "That is really the runtime's job,",
+    "start": 1121
+  },
+  {
+    "text": "not your application's code job.",
+    "start": 1124
+  },
+  {
+    "text": "So having that separation\nis a real advantage,",
+    "start": 1126
+  },
+  {
+    "text": "and that's the essence of\nmany of these refactorings.",
+    "start": 1130
+  },
+  {
+    "text": "- [Sindhu] Looks like we have to go",
+    "start": 1137
+  },
+  {
+    "text": "to our manual step of clicking.",
+    "start": 1139
+  },
+  {
+    "text": "- Oh, manual clicking.\nOkay, it's your turn.",
+    "start": 1140
+  },
+  {
+    "text": "I will click.",
+    "start": 1142
+  },
+  {
+    "text": "- Interference from other rooms.",
+    "start": 1143
+  },
+  {
+    "text": "- Ah, okay. Yeah, no worries.",
+    "start": 1144
+  },
+  {
+    "text": "It's like, technology, sometimes\nit gives us some trouble.",
+    "start": 1145
+  },
+  {
+    "text": "Go ahead.",
+    "start": 1149
+  },
+  {
+    "text": "- So we saw three\nexamples today that showed",
+    "start": 1150
+  },
+  {
+    "text": "how you can improve the design",
+    "start": 1153
+  },
+  {
+    "text": "of your serverless application,",
+    "start": 1155
+  },
+  {
+    "text": "by writing less application\ncode and more automation code.",
+    "start": 1157
+  },
+  {
+    "text": "The automation code better\nutilizes serverless capabilities",
+    "start": 1163
+  },
+  {
+    "text": "and brings a clear separation of concern.",
+    "start": 1168
+  },
+  {
+    "text": "So we started building a\ncatalog of these refactorings.",
+    "start": 1172
+  },
+  {
+    "text": "And when we did that, we\nstarted seeing the reasons",
+    "start": 1177
+  },
+  {
+    "text": "for why you would want to refactor.",
+    "start": 1180
+  },
+  {
+    "text": "So let's talk through these reasons now.",
+    "start": 1184
+  },
+  {
+    "text": "The first one we already talked about",
+    "start": 1187
+  },
+  {
+    "text": "of better utilizing your\nserverless platform capabilities",
+    "start": 1190
+  },
+  {
+    "text": "by using Lambda Destination\nor EventBridge Pipes.",
+    "start": 1195
+  },
+  {
+    "text": "You get the benefit of the\nscale and robustness of AWS.",
+    "start": 1199
+  },
+  {
+    "text": "Secondly, again, we are\ngoing top to bottom,",
+    "start": 1206
+  },
+  {
+    "text": "if you're trying to figure out where I am,",
+    "start": 1209
+  },
+  {
+    "text": "the second one, AWS is constantly evolving",
+    "start": 1211
+  },
+  {
+    "text": "and adding features.",
+    "start": 1216
+  },
+  {
+    "text": "So by incorporating these features,",
+    "start": 1218
+  },
+  {
+    "text": "something that you would\nhave built on your own,",
+    "start": 1221
+  },
+  {
+    "text": "but by refactoring",
+    "start": 1224
+  },
+  {
+    "text": "to use serverless out-of-the-box features,",
+    "start": 1225
+  },
+  {
+    "text": "you can also help reduce\nyour maintenance code,",
+    "start": 1229
+  },
+  {
+    "text": "because you don't have to\nnow worry about your runtime",
+    "start": 1233
+  },
+  {
+    "text": "of Lambda getting deprecated\nor having to patch things.",
+    "start": 1236
+  },
+  {
+    "text": "Now, the inverse could also be true.",
+    "start": 1241
+  },
+  {
+    "text": "That is, your application\nneeds have evolved,",
+    "start": 1244
+  },
+  {
+    "text": "and it cannot be satisfied\nwith the service capabilities.",
+    "start": 1248
+  },
+  {
+    "text": "Now, in which case, you will\nremove it from your automation",
+    "start": 1252
+  },
+  {
+    "text": "and implement it as part\nof your application code.",
+    "start": 1256
+  },
+  {
+    "text": "Now, we talked about",
+    "start": 1262
+  },
+  {
+    "text": "how it can improve\nruntime characteristics,",
+    "start": 1263
+  },
+  {
+    "text": "like latency or availability\nor transactional integrity.",
+    "start": 1267
+  },
+  {
+    "text": "Another important runtime\ncharacteristic is cost,",
+    "start": 1273
+  },
+  {
+    "text": "something that we see our\ncustomers talk all the time.",
+    "start": 1277
+  },
+  {
+    "text": "So if you can remove a Lambda,",
+    "start": 1281
+  },
+  {
+    "text": "replace that with an\nexisting service integration,",
+    "start": 1284
+  },
+  {
+    "text": "you can save the cost of\nthat Lambda invocation.",
+    "start": 1288
+  },
+  {
+    "text": "Now, this is what we mean by\nrefactoring to serverless.",
+    "start": 1292
+  },
+  {
+    "text": "Serverless is the highest form",
+    "start": 1298
+  },
+  {
+    "text": "of leveraging the platform capabilities.",
+    "start": 1301
+  },
+  {
+    "text": "And refactoring to that goal\nmeans using the platform",
+    "start": 1305
+  },
+  {
+    "text": "for all it can do.",
+    "start": 1309
+  },
+  {
+    "text": "So the patterns that we talked\nabout can be categorized",
+    "start": 1312
+  },
+  {
+    "text": "into these dimensions.",
+    "start": 1316
+  },
+  {
+    "text": "- [Gregor] And you see the\nexamples here we have, right?",
+    "start": 1320
+  },
+  {
+    "text": "- Yeah. So we covered the first one.",
+    "start": 1322
+  },
+  {
+    "text": "I covered the Lambda Destination example,",
+    "start": 1325
+  },
+  {
+    "text": "and Gregor talked about the last one,",
+    "start": 1328
+  },
+  {
+    "text": "which is the DynamoDB Stream.",
+    "start": 1330
+  },
+  {
+    "text": "Another example would be\nif you have filtering logic",
+    "start": 1333
+  },
+  {
+    "text": "in your consumer applications,",
+    "start": 1337
+  },
+  {
+    "text": "you can remove that and\nput it in EventBridge.",
+    "start": 1339
+  },
+  {
+    "text": "That was about talking\nleveraging platform capabilities.",
+    "start": 1344
+  },
+  {
+    "text": "The next one is AWS evolving.",
+    "start": 1347
+  },
+  {
+    "text": "Just to throw stats,",
+    "start": 1352
+  },
+  {
+    "text": "last year AWS released\n3,300 service features.",
+    "start": 1353
+  },
+  {
+    "text": "So that means you have\na lot more opportunities",
+    "start": 1361
+  },
+  {
+    "text": "to take benefit from that.",
+    "start": 1364
+  },
+  {
+    "text": "- [Gregor] Yeah, and we're at re:Invent,",
+    "start": 1366
+  },
+  {
+    "text": "so I'm sure more good\nthings will come, right?",
+    "start": 1367
+  },
+  {
+    "text": "- Yeah. And it started coming in too.",
+    "start": 1369
+  },
+  {
+    "text": "So let's me talk about the first one.",
+    "start": 1373
+  },
+  {
+    "text": "So this is an example in your\nservice integration space.",
+    "start": 1376
+  },
+  {
+    "text": "Step functions can now directly integrate",
+    "start": 1380
+  },
+  {
+    "text": "with over 200 services.",
+    "start": 1383
+  },
+  {
+    "text": "So you can directly\nconnect from step functions",
+    "start": 1385
+  },
+  {
+    "text": "to any AWS services using\nthe AWS SDK integration.",
+    "start": 1388
+  },
+  {
+    "text": "What that means is, say you\nhave a Rekognition task.",
+    "start": 1393
+  },
+  {
+    "text": "From step functions,",
+    "start": 1397
+  },
+  {
+    "text": "you can directly call the Rekognition API,",
+    "start": 1398
+  },
+  {
+    "text": "eliminating the need of a Lambda function.",
+    "start": 1402
+  },
+  {
+    "text": "Likewise, from step functions,",
+    "start": 1405
+  },
+  {
+    "text": "you can directly read DynamoDB tables,",
+    "start": 1407
+  },
+  {
+    "text": "again, eliminating Lambda functions.",
+    "start": 1410
+  },
+  {
+    "text": "This means there is less moving parts,",
+    "start": 1413
+  },
+  {
+    "text": "less code to maintain, lowering your cost.",
+    "start": 1416
+  },
+  {
+    "text": "Talking about the reverse,",
+    "start": 1423
+  },
+  {
+    "text": "your application needs have evolved.",
+    "start": 1424
+  },
+  {
+    "text": "And say, for example,",
+    "start": 1428
+  },
+  {
+    "text": "you have a very sophisticated\npattern matching",
+    "start": 1429
+  },
+  {
+    "text": "that cannot be done\nthrough EventBridge rules.",
+    "start": 1433
+  },
+  {
+    "text": "We have seen customers do that too.",
+    "start": 1436
+  },
+  {
+    "text": "They take that logic out and\nbuild it in a Lambda function.",
+    "start": 1438
+  },
+  {
+    "text": "And if you are looking",
+    "start": 1444
+  },
+  {
+    "text": "to improve your runtime characteristics,",
+    "start": 1446
+  },
+  {
+    "text": "we have quite a few refactorings for you.",
+    "start": 1448
+  },
+  {
+    "text": "Let's look at the bottom two.",
+    "start": 1451
+  },
+  {
+    "text": "So I covered this use case earlier",
+    "start": 1454
+  },
+  {
+    "text": "with the ride booking app,",
+    "start": 1457
+  },
+  {
+    "text": "where we replaced the choreography",
+    "start": 1459
+  },
+  {
+    "text": "with a step function orchestrator.",
+    "start": 1461
+  },
+  {
+    "text": "Now, because of the trade-offs,\nremember, that was involved,",
+    "start": 1465
+  },
+  {
+    "text": "we also see that you can go\nin the opposite direction.",
+    "start": 1468
+  },
+  {
+    "text": "So we have customers who\nreplace their orchestrator",
+    "start": 1473
+  },
+  {
+    "text": "with a choreography,\nand that is also valid,",
+    "start": 1477
+  },
+  {
+    "text": "depending on what you\nwant to achieve at the end",
+    "start": 1481
+  },
+  {
+    "text": "for your use case.",
+    "start": 1484
+  },
+  {
+    "text": "So that was our catalog of refactoring.",
+    "start": 1488
+  },
+  {
+    "text": "- So yeah.",
+    "start": 1493
+  },
+  {
+    "text": "So where we are is we, again,",
+    "start": 1494
+  },
+  {
+    "text": "we said the application code,",
+    "start": 1495
+  },
+  {
+    "text": "automation code achieve the same thing,",
+    "start": 1497
+  },
+  {
+    "text": "use the same language.",
+    "start": 1499
+  },
+  {
+    "text": "You can shift from one to the other,",
+    "start": 1501
+  },
+  {
+    "text": "most of the time from\napplication to automation,",
+    "start": 1503
+  },
+  {
+    "text": "but in some cases the other\nway around, if you need to.",
+    "start": 1505
+  },
+  {
+    "text": "And the orchestration choreography\nexamples were very nice",
+    "start": 1508
+  },
+  {
+    "text": "because we're not here to lecture sort",
+    "start": 1511
+  },
+  {
+    "text": "of there's one right way.",
+    "start": 1513
+  },
+  {
+    "text": "Sometimes both directions are viable.",
+    "start": 1515
+  },
+  {
+    "text": "And it's good to give\nnames to these things",
+    "start": 1517
+  },
+  {
+    "text": "and to understand the trade-offs",
+    "start": 1519
+  },
+  {
+    "text": "so it becomes much easier",
+    "start": 1521
+  },
+  {
+    "text": "to talk about these kind of refactorings.",
+    "start": 1522
+  },
+  {
+    "text": "Now, we need to confess one little thing.",
+    "start": 1525
+  },
+  {
+    "text": "When we borrowed the word refactoring,",
+    "start": 1528
+  },
+  {
+    "text": "what we are doing here\nis slightly different",
+    "start": 1530
+  },
+  {
+    "text": "than the original Martin\nFowler version, right?",
+    "start": 1533
+  },
+  {
+    "text": "We are not introducing a\nvariable or extracting a method",
+    "start": 1534
+  },
+  {
+    "text": "in your source code, right?",
+    "start": 1538
+  },
+  {
+    "text": "These are distributed systems.",
+    "start": 1539
+  },
+  {
+    "text": "So if you take a Lambda function out,",
+    "start": 1541
+  },
+  {
+    "text": "you get some nice properties.",
+    "start": 1544
+  },
+  {
+    "text": "But if you add another component,",
+    "start": 1545
+  },
+  {
+    "text": "that might have an impact on latency,",
+    "start": 1547
+  },
+  {
+    "text": "runtime, perhaps even cost.",
+    "start": 1550
+  },
+  {
+    "text": "So now we wanna talk a little bit about,",
+    "start": 1552
+  },
+  {
+    "text": "how true are these refactorings really?",
+    "start": 1554
+  },
+  {
+    "text": "And do they have an impact\non the operational aspects?",
+    "start": 1558
+  },
+  {
+    "text": "- So let's look at the\nexample that I talked about",
+    "start": 1562
+  },
+  {
+    "text": "with Lambda Destination.",
+    "start": 1565
+  },
+  {
+    "text": "Now, did that preserve the behavior?",
+    "start": 1567
+  },
+  {
+    "text": "Well, it turns out there\nwere a few nuances.",
+    "start": 1571
+  },
+  {
+    "text": "The first, you know Lambdas\ncan be invoked synchronously",
+    "start": 1574
+  },
+  {
+    "text": "or asynchronously.",
+    "start": 1578
+  },
+  {
+    "text": "But Lambda Destinations\nwill only triggered",
+    "start": 1580
+  },
+  {
+    "text": "if your function is called asynchronously.",
+    "start": 1583
+  },
+  {
+    "text": "Now, in an event-driven architecture,",
+    "start": 1587
+  },
+  {
+    "text": "usually this doesn't matter.",
+    "start": 1589
+  },
+  {
+    "text": "But if you have a specific use case",
+    "start": 1592
+  },
+  {
+    "text": "where your functions are\ncalled synchronously,",
+    "start": 1595
+  },
+  {
+    "text": "say you have a real-time\nrequest response model,",
+    "start": 1597
+  },
+  {
+    "text": "the refactoring won't work.",
+    "start": 1601
+  },
+  {
+    "text": "The next one was with the message payload.",
+    "start": 1606
+  },
+  {
+    "text": "So look at your screen.",
+    "start": 1610
+  },
+  {
+    "text": "On your left is the message",
+    "start": 1613
+  },
+  {
+    "text": "that was sent when you\ndirectly wrote the code,",
+    "start": 1615
+  },
+  {
+    "text": "and on your right is the message",
+    "start": 1618
+  },
+  {
+    "text": "from Lambda Destination.",
+    "start": 1621
+  },
+  {
+    "text": "The Lambda Destination\nwraps an event envelope,",
+    "start": 1624
+  },
+  {
+    "text": "which adds additional metadata\nalong with the message.",
+    "start": 1628
+  },
+  {
+    "text": "What does this mean?",
+    "start": 1633
+  },
+  {
+    "text": "This means that at your consumers,",
+    "start": 1634
+  },
+  {
+    "text": "you will now have to pass the payload",
+    "start": 1637
+  },
+  {
+    "text": "and extract the necessary information.",
+    "start": 1640
+  },
+  {
+    "text": "The next one is about",
+    "start": 1646
+  },
+  {
+    "text": "when the Lambda Destination get triggered.",
+    "start": 1648
+  },
+  {
+    "text": "Lambda Destination gets triggered",
+    "start": 1652
+  },
+  {
+    "text": "at the end of your function invocation.",
+    "start": 1654
+  },
+  {
+    "text": "Now, if you have a specific use case",
+    "start": 1658
+  },
+  {
+    "text": "where you need to send the\nmessage at a certain point,",
+    "start": 1661
+  },
+  {
+    "text": "well, this won't work.",
+    "start": 1665
+  },
+  {
+    "text": "Maybe at that time you\nshould probably think",
+    "start": 1666
+  },
+  {
+    "text": "about splitting the function.",
+    "start": 1668
+  },
+  {
+    "text": "- [Gregor] Yeah, to be honest,",
+    "start": 1670
+  },
+  {
+    "text": "in an asynchronous environment,",
+    "start": 1671
+  },
+  {
+    "text": "the first argument would\nbe, if that matters, right,",
+    "start": 1672
+  },
+  {
+    "text": "there might be something else\nwrong with the architecture.",
+    "start": 1675
+  },
+  {
+    "text": "The only case we could really think about",
+    "start": 1678
+  },
+  {
+    "text": "is if you have a very expensive operation,",
+    "start": 1680
+  },
+  {
+    "text": "something that takes a lot of time,",
+    "start": 1682
+  },
+  {
+    "text": "and you wanna send the message",
+    "start": 1684
+  },
+  {
+    "text": "before you do that processing,",
+    "start": 1685
+  },
+  {
+    "text": "and I think then the\nright answer would be,",
+    "start": 1687
+  },
+  {
+    "text": "why don't you split\nthat into two functions?",
+    "start": 1689
+  },
+  {
+    "text": "- [Sindhu] So what we wanna\ntake out of this is, yes,",
+    "start": 1692
+  },
+  {
+    "text": "there could be some nuances,",
+    "start": 1695
+  },
+  {
+    "text": "but always look at the bigger picture.",
+    "start": 1697
+  },
+  {
+    "text": "By doing the refactoring,",
+    "start": 1699
+  },
+  {
+    "text": "you gained a higher resilience\nand transactional integrity.",
+    "start": 1701
+  },
+  {
+    "text": "- So let's come back",
+    "start": 1708
+  },
+  {
+    "text": "to the distributed system aspect, right?",
+    "start": 1709
+  },
+  {
+    "text": "So we're talking about the nuances here.",
+    "start": 1710
+  },
+  {
+    "text": "So I wrote a whole blog post about this.",
+    "start": 1713
+  },
+  {
+    "text": "So I have a little summary,",
+    "start": 1715
+  },
+  {
+    "text": "that we have a link at the bottom there.",
+    "start": 1716
+  },
+  {
+    "text": "When we talk about\ndistributed systems, right,",
+    "start": 1719
+  },
+  {
+    "text": "the serverless cloud systems,",
+    "start": 1721
+  },
+  {
+    "text": "they're inherently distributed.",
+    "start": 1722
+  },
+  {
+    "text": "And that's what gives them all\nthe nice properties, right?",
+    "start": 1724
+  },
+  {
+    "text": "They have scalability,\nautoscaling, graceful decoration.",
+    "start": 1727
+  },
+  {
+    "text": "They can do all do these amazing things",
+    "start": 1730
+  },
+  {
+    "text": "because they're\nindependently running parts.",
+    "start": 1732
+  },
+  {
+    "text": "But one question, of\ncourse, is latency, right?",
+    "start": 1735
+  },
+  {
+    "text": "If I pull from my DynamoDB stream",
+    "start": 1739
+  },
+  {
+    "text": "and then have EventBridge\nPipes publish this event,",
+    "start": 1742
+  },
+  {
+    "text": "does that actually increase my latency?",
+    "start": 1745
+  },
+  {
+    "text": "And in this case it actually does",
+    "start": 1748
+  },
+  {
+    "text": "because EventBridge pipes\npulls from the DynamoDB stream.",
+    "start": 1750
+  },
+  {
+    "text": "Now, you can configure this,",
+    "start": 1755
+  },
+  {
+    "text": "you have timeouts, you have batch sizes,",
+    "start": 1756
+  },
+  {
+    "text": "but ultimately there's\nanother running part.",
+    "start": 1758
+  },
+  {
+    "text": "So it takes slightly longer to publish",
+    "start": 1761
+  },
+  {
+    "text": "that event to its destination.",
+    "start": 1764
+  },
+  {
+    "text": "Now, I've done some very\nnon-scientific experiments, right,",
+    "start": 1767
+  },
+  {
+    "text": "like little demo apps to try this out,",
+    "start": 1770
+  },
+  {
+    "text": "and it was about sort of 100\nmilliseconds that this took.",
+    "start": 1772
+  },
+  {
+    "text": "At the same time,",
+    "start": 1776
+  },
+  {
+    "text": "keep in mind the Lambda\nfunction got shorter, right?",
+    "start": 1777
+  },
+  {
+    "text": "So the Lambda function no\nlonger publishes that event.",
+    "start": 1780
+  },
+  {
+    "text": "And when I tried that,",
+    "start": 1782
+  },
+  {
+    "text": "that was actually also 40 milliseconds.",
+    "start": 1783
+  },
+  {
+    "text": "So always look at the big picture.",
+    "start": 1786
+  },
+  {
+    "text": "Yes, latency might be\nsomething that impacts you,",
+    "start": 1788
+  },
+  {
+    "text": "but the time you spend here\nyou might save over there.",
+    "start": 1791
+  },
+  {
+    "text": "And actually, these kind of architectures",
+    "start": 1794
+  },
+  {
+    "text": "are often more optimized\nfor high throughput",
+    "start": 1796
+  },
+  {
+    "text": "than for low latencies, right?",
+    "start": 1799
+  },
+  {
+    "text": "Because these are\nasynchronous architectures.",
+    "start": 1800
+  },
+  {
+    "text": "So that is around the latency.",
+    "start": 1804
+  },
+  {
+    "text": "The other one, of course,",
+    "start": 1808
+  },
+  {
+    "text": "that everybody wants to\ntalk about is cost, right?",
+    "start": 1809
+  },
+  {
+    "text": "And that is actually the\ntitle of my blog post,",
+    "start": 1814
+  },
+  {
+    "text": "is I didn't want to put\nit on the slides here,",
+    "start": 1816
+  },
+  {
+    "text": "is I made everything loosely coupled.",
+    "start": 1818
+  },
+  {
+    "text": "Will my cloud bill go up? Right?",
+    "start": 1820
+  },
+  {
+    "text": "So will this cost you money?",
+    "start": 1822
+  },
+  {
+    "text": "And the good answer is\nprobably actually not.",
+    "start": 1823
+  },
+  {
+    "text": "And again, disclaimer here, right?",
+    "start": 1826
+  },
+  {
+    "text": "These are a little bit sort\nof lab kind of experiments",
+    "start": 1828
+  },
+  {
+    "text": "that I ran.",
+    "start": 1831
+  },
+  {
+    "text": "So please use the tools that you have,",
+    "start": 1832
+  },
+  {
+    "text": "like Anomaly Detector,\nCost Estimator, right?",
+    "start": 1834
+  },
+  {
+    "text": "This depends on event sizes,",
+    "start": 1836
+  },
+  {
+    "text": "regions that you run in, right?",
+    "start": 1838
+  },
+  {
+    "text": "So that as a short disclaimer.",
+    "start": 1840
+  },
+  {
+    "text": "But here is what I found, right?",
+    "start": 1842
+  },
+  {
+    "text": "So let's come back to what we did.",
+    "start": 1844
+  },
+  {
+    "text": "We had a Lambda function updates DynamoDB",
+    "start": 1846
+  },
+  {
+    "text": "and sends an event explicitly,",
+    "start": 1848
+  },
+  {
+    "text": "and we changed that into\njust writing to DynamoDB,",
+    "start": 1850
+  },
+  {
+    "text": "using a stream and then using\npipes to read from the stream.",
+    "start": 1854
+  },
+  {
+    "text": "Couple of comments.",
+    "start": 1858
+  },
+  {
+    "text": "First thing is once you use pipes,",
+    "start": 1859
+  },
+  {
+    "text": "you don't pay for the\npolling from the stream.",
+    "start": 1861
+  },
+  {
+    "text": "That is built into the pipes price.",
+    "start": 1864
+  },
+  {
+    "text": "Pipes will cost you\ndepending on the region.",
+    "start": 1867
+  },
+  {
+    "text": "So this like, US region,",
+    "start": 1868
+  },
+  {
+    "text": "I think, I picked US East, right,",
+    "start": 1869
+  },
+  {
+    "text": "will cost you 40 cents per million.",
+    "start": 1871
+  },
+  {
+    "text": "But the Lambda runtime also went down.",
+    "start": 1875
+  },
+  {
+    "text": "And I just picked some numbers,",
+    "start": 1878
+  },
+  {
+    "text": "I don't wanna say random numbers.",
+    "start": 1881
+  },
+  {
+    "text": "Some like, sort of typical numbers.",
+    "start": 1882
+  },
+  {
+    "text": "Let's say that's like\na 256-megabyte Lambda.",
+    "start": 1883
+  },
+  {
+    "text": "So the 40, 50 milliseconds\nthat were saved by not having",
+    "start": 1887
+  },
+  {
+    "text": "to write the event actually\nsaves you 20 cents.",
+    "start": 1891
+  },
+  {
+    "text": "So it's like, oh, I'm getting\nhalf of my money back.",
+    "start": 1893
+  },
+  {
+    "text": "Not bad, actually.",
+    "start": 1896
+  },
+  {
+    "text": "Two more important considerations here,",
+    "start": 1898
+  },
+  {
+    "text": "because one is look at the big picture.",
+    "start": 1900
+  },
+  {
+    "text": "Because before I was sending\nan event to EventBridge, right,",
+    "start": 1903
+  },
+  {
+    "text": "when we showed the original code.",
+    "start": 1908
+  },
+  {
+    "text": "Or an EventBridge bus,\nI should say properly.",
+    "start": 1911
+  },
+  {
+    "text": "Now we already have EventBridge Pipes.",
+    "start": 1914
+  },
+  {
+    "text": "EventBridge Pipes can\nalso transform and route.",
+    "start": 1916
+  },
+  {
+    "text": "So do I still even need",
+    "start": 1919
+  },
+  {
+    "text": "to send this event through EventBridge?",
+    "start": 1921
+  },
+  {
+    "text": "Or can I now send this event\nto its proper destination?",
+    "start": 1924
+  },
+  {
+    "text": "And then the whole thing flips very much",
+    "start": 1928
+  },
+  {
+    "text": "in the other direction because EventBridge",
+    "start": 1930
+  },
+  {
+    "text": "is about a dollar per\nmillion events, right?",
+    "start": 1932
+  },
+  {
+    "text": "And I'm actually in the black very much.",
+    "start": 1934
+  },
+  {
+    "text": "So don't look at this thing, oh,",
+    "start": 1937
+  },
+  {
+    "text": "I can't put an element in",
+    "start": 1939
+  },
+  {
+    "text": "because it's gonna cost me 40 cents.",
+    "start": 1940
+  },
+  {
+    "text": "No, you might actually\nend up with something",
+    "start": 1942
+  },
+  {
+    "text": "that's less expensive once you look",
+    "start": 1944
+  },
+  {
+    "text": "at the whole end-to-end chain,",
+    "start": 1945
+  },
+  {
+    "text": "on top of all the benefits",
+    "start": 1947
+  },
+  {
+    "text": "that we already talked about, right?",
+    "start": 1949
+  },
+  {
+    "text": "You have the whole\ntopology managed separately",
+    "start": 1950
+  },
+  {
+    "text": "from the application logic.",
+    "start": 1953
+  },
+  {
+    "text": "The other thing not to forget\nis serverless is cheap, right?",
+    "start": 1955
+  },
+  {
+    "text": "Think about what one\ndeveloper hour would cost you,",
+    "start": 1960
+  },
+  {
+    "text": "and how many events you can\nsend for one developer hour.",
+    "start": 1964
+  },
+  {
+    "text": "So unless you're running\nBlack Friday, right,",
+    "start": 1967
+  },
+  {
+    "text": "you're probably doing pretty well,",
+    "start": 1970
+  },
+  {
+    "text": "refactoring things so that\nthey're easier to debug,",
+    "start": 1972
+  },
+  {
+    "text": "easier to understand, makes\nyour developers more productive.",
+    "start": 1975
+  },
+  {
+    "text": "Because that developer hour\nis probably worth like,",
+    "start": 1979
+  },
+  {
+    "text": "500 million events alone.",
+    "start": 1981
+  },
+  {
+    "text": "So never forget, right?",
+    "start": 1983
+  },
+  {
+    "text": "The runtime cost is not your total cost.",
+    "start": 1984
+  },
+  {
+    "text": "Developer productivity\nand maybe avoiding a bug",
+    "start": 1987
+  },
+  {
+    "text": "or avoiding a mistake is\nworth much, much more money",
+    "start": 1989
+  },
+  {
+    "text": "than the 20 cents or the\n40 cents per million events",
+    "start": 1992
+  },
+  {
+    "text": "we're talking here.",
+    "start": 1996
+  },
+  {
+    "text": "And we haven't even\nmentioned the free tier",
+    "start": 1997
+  },
+  {
+    "text": "that helps you on top of that.",
+    "start": 1999
+  },
+  {
+    "text": "So then around latency and cost,",
+    "start": 2001
+  },
+  {
+    "text": "yes, you know, be smart,\nlook at what it does,",
+    "start": 2003
+  },
+  {
+    "text": "but it's not automatically\nslower or more expensive.",
+    "start": 2006
+  },
+  {
+    "text": "Quite often it can actually\ndo the opposite for you",
+    "start": 2009
+  },
+  {
+    "text": "and save you money to\narchitect things this way.",
+    "start": 2012
+  },
+  {
+    "text": "Last comment.",
+    "start": 2016
+  },
+  {
+    "text": "One consideration that's also\ncoupled to operational aspects",
+    "start": 2017
+  },
+  {
+    "text": "is switching costs, right,\nwhen we talk about costs.",
+    "start": 2021
+  },
+  {
+    "text": "Do I get locked in, right?",
+    "start": 2024
+  },
+  {
+    "text": "Will this make it harder\nto run this somewhere else",
+    "start": 2026
+  },
+  {
+    "text": "if I need it to?",
+    "start": 2029
+  },
+  {
+    "text": "Really good question and mini advertising.",
+    "start": 2030
+  },
+  {
+    "text": "On Thursday, I have a\nwhole talk on this topic.",
+    "start": 2032
+  },
+  {
+    "text": "ARC307 is called Do Modern\nCloud Applications Lock Me In?",
+    "start": 2035
+  },
+  {
+    "text": "I'm always a little bit proud",
+    "start": 2039
+  },
+  {
+    "text": "to be able to speak at re:Invent\nand use the word lock-in",
+    "start": 2040
+  },
+  {
+    "text": "because, you know, vendors,",
+    "start": 2042
+  },
+  {
+    "text": "we don't like to say this so much.",
+    "start": 2043
+  },
+  {
+    "text": "So we have a whole talk there",
+    "start": 2044
+  },
+  {
+    "text": "that talks about switching\ncosts and dependencies",
+    "start": 2046
+  },
+  {
+    "text": "and how to manage that aspect.",
+    "start": 2048
+  },
+  {
+    "text": "For now, let's dive into\na little different topic.",
+    "start": 2052
+  },
+  {
+    "text": "And that is, we kind of find ourselves",
+    "start": 2056
+  },
+  {
+    "text": "in a slightly different\nuniverse now, right?",
+    "start": 2059
+  },
+  {
+    "text": "This application and automation code,",
+    "start": 2061
+  },
+  {
+    "text": "this all becomes the same,",
+    "start": 2063
+  },
+  {
+    "text": "and we shift from the\nleft to the right, right?",
+    "start": 2064
+  },
+  {
+    "text": "So that is a very interesting space.",
+    "start": 2067
+  },
+  {
+    "text": "And actually there's a lot\nmore going on in the space.",
+    "start": 2069
+  },
+  {
+    "text": "So I want to share one slide here",
+    "start": 2072
+  },
+  {
+    "text": "that shares a little bit\nmy thoughts where we are.",
+    "start": 2074
+  },
+  {
+    "text": "So when we look at cloud automation now,",
+    "start": 2077
+  },
+  {
+    "text": "we can split that into\nthree separate dimensions.",
+    "start": 2079
+  },
+  {
+    "text": "The first one is the\nkind of language, right?",
+    "start": 2084
+  },
+  {
+    "text": "That's where Sindhu started\nin the beginning, right?",
+    "start": 2086
+  },
+  {
+    "text": "We have a lot of\ndocument-oriented languages.",
+    "start": 2088
+  },
+  {
+    "text": "And that's JSON, YAML kind of things.",
+    "start": 2090
+  },
+  {
+    "text": "Then we have object-oriented languages.",
+    "start": 2093
+  },
+  {
+    "text": "That's where most of\nthe CDK languages play.",
+    "start": 2095
+  },
+  {
+    "text": "And there's also a lot of movement",
+    "start": 2097
+  },
+  {
+    "text": "in the functional languages, right?",
+    "start": 2099
+  },
+  {
+    "text": "You could use CDK with\nF# if you wanted to,",
+    "start": 2100
+  },
+  {
+    "text": "but there's also things, you know,",
+    "start": 2103
+  },
+  {
+    "text": "we have like CUE lang\nis quite interesting.",
+    "start": 2105
+  },
+  {
+    "text": "Jsonnet can do some of these things.",
+    "start": 2108
+  },
+  {
+    "text": "So we have different choices of language.",
+    "start": 2110
+  },
+  {
+    "text": "One little soapbox I\nalways have in this place",
+    "start": 2113
+  },
+  {
+    "text": "is we tend to conflate\nthe word declarative.",
+    "start": 2117
+  },
+  {
+    "text": "So declarative automation means",
+    "start": 2121
+  },
+  {
+    "text": "that your automation describes\nwhat your infrastructure",
+    "start": 2124
+  },
+  {
+    "text": "or all your resources should look like,",
+    "start": 2128
+  },
+  {
+    "text": "and the system figures\nout the current state,",
+    "start": 2131
+  },
+  {
+    "text": "the difference between the current state",
+    "start": 2133
+  },
+  {
+    "text": "and the desired state, and\nbasically gets the delta",
+    "start": 2135
+  },
+  {
+    "text": "so that the current state\nbecomes the desired state.",
+    "start": 2138
+  },
+  {
+    "text": "That's what we mean by\ndeclarative automation.",
+    "start": 2141
+  },
+  {
+    "text": "That has nothing to do with\ndeclarative languages, right?",
+    "start": 2144
+  },
+  {
+    "text": "CDK is object oriented.",
+    "start": 2148
+  },
+  {
+    "text": "Like, people say, \"Oh, that's\nlike an imperative language.\"",
+    "start": 2150
+  },
+  {
+    "text": "Like, fair enough.",
+    "start": 2152
+  },
+  {
+    "text": "But what it does, it\nproduces a data structure",
+    "start": 2153
+  },
+  {
+    "text": "that declares the desired state,",
+    "start": 2156
+  },
+  {
+    "text": "and the declarative automation happens",
+    "start": 2158
+  },
+  {
+    "text": "just like it would otherwise.",
+    "start": 2159
+  },
+  {
+    "text": "Those are two separate concerns.",
+    "start": 2161
+  },
+  {
+    "text": "So that's the language part of it.",
+    "start": 2164
+  },
+  {
+    "text": "Then the second part of it,",
+    "start": 2165
+  },
+  {
+    "text": "and that's where I'm working right now,",
+    "start": 2167
+  },
+  {
+    "text": "you know, Sindhu hinted I'm\nworking on the serverless team,",
+    "start": 2168
+  },
+  {
+    "text": "is what is really a metamodel.",
+    "start": 2171
+  },
+  {
+    "text": "It's one of those, you\nknow, big architect words,",
+    "start": 2173
+  },
+  {
+    "text": "but what is the metamodel?",
+    "start": 2175
+  },
+  {
+    "text": "We talked so much about topology, right?",
+    "start": 2177
+  },
+  {
+    "text": "What is wired to what? That\nwas where we even started.",
+    "start": 2180
+  },
+  {
+    "text": "Now, most of current cloud automation",
+    "start": 2184
+  },
+  {
+    "text": "is really a resource hierarchy.",
+    "start": 2187
+  },
+  {
+    "text": "You have an availability zone,",
+    "start": 2189
+  },
+  {
+    "text": "you have a DVC in there,\nan auto scaling group,",
+    "start": 2191
+  },
+  {
+    "text": "and then EC2 instances in there, right?",
+    "start": 2193
+  },
+  {
+    "text": "This is like the nested,",
+    "start": 2195
+  },
+  {
+    "text": "it's sort of like the Russian\ndoll kind of thing, right?",
+    "start": 2197
+  },
+  {
+    "text": "It's a hierarchy of nested resources.",
+    "start": 2199
+  },
+  {
+    "text": "All the examples we gave here,",
+    "start": 2202
+  },
+  {
+    "text": "we never really talked about\nnesting in hierarchies.",
+    "start": 2204
+  },
+  {
+    "text": "We always talk about data\nflow essentially, right?",
+    "start": 2207
+  },
+  {
+    "text": "Where does the event originate?\nWhere does the event go?",
+    "start": 2210
+  },
+  {
+    "text": "Who routes the event?\nWho consumes the event?",
+    "start": 2212
+  },
+  {
+    "text": "It's a completely different dimension",
+    "start": 2214
+  },
+  {
+    "text": "of your architecture, right?",
+    "start": 2216
+  },
+  {
+    "text": "Both are valid,",
+    "start": 2218
+  },
+  {
+    "text": "they're different lenses\non the architecture,",
+    "start": 2219
+  },
+  {
+    "text": "but we feel that in the\nserverless environment,",
+    "start": 2221
+  },
+  {
+    "text": "this topology, this data flow",
+    "start": 2225
+  },
+  {
+    "text": "is actually more interesting\nthan the hierarchy",
+    "start": 2228
+  },
+  {
+    "text": "because you rarely have a lot of nesting.",
+    "start": 2231
+  },
+  {
+    "text": "You have event-driven architectures,",
+    "start": 2234
+  },
+  {
+    "text": "so what goes where\nbecomes more interesting.",
+    "start": 2236
+  },
+  {
+    "text": "And then the last dimension of this is,",
+    "start": 2240
+  },
+  {
+    "text": "so we made a big pitch here, right?",
+    "start": 2242
+  },
+  {
+    "text": "We said, \"Hey, the application\ncode and automation code,",
+    "start": 2244
+  },
+  {
+    "text": "you can write this in the same language",
+    "start": 2246
+  },
+  {
+    "text": "and shift stuff left to right.\"",
+    "start": 2248
+  },
+  {
+    "text": "A valid question should\nbe, do we still need both?",
+    "start": 2249
+  },
+  {
+    "text": "Why do we have two separate thingies",
+    "start": 2254
+  },
+  {
+    "text": "if they're the same language",
+    "start": 2257
+  },
+  {
+    "text": "and you could do one and the other, right?",
+    "start": 2258
+  },
+  {
+    "text": "It's a legitimate question to say like,",
+    "start": 2260
+  },
+  {
+    "text": "\"Hey, can I just do this\nout of one source file?\"",
+    "start": 2261
+  },
+  {
+    "text": "And the answer is many folks\nare actually working on this.",
+    "start": 2265
+  },
+  {
+    "text": "The keyword there is\ninfrastructure from code.",
+    "start": 2268
+  },
+  {
+    "text": "Basically, you're writing your code,",
+    "start": 2271
+  },
+  {
+    "text": "some folks making custom\nlanguages to do this,",
+    "start": 2273
+  },
+  {
+    "text": "other folks do annotations, right?",
+    "start": 2276
+  },
+  {
+    "text": "There's clever things\nlike cloud compilers.",
+    "start": 2278
+  },
+  {
+    "text": "Even I have written CDK programs",
+    "start": 2280
+  },
+  {
+    "text": "that can run locally as application code",
+    "start": 2283
+  },
+  {
+    "text": "or as CDK code for deployment.",
+    "start": 2286
+  },
+  {
+    "text": "So it's the same code,",
+    "start": 2288
+  },
+  {
+    "text": "and you can run it locally and execute it,",
+    "start": 2290
+  },
+  {
+    "text": "or you can actually go and\ndeploy it to the cloud.",
+    "start": 2292
+  },
+  {
+    "text": "And it's the same code.",
+    "start": 2294
+  },
+  {
+    "text": "So you really can, it's TypeScript,",
+    "start": 2295
+  },
+  {
+    "text": "you really can tell\nwhich of the two it is.",
+    "start": 2297
+  },
+  {
+    "text": "Very, very interesting area.",
+    "start": 2298
+  },
+  {
+    "text": "One of the key considerations here is,",
+    "start": 2301
+  },
+  {
+    "text": "do you want your automation\nto be implicit or explicit?",
+    "start": 2304
+  },
+  {
+    "text": "Do you want it to be sort\nof automagically derived",
+    "start": 2307
+  },
+  {
+    "text": "from your code?",
+    "start": 2310
+  },
+  {
+    "text": "Or do you rather wanna explicitly say,",
+    "start": 2311
+  },
+  {
+    "text": "\"Hey, that's my functionality,\nand here's my topology\"?",
+    "start": 2314
+  },
+  {
+    "text": "So I reveal where I stand in this camp,",
+    "start": 2319
+  },
+  {
+    "text": "but let me start with the last one first.",
+    "start": 2321
+  },
+  {
+    "text": "I feel there's still a lot of benefits",
+    "start": 2323
+  },
+  {
+    "text": "of doing the automation explicitly.",
+    "start": 2326
+  },
+  {
+    "text": "It's great to use the same language.",
+    "start": 2328
+  },
+  {
+    "text": "It's fantastic to be able to refactor.",
+    "start": 2330
+  },
+  {
+    "text": "But I like to say, \"Is this one Lambda?",
+    "start": 2332
+  },
+  {
+    "text": "Are these two Lambdas? Are\nthey connected via destination?",
+    "start": 2335
+  },
+  {
+    "text": "Is this via CUE? Is this SNS or SQS?\"",
+    "start": 2337
+  },
+  {
+    "text": "Because that really impacts\nmy runtime behavior,",
+    "start": 2340
+  },
+  {
+    "text": "and I'd like to be more explicit about it.",
+    "start": 2343
+  },
+  {
+    "text": "As I hinted right in the\nmiddle, I'm in the bottom camp.",
+    "start": 2346
+  },
+  {
+    "text": "I'm very much a fan of\nevent-driven applications,",
+    "start": 2349
+  },
+  {
+    "text": "and put that in the\nfront, not the hierarchy.",
+    "start": 2352
+  },
+  {
+    "text": "And that's something I am working on.",
+    "start": 2355
+  },
+  {
+    "text": "And while you probably guessed by now,",
+    "start": 2357
+  },
+  {
+    "text": "we are a little bit in the\nobject-oriented camp here",
+    "start": 2358
+  },
+  {
+    "text": "because that's where\nwe build our examples.",
+    "start": 2361
+  },
+  {
+    "text": "I have a talk on this topic.",
+    "start": 2364
+  },
+  {
+    "text": "Now, ironically, that talk is in German.",
+    "start": 2366
+  },
+  {
+    "text": "So if you speak German,\nyou're welcome to come.",
+    "start": 2369
+  },
+  {
+    "text": "This is in the global lounge.",
+    "start": 2372
+  },
+  {
+    "text": "I will try to make a English\nvideo recording of this,",
+    "start": 2373
+  },
+  {
+    "text": "and that dives deeper",
+    "start": 2376
+  },
+  {
+    "text": "into this whole application\narchitecture as code topic.",
+    "start": 2377
+  },
+  {
+    "text": "- [Sindhu] So Gregor,\nlet's go back to 300 level.",
+    "start": 2383
+  },
+  {
+    "text": "- [Gregor] Okay, fair enough.",
+    "start": 2386
+  },
+  {
+    "text": "- Because we refactoring",
+    "start": 2388
+  },
+  {
+    "text": "is not just about language\nstyles and metamodels.",
+    "start": 2389
+  },
+  {
+    "text": "To make this work, you also need to know",
+    "start": 2393
+  },
+  {
+    "text": "how you can incorporate refactoring",
+    "start": 2397
+  },
+  {
+    "text": "within your existing team structures.",
+    "start": 2400
+  },
+  {
+    "text": "So yeah, let's go to the next slide.",
+    "start": 2404
+  },
+  {
+    "text": "- Yeah, I'm the click\nperson here. Okay, good.",
+    "start": 2406
+  },
+  {
+    "text": "- So we see organizations\nuse one of these two models",
+    "start": 2410
+  },
+  {
+    "text": "when structuring their teams.",
+    "start": 2415
+  },
+  {
+    "text": "The first one is where\nyou have a single team",
+    "start": 2418
+  },
+  {
+    "text": "that builds the application end-to-end.",
+    "start": 2422
+  },
+  {
+    "text": "So this is the team",
+    "start": 2424
+  },
+  {
+    "text": "that will all do the\napplication development,",
+    "start": 2426
+  },
+  {
+    "text": "build the infrastructure to\nsupport that application,",
+    "start": 2428
+  },
+  {
+    "text": "and also do security.",
+    "start": 2432
+  },
+  {
+    "text": "Now, this model has the lowest friction",
+    "start": 2435
+  },
+  {
+    "text": "when it comes to refactoring,",
+    "start": 2439
+  },
+  {
+    "text": "because all the changes\nthat we talked about,",
+    "start": 2441
+  },
+  {
+    "text": "changing from Lambda to DynamoDB Streams,",
+    "start": 2443
+  },
+  {
+    "text": "that all can be done\nwithin that same team.",
+    "start": 2447
+  },
+  {
+    "text": "This might look like\nan easy model and idea,",
+    "start": 2450
+  },
+  {
+    "text": "but then to get all the skill sets",
+    "start": 2454
+  },
+  {
+    "text": "within that one team is not easy.",
+    "start": 2456
+  },
+  {
+    "text": "And that is why",
+    "start": 2459
+  },
+  {
+    "text": "we see many organizations\nuse separate teams,",
+    "start": 2461
+  },
+  {
+    "text": "each owning different aspects.",
+    "start": 2465
+  },
+  {
+    "text": "For example, your development\nteam will only focus",
+    "start": 2469
+  },
+  {
+    "text": "on writing the business code",
+    "start": 2472
+  },
+  {
+    "text": "and providing your packages,",
+    "start": 2474
+  },
+  {
+    "text": "like npm or a ZIP file.",
+    "start": 2476
+  },
+  {
+    "text": "Your infrastructure team builds",
+    "start": 2479
+  },
+  {
+    "text": "the foundation infrastructure\nfor those application.",
+    "start": 2481
+  },
+  {
+    "text": "And sometimes you also have\na separate security team",
+    "start": 2485
+  },
+  {
+    "text": "that focuses on\nmaintaining your guardrails",
+    "start": 2488
+  },
+  {
+    "text": "and making sure your compliance\nand auditing is in place.",
+    "start": 2491
+  },
+  {
+    "text": "- [Gregor] So you also\nhave some granularity",
+    "start": 2496
+  },
+  {
+    "text": "and topology questions here,",
+    "start": 2499
+  },
+  {
+    "text": "but on the team side, right?\n- Correct. Yeah.",
+    "start": 2500
+  },
+  {
+    "text": "So if you have something on your left,",
+    "start": 2503
+  },
+  {
+    "text": "like your split team model,\nhow do you do refactoring?",
+    "start": 2507
+  },
+  {
+    "text": "What does that interface look like?",
+    "start": 2511
+  },
+  {
+    "text": "So we have some recommendations for you.",
+    "start": 2513
+  },
+  {
+    "text": "Now, if you have split\nteams in your organization,",
+    "start": 2516
+  },
+  {
+    "text": "your platform or your\ninfrastructure team can focus",
+    "start": 2520
+  },
+  {
+    "text": "on the foundational services,",
+    "start": 2524
+  },
+  {
+    "text": "like your networking, your monitoring,",
+    "start": 2526
+  },
+  {
+    "text": "your logging, security,\nwhich forms the core",
+    "start": 2529
+  },
+  {
+    "text": "on which the applications would be built.",
+    "start": 2532
+  },
+  {
+    "text": "Your application team now\nwrites the application code,",
+    "start": 2535
+  },
+  {
+    "text": "but, in addition, will also be responsible",
+    "start": 2540
+  },
+  {
+    "text": "for automating all the\napplication-specific needs.",
+    "start": 2544
+  },
+  {
+    "text": "For example, your Lambda Destination,",
+    "start": 2549
+  },
+  {
+    "text": "your SNS topics, your\nrouting, and DynamoDB Streams,",
+    "start": 2552
+  },
+  {
+    "text": "all that we talked about\nneeds to be within this team.",
+    "start": 2556
+  },
+  {
+    "text": "You do not want to slice it here.",
+    "start": 2560
+  },
+  {
+    "text": "- [Gregor] Yeah, if you\nhave to file a ticket",
+    "start": 2564
+  },
+  {
+    "text": "to get the Lambda Destination set up,",
+    "start": 2565
+  },
+  {
+    "text": "you're probably-\n- I know.",
+    "start": 2567
+  },
+  {
+    "text": "- [Gregor] you're probably in bad shape.",
+    "start": 2568
+  },
+  {
+    "text": "- Exactly. And then nobody\nwill be happy at the end.",
+    "start": 2569
+  },
+  {
+    "text": "So all of those changes should\nrely within that same team,",
+    "start": 2572
+  },
+  {
+    "text": "even though you have a\nseparate operations team.",
+    "start": 2576
+  },
+  {
+    "text": "So that was about how you can manage",
+    "start": 2580
+  },
+  {
+    "text": "with the team structure.",
+    "start": 2582
+  },
+  {
+    "text": "Let's talk about now tooling.",
+    "start": 2584
+  },
+  {
+    "text": "Now, in your organization,",
+    "start": 2587
+  },
+  {
+    "text": "if everyone agrees to use\nthe same infrastructure",
+    "start": 2588
+  },
+  {
+    "text": "as a code tool, for example, AWS CDK,",
+    "start": 2592
+  },
+  {
+    "text": "then your teams can build\nhigher-level constructs",
+    "start": 2596
+  },
+  {
+    "text": "and reuse them, just as\nthey would do with code.",
+    "start": 2600
+  },
+  {
+    "text": "For example, S3 buckets with encryption",
+    "start": 2604
+  },
+  {
+    "text": "or databases with retention policies.",
+    "start": 2608
+  },
+  {
+    "text": "And then they can share that\nwith your development team.",
+    "start": 2612
+  },
+  {
+    "text": "Now, we do acknowledge that,",
+    "start": 2616
+  },
+  {
+    "text": "in large organizations,\nthis might not be the case.",
+    "start": 2618
+  },
+  {
+    "text": "Your platform teams might have,",
+    "start": 2622
+  },
+  {
+    "text": "infrastructure teams might\nhave already invested",
+    "start": 2625
+  },
+  {
+    "text": "into, say, CloudFormation.",
+    "start": 2627
+  },
+  {
+    "text": "And your developer team is more going",
+    "start": 2631
+  },
+  {
+    "text": "towards object oriented,",
+    "start": 2634
+  },
+  {
+    "text": "so they prefer using AWS CDK, for example.",
+    "start": 2635
+  },
+  {
+    "text": "Now, even in this case,\nyour teams can share",
+    "start": 2639
+  },
+  {
+    "text": "or build upon the CloudFormation modules,",
+    "start": 2643
+  },
+  {
+    "text": "but it won't provide the\nsame higher-level abstraction",
+    "start": 2646
+  },
+  {
+    "text": "as the CDK construct does.",
+    "start": 2650
+  },
+  {
+    "text": "Now, what we wanna say here\nis both these models work",
+    "start": 2654
+  },
+  {
+    "text": "in a split team model.",
+    "start": 2658
+  },
+  {
+    "text": "And we do see that happening often.",
+    "start": 2660
+  },
+  {
+    "text": "- Yeah, just don't split\nbetween your Lambda function",
+    "start": 2663
+  },
+  {
+    "text": "and your EventBridge, your destination.",
+    "start": 2665
+  },
+  {
+    "text": "That will not be a good split.",
+    "start": 2667
+  },
+  {
+    "text": "Otherwise, this will work in either way.",
+    "start": 2669
+  },
+  {
+    "text": "- Yep. Keep that change\nwithin the application.",
+    "start": 2670
+  },
+  {
+    "text": "They will write the\nautomation code as well.",
+    "start": 2673
+  },
+  {
+    "text": "Now, we talked about how the\nrefactorings primarily comes",
+    "start": 2677
+  },
+  {
+    "text": "to your development team.",
+    "start": 2681
+  },
+  {
+    "text": "And so it's also important to know,",
+    "start": 2683
+  },
+  {
+    "text": "where in your development\nlife cycle does this flow?",
+    "start": 2685
+  },
+  {
+    "text": "Basically, we get asked\nthis question a lot:",
+    "start": 2689
+  },
+  {
+    "text": "When and how often should I refactor?",
+    "start": 2692
+  },
+  {
+    "text": "And for that, the first\npiece of advice comes",
+    "start": 2695
+  },
+  {
+    "text": "from Martin again.",
+    "start": 2698
+  },
+  {
+    "text": "He said, \"If it hurts, do\nit more often.\"",
+    "start": 2700
+  },
+  {
+    "text": "Martin is a masochist,",
+    "start": 2705
+  },
+  {
+    "text": "but then we ourselves know this",
+    "start": 2707
+  },
+  {
+    "text": "from our own software delivery.",
+    "start": 2709
+  },
+  {
+    "text": "Now, if you are releasing your software",
+    "start": 2712
+  },
+  {
+    "text": "once in every six months,",
+    "start": 2715
+  },
+  {
+    "text": "it's surely going to be painful.",
+    "start": 2717
+  },
+  {
+    "text": "So the same applies to refactoring.",
+    "start": 2720
+  },
+  {
+    "text": "Just like you do continuous delivery,",
+    "start": 2723
+  },
+  {
+    "text": "you should be doing\ncontinuous refactoring.",
+    "start": 2726
+  },
+  {
+    "text": "In fact, refactoring is not separate",
+    "start": 2730
+  },
+  {
+    "text": "from software delivery.",
+    "start": 2734
+  },
+  {
+    "text": "It is a part of your software delivery.",
+    "start": 2736
+  },
+  {
+    "text": "So you shouldn't think like,",
+    "start": 2739
+  },
+  {
+    "text": "\"Oh, we are doing\nrefactoring in the spring,",
+    "start": 2740
+  },
+  {
+    "text": "so let's stop your software delivery.\"",
+    "start": 2743
+  },
+  {
+    "text": "Now, if your teams find that\nrefactorings is painful,",
+    "start": 2747
+  },
+  {
+    "text": "it could probably because",
+    "start": 2751
+  },
+  {
+    "text": "you are lacking functional\ntest coverage and automation.",
+    "start": 2752
+  },
+  {
+    "text": "So now refactoring is a driver",
+    "start": 2757
+  },
+  {
+    "text": "to improve your software delivery hygiene.",
+    "start": 2760
+  },
+  {
+    "text": "We are at re:Invent, like we said.",
+    "start": 2764
+  },
+  {
+    "text": "Be prepared for all the\nannouncements that come.",
+    "start": 2767
+  },
+  {
+    "text": "And we don't stop there.",
+    "start": 2770
+  },
+  {
+    "text": "We keep releasing new features",
+    "start": 2771
+  },
+  {
+    "text": "and capabilities throughout the year.",
+    "start": 2773
+  },
+  {
+    "text": "And so should you be constantly looking",
+    "start": 2776
+  },
+  {
+    "text": "to improve your solutions.",
+    "start": 2778
+  },
+  {
+    "text": "Lastly, adding any code",
+    "start": 2781
+  },
+  {
+    "text": "or functionality increases the complexity",
+    "start": 2785
+  },
+  {
+    "text": "of your application,",
+    "start": 2788
+  },
+  {
+    "text": "like the additional wiring\ncode or Lambda functions.",
+    "start": 2790
+  },
+  {
+    "text": "Now, to bring your complexity down,",
+    "start": 2794
+  },
+  {
+    "text": "have the continuous refactoring mindset,",
+    "start": 2798
+  },
+  {
+    "text": "'cause that will help you moderate",
+    "start": 2801
+  },
+  {
+    "text": "your development team's velocity.",
+    "start": 2804
+  },
+  {
+    "text": "- Yeah, and that's really the same",
+    "start": 2807
+  },
+  {
+    "text": "with serverless refactoring as\nit is with application code.",
+    "start": 2808
+  },
+  {
+    "text": "As you keep working,",
+    "start": 2812
+  },
+  {
+    "text": "the entropy of your system just goes up",
+    "start": 2813
+  },
+  {
+    "text": "as you keep adding things.",
+    "start": 2817
+  },
+  {
+    "text": "That's totally normal.",
+    "start": 2818
+  },
+  {
+    "text": "So refactoring is the best\nway to bring that back down.",
+    "start": 2819
+  },
+  {
+    "text": "And that is true for application code",
+    "start": 2822
+  },
+  {
+    "text": "and sort of classic refactorings like,",
+    "start": 2824
+  },
+  {
+    "text": "you know, extracting methods",
+    "start": 2826
+  },
+  {
+    "text": "and inserting variables\nor inlining expressions",
+    "start": 2827
+  },
+  {
+    "text": "as it is for the serverless refactorings.",
+    "start": 2830
+  },
+  {
+    "text": "So it's already time to\nsummarize where we are.",
+    "start": 2833
+  },
+  {
+    "text": "So I hope we convinced you",
+    "start": 2836
+  },
+  {
+    "text": "that with modern cloud automation,",
+    "start": 2838
+  },
+  {
+    "text": "it's not about toil and just like,",
+    "start": 2840
+  },
+  {
+    "text": "repeating tasks, and I\nneed a server, right?",
+    "start": 2842
+  },
+  {
+    "text": "In the serverless land,\nthat's all done for you,",
+    "start": 2845
+  },
+  {
+    "text": "so cloud automation takes\non a very different role.",
+    "start": 2847
+  },
+  {
+    "text": "And really the lines\nbetween application code",
+    "start": 2850
+  },
+  {
+    "text": "and automation code blur.",
+    "start": 2853
+  },
+  {
+    "text": "And that's where the whole\nrefactoring story comes from,",
+    "start": 2855
+  },
+  {
+    "text": "that you can start shifting behavior",
+    "start": 2858
+  },
+  {
+    "text": "from one side to the other.",
+    "start": 2860
+  },
+  {
+    "text": "As Sindhu just highlighted, right,",
+    "start": 2861
+  },
+  {
+    "text": "that doesn't mean that one team needs",
+    "start": 2864
+  },
+  {
+    "text": "to do everything, right?",
+    "start": 2866
+  },
+  {
+    "text": "There's additional team structures,",
+    "start": 2867
+  },
+  {
+    "text": "there's infrastructure teams.",
+    "start": 2869
+  },
+  {
+    "text": "Often they use CloudFormation,\nthey use Terraform.",
+    "start": 2870
+  },
+  {
+    "text": "That is all fine,",
+    "start": 2872
+  },
+  {
+    "text": "as long as you don't make it",
+    "start": 2874
+  },
+  {
+    "text": "that one of those teams has\nthe license to do automation,",
+    "start": 2877
+  },
+  {
+    "text": "and the other team does not.",
+    "start": 2881
+  },
+  {
+    "text": "That will not work in the\nserverless environment, right?",
+    "start": 2882
+  },
+  {
+    "text": "Because that EventBridge\nPipes that we put in,",
+    "start": 2885
+  },
+  {
+    "text": "or that destination that we did is,",
+    "start": 2888
+  },
+  {
+    "text": "well, that needs to happen",
+    "start": 2890
+  },
+  {
+    "text": "at the same time we take\nthe application code out.",
+    "start": 2891
+  },
+  {
+    "text": "So the developers must also be authorized,",
+    "start": 2894
+  },
+  {
+    "text": "if you wish, to do automation.",
+    "start": 2897
+  },
+  {
+    "text": "That split simply\notherwise makes no sense.",
+    "start": 2899
+  },
+  {
+    "text": "Nobody owns automation.",
+    "start": 2902
+  },
+  {
+    "text": "You cannot take that away\nfrom anybody in the cloud.",
+    "start": 2905
+  },
+  {
+    "text": "And then, yeah, last thing\nSindhu mentioned is that,",
+    "start": 2908
+  },
+  {
+    "text": "yeah, it's not sort of once\na year you stop and say,",
+    "start": 2911
+  },
+  {
+    "text": "\"Oh, we really ought to\nrefactor,\" kind of thing.",
+    "start": 2913
+  },
+  {
+    "text": "But it should become second nature",
+    "start": 2915
+  },
+  {
+    "text": "and just be part of your\noverall development cycle.",
+    "start": 2917
+  },
+  {
+    "text": "But with that, we only\nhave one last message.",
+    "start": 2921
+  },
+  {
+    "text": "As Fowler would say, you know,",
+    "start": 2923
+  },
+  {
+    "text": "now, go refactor.\n- Refactor.",
+    "start": 2924
+  },
+  {
+    "text": "- I hope you have interesting\nserverless applications",
+    "start": 2927
+  },
+  {
+    "text": "that can benefit from this technique.",
+    "start": 2930
+  },
+  {
+    "text": "And should mention this is an\nopen-source project, right?",
+    "start": 2932
+  },
+  {
+    "text": "So you can actually\ncontribute to the catalog.",
+    "start": 2936
+  },
+  {
+    "text": "- Yeah.",
+    "start": 2939
+  },
+  {
+    "text": "So as we said,",
+    "start": 2940
+  },
+  {
+    "text": "all those refactorings we are\nmaking as a community project.",
+    "start": 2941
+  },
+  {
+    "text": "So if you have ideas, or\nif you have refactored,",
+    "start": 2944
+  },
+  {
+    "text": "feel free to reach out to us, contribute,",
+    "start": 2948
+  },
+  {
+    "text": "and make it available for everyone.",
+    "start": 2951
+  },
+  {
+    "text": "- Yeah. And once again,\nthe pointer, right?",
+    "start": 2954
+  },
+  {
+    "text": "If part of your operational considerations",
+    "start": 2956
+  },
+  {
+    "text": "is switching costs,\nright, and how easy is it",
+    "start": 2958
+  },
+  {
+    "text": "if I should ever need to\ntake this somewhere else,",
+    "start": 2960
+  },
+  {
+    "text": "there's a whole other session about this",
+    "start": 2962
+  },
+  {
+    "text": "on Thursday, 11 o'clock, ARC307,",
+    "start": 2964
+  },
+  {
+    "text": "that talks about modern\ncloud applications,",
+    "start": 2967
+  },
+  {
+    "text": "like we talked about\ntoday, and switching costs.",
+    "start": 2969
+  },
+  {
+    "text": "So thank you so much.",
+    "start": 2972
+  },
+  {
+    "text": "I hope this was a good start for the week",
+    "start": 2974
+  },
+  {
+    "text": "and on Monday at re:Invent.",
+    "start": 2976
+  },
+  {
+    "text": "Apologies for the little\naudio/visual interruptions,",
+    "start": 2978
+  },
+  {
+    "text": "but at least we showed",
+    "start": 2981
+  },
+  {
+    "text": "that we are not reading off the slides,",
+    "start": 2983
+  },
+  {
+    "text": "that we can still present,",
+    "start": 2984
+  },
+  {
+    "text": "even if the slides show something else.",
+    "start": 2985
+  },
+  {
+    "text": "So thank you for that.",
+    "start": 2987
+  }
+]

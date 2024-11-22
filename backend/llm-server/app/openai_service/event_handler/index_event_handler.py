@@ -1,6 +1,9 @@
 import asyncio
+import json
 import os
-from typing import override
+import re
+
+from typing_extensions import override
 
 from loguru import logger
 from openai import AssistantEventHandler, AsyncAssistantEventHandler
@@ -44,10 +47,10 @@ class IndexEventHandler(AsyncAssistantEventHandler):
             logger.info(f"목차 데이터가 {index_file_path}에 저장되었습니다.")
         except Exception as e:
             logger.error(f"목차 파일을 저장하는 중 오류 발생: {e}")
-
+        logger.info(type(self.index_data))
         index_message = IndexMessage(
             noteId = self.note_id,
-            segments = self.index_data,
+            segments = json.loads(re.sub(r"```json|```", "", self.index_data)),
         )
 
         # 메시지를 JSON으로 직렬화하여 Kafka에 전송

@@ -1,0 +1,6054 @@
+[
+  {
+    "text": "- So today we're gonna spend the next hour",
+    "start": 1
+  },
+  {
+    "text": "talking about a real life\nproduction application",
+    "start": 2
+  },
+  {
+    "text": "that my team built.",
+    "start": 5
+  },
+  {
+    "text": "We're gonna go through some\nof the lessons we learned,",
+    "start": 6
+  },
+  {
+    "text": "lots of mistakes we made,",
+    "start": 9
+  },
+  {
+    "text": "and hopefully show you\nsome of the patterns",
+    "start": 10
+  },
+  {
+    "text": "that we think are useful",
+    "start": 12
+  },
+  {
+    "text": "when you're building\nthis type of application.",
+    "start": 13
+  },
+  {
+    "text": "So my name is James Beswick",
+    "start": 16
+  },
+  {
+    "text": "and I lead the develop per\nadvocacy team in AWS serverless.",
+    "start": 17
+  },
+  {
+    "text": "And prior to being a DA,",
+    "start": 22
+  },
+  {
+    "text": "I was a software engineer\nfor quite a few years",
+    "start": 23
+  },
+  {
+    "text": "and also a product manager\nfor a long time as well.",
+    "start": 25
+  },
+  {
+    "text": "I'm a serverless geek,",
+    "start": 27
+  },
+  {
+    "text": "so I've built quite a few different",
+    "start": 28
+  },
+  {
+    "text": "large scale serverless applications",
+    "start": 31
+  },
+  {
+    "text": "and I really enjoy this\ntype of technology.",
+    "start": 33
+  },
+  {
+    "text": "The most useful thing on\nthis slide is the QR code.",
+    "start": 35
+  },
+  {
+    "text": "Make friends with me on LinkedIn",
+    "start": 38
+  },
+  {
+    "text": "'cause long after the conference",
+    "start": 40
+  },
+  {
+    "text": "and in the future when you have questions,",
+    "start": 41
+  },
+  {
+    "text": "this is the best way to reach me",
+    "start": 43
+  },
+  {
+    "text": "and if you ask me any questions,",
+    "start": 44
+  },
+  {
+    "text": "I'll do my very best to help.",
+    "start": 45
+  },
+  {
+    "text": "So we've got four things to cover today.",
+    "start": 49
+  },
+  {
+    "text": "I'm gonna give you an introduction",
+    "start": 51
+  },
+  {
+    "text": "to serverlesspresso since\nit's early in the conference",
+    "start": 52
+  },
+  {
+    "text": "and you won't have seen it\nin the expo hall just yet.",
+    "start": 55
+  },
+  {
+    "text": "Then I'll talk about the design decisions",
+    "start": 58
+  },
+  {
+    "text": "involved in building this application",
+    "start": 60
+  },
+  {
+    "text": "and then we'll go through\nthese lessons learned",
+    "start": 62
+  },
+  {
+    "text": "and some of these useful patterns.",
+    "start": 64
+  },
+  {
+    "text": "At the very end I'll\nshare a resources link",
+    "start": 66
+  },
+  {
+    "text": "that will have the deck",
+    "start": 68
+  },
+  {
+    "text": "and a bunch of other useful things",
+    "start": 69
+  },
+  {
+    "text": "you can download and play with.",
+    "start": 71
+  },
+  {
+    "text": "So serverlesspresso is an\nevent-based coffee ordering system",
+    "start": 76
+  },
+  {
+    "text": "and this was really created as\nan idea during the pandemic.",
+    "start": 80
+  },
+  {
+    "text": "We wanted to build something",
+    "start": 83
+  },
+  {
+    "text": "that was a bit more real life",
+    "start": 84
+  },
+  {
+    "text": "that customers could interact with",
+    "start": 85
+  },
+  {
+    "text": "and see how you could build",
+    "start": 87
+  },
+  {
+    "text": "real life serverless applications.",
+    "start": 88
+  },
+  {
+    "text": "And we took two of our\ngreat loves in life,",
+    "start": 90
+  },
+  {
+    "text": "serverless and coffee\nand put them together.",
+    "start": 92
+  },
+  {
+    "text": "Now we didn't really know\nhow this would be received.",
+    "start": 96
+  },
+  {
+    "text": "It was on my office floor for a long time",
+    "start": 98
+  },
+  {
+    "text": "and when we brought it\nto re:Invent in 2021,",
+    "start": 101
+  },
+  {
+    "text": "we didn't know just how many people",
+    "start": 104
+  },
+  {
+    "text": "would be enjoying this application,",
+    "start": 105
+  },
+  {
+    "text": "it turned out to be wildly popular.",
+    "start": 108
+  },
+  {
+    "text": "We did 1,920 drinks over\nthe course of three days,",
+    "start": 110
+  },
+  {
+    "text": "peaking at 71 drinks per hour.",
+    "start": 113
+  },
+  {
+    "text": "And since then we've been in\nsummits all over the world",
+    "start": 116
+  },
+  {
+    "text": "in Berlin, London,\nStockholm, Milan, and in GOTO",
+    "start": 118
+  },
+  {
+    "text": "and other conferences too.",
+    "start": 123
+  },
+  {
+    "text": "And so after doing about 30 conferences,",
+    "start": 125
+  },
+  {
+    "text": "what we found is we do\nabout 1000 drinks per day.",
+    "start": 127
+  },
+  {
+    "text": "And one day we even had five\nevents in different countries",
+    "start": 131
+  },
+  {
+    "text": "and we had to modify the application",
+    "start": 134
+  },
+  {
+    "text": "to support this sort\nof SAS type performance",
+    "start": 136
+  },
+  {
+    "text": "where you can serve different\ncountries at the same time.",
+    "start": 138
+  },
+  {
+    "text": "It's really been in incredibly popular.",
+    "start": 141
+  },
+  {
+    "text": "So how does it work?",
+    "start": 145
+  },
+  {
+    "text": "Well it's designed to\nbe very, very simple.",
+    "start": 146
+  },
+  {
+    "text": "So you scan a QR code that's\nabove the barista at the booth.",
+    "start": 148
+  },
+  {
+    "text": "From that point on your phone,",
+    "start": 152
+  },
+  {
+    "text": "you then place an order\nwith your mobile device",
+    "start": 154
+  },
+  {
+    "text": "and then the order then\nappears on the screens",
+    "start": 156
+  },
+  {
+    "text": "above the barista, also on your phone",
+    "start": 159
+  },
+  {
+    "text": "and on the barista's tablet.",
+    "start": 161
+  },
+  {
+    "text": "And at that point, once\nit goes into production,",
+    "start": 162
+  },
+  {
+    "text": "all of the updates that are being made",
+    "start": 165
+  },
+  {
+    "text": "appear on those various apps.",
+    "start": 166
+  },
+  {
+    "text": "Give you an idea of what\nthese apps look like.",
+    "start": 169
+  },
+  {
+    "text": "So this is the app that appears",
+    "start": 171
+  },
+  {
+    "text": "above the screen on the barista.",
+    "start": 173
+  },
+  {
+    "text": "This shows a dynamic barcode\nthat changes every five minutes",
+    "start": 175
+  },
+  {
+    "text": "and also shows the order status",
+    "start": 179
+  },
+  {
+    "text": "of whatever drinks are\ncurrently in the queue.",
+    "start": 181
+  },
+  {
+    "text": "And it listens to global events",
+    "start": 184
+  },
+  {
+    "text": "such as the store being open or closed",
+    "start": 185
+  },
+  {
+    "text": "or any other problems.",
+    "start": 187
+  },
+  {
+    "text": "We display those on the screen.",
+    "start": 188
+  },
+  {
+    "text": "The ordering app, this is the\none that's in your pockets.",
+    "start": 192
+  },
+  {
+    "text": "So when you scan the barcode",
+    "start": 195
+  },
+  {
+    "text": "to start with as a customer on your phone,",
+    "start": 196
+  },
+  {
+    "text": "that loads a dynamic\nmenu from the backend.",
+    "start": 198
+  },
+  {
+    "text": "The menu can change for various reasons",
+    "start": 200
+  },
+  {
+    "text": "and then once you place your order,",
+    "start": 202
+  },
+  {
+    "text": "it gives you a human readable order number",
+    "start": 205
+  },
+  {
+    "text": "and tells you where to look for updates.",
+    "start": 207
+  },
+  {
+    "text": "Next, when the barista\npulls it in into production",
+    "start": 211
+  },
+  {
+    "text": "and starts making your drink,\nyou get that notification.",
+    "start": 214
+  },
+  {
+    "text": "And then finally, once the\ndrink is ready to be picked up,",
+    "start": 216
+  },
+  {
+    "text": "you get that very last notification.",
+    "start": 219
+  },
+  {
+    "text": "And then the third UI\nis the barista web app.",
+    "start": 223
+  },
+  {
+    "text": "So the baristas, we\ntypically have at least one,",
+    "start": 225
+  },
+  {
+    "text": "often two or three,",
+    "start": 228
+  },
+  {
+    "text": "each barista has their own tablet",
+    "start": 229
+  },
+  {
+    "text": "and their own thermal printer",
+    "start": 231
+  },
+  {
+    "text": "and they don't really interact",
+    "start": 233
+  },
+  {
+    "text": "with the customers\nexcept through this app.",
+    "start": 234
+  },
+  {
+    "text": "So on the left hand side\nthey have incoming orders,",
+    "start": 235
+  },
+  {
+    "text": "they can choose to pull\nthose in to make them,",
+    "start": 238
+  },
+  {
+    "text": "that takes them off of\nthe other barista screens,",
+    "start": 240
+  },
+  {
+    "text": "sometimes they have to cancel them",
+    "start": 243
+  },
+  {
+    "text": "in the event they're out of product",
+    "start": 244
+  },
+  {
+    "text": "and they can take other\nadmin actions as well",
+    "start": 245
+  },
+  {
+    "text": "using this application.",
+    "start": 247
+  },
+  {
+    "text": "And this also interacts",
+    "start": 249
+  },
+  {
+    "text": "with a thermal print that prints tickets.",
+    "start": 250
+  },
+  {
+    "text": "Now under the covers,\nthese are the services",
+    "start": 255
+  },
+  {
+    "text": "that we use to put all of this together.",
+    "start": 257
+  },
+  {
+    "text": "So we've got Amplify Console",
+    "start": 260
+  },
+  {
+    "text": "because we've got three frontends.",
+    "start": 262
+  },
+  {
+    "text": "This is a great service for building",
+    "start": 263
+  },
+  {
+    "text": "and deploying Vue.js React\nand Angular type apps.",
+    "start": 265
+  },
+  {
+    "text": "You can simply deploy\nthem to a GitHub repo",
+    "start": 269
+  },
+  {
+    "text": "and this service makes sure",
+    "start": 272
+  },
+  {
+    "text": "that you've got a live production site,",
+    "start": 273
+  },
+  {
+    "text": "manages certificates and all of this",
+    "start": 275
+  },
+  {
+    "text": "sort of work involved with that.",
+    "start": 276
+  },
+  {
+    "text": "API Gateway is what connects\nthe frontend and the backend",
+    "start": 279
+  },
+  {
+    "text": "and we're using Cognito to secure that.",
+    "start": 282
+  },
+  {
+    "text": "So when you get to use this,",
+    "start": 284
+  },
+  {
+    "text": "you'll see you sign up with a phone number",
+    "start": 285
+  },
+  {
+    "text": "and it's Cognito providing\nthat authentication.",
+    "start": 286
+  },
+  {
+    "text": "DynamoDB, all of the\nmicroservices involved",
+    "start": 290
+  },
+  {
+    "text": "have their own local storage,\nwhich are DynamoDB tables.",
+    "start": 292
+  },
+  {
+    "text": "We also have a main table",
+    "start": 296
+  },
+  {
+    "text": "that contains all of the coffee orders.",
+    "start": 297
+  },
+  {
+    "text": "I think it's got something\nlike 80,000 coffee drinks",
+    "start": 298
+  },
+  {
+    "text": "in there right now.",
+    "start": 301
+  },
+  {
+    "text": "EventBridge and step functions",
+    "start": 303
+  },
+  {
+    "text": "are the main focus of what\nI'll be talking about.",
+    "start": 304
+  },
+  {
+    "text": "So I'll come back to that\nin just a few minutes.",
+    "start": 306
+  },
+  {
+    "text": "IoT Core is how we keep",
+    "start": 308
+  },
+  {
+    "text": "the frontends up to date in real time.",
+    "start": 310
+  },
+  {
+    "text": "So when you use this app,",
+    "start": 312
+  },
+  {
+    "text": "you'll see you don't need to refresh.",
+    "start": 313
+  },
+  {
+    "text": "It's all using WebSockets\nto keep the data up to date.",
+    "start": 315
+  },
+  {
+    "text": "And then finally, of course\nfor any custom compute,",
+    "start": 318
+  },
+  {
+    "text": "we're using AWS Lambda to run our code.",
+    "start": 320
+  },
+  {
+    "text": "So those are the finished UIs",
+    "start": 327
+  },
+  {
+    "text": "but really there are a lot of points",
+    "start": 328
+  },
+  {
+    "text": "building up to this where\nwe had to build a backend",
+    "start": 331
+  },
+  {
+    "text": "and make various design decisions",
+    "start": 334
+  },
+  {
+    "text": "before we even got this far.",
+    "start": 336
+  },
+  {
+    "text": "So before we did anything at all,",
+    "start": 338
+  },
+  {
+    "text": "we sat down with some\ndesign guidelines as a team",
+    "start": 340
+  },
+  {
+    "text": "and we're a team of six or seven people",
+    "start": 342
+  },
+  {
+    "text": "and we tried to operate\nlike a real software team,",
+    "start": 345
+  },
+  {
+    "text": "so we decided we needed to\noperate with minimal code.",
+    "start": 347
+  },
+  {
+    "text": "I like this idea because I\nthink code is a liability,",
+    "start": 352
+  },
+  {
+    "text": "especially my code,",
+    "start": 354
+  },
+  {
+    "text": "and having less code\nmakes it more testable,",
+    "start": 355
+  },
+  {
+    "text": "more maintainable.",
+    "start": 358
+  },
+  {
+    "text": "I think extensibility is really important",
+    "start": 359
+  },
+  {
+    "text": "because you just don't know",
+    "start": 362
+  },
+  {
+    "text": "what you need your application to do",
+    "start": 363
+  },
+  {
+    "text": "at the point where\nyou're designing it out.",
+    "start": 364
+  },
+  {
+    "text": "So we need to come up with an architecture",
+    "start": 365
+  },
+  {
+    "text": "that enabled us to make\nchanges as we went forward.",
+    "start": 368
+  },
+  {
+    "text": "Scalability similarly is important",
+    "start": 371
+  },
+  {
+    "text": "because when all the equipment\nwas on my office floor",
+    "start": 373
+  },
+  {
+    "text": "and not at a conference,",
+    "start": 375
+  },
+  {
+    "text": "I didn't know how popular it would be.",
+    "start": 376
+  },
+  {
+    "text": "But it's very difficult to\ndesign scale in your code",
+    "start": 378
+  },
+  {
+    "text": "early on when you don't know",
+    "start": 381
+  },
+  {
+    "text": "what the traffic is gonna be like.",
+    "start": 382
+  },
+  {
+    "text": "And then also cost efficiency.",
+    "start": 385
+  },
+  {
+    "text": "Now I've been a developer for a long time",
+    "start": 387
+  },
+  {
+    "text": "and it's important to me",
+    "start": 389
+  },
+  {
+    "text": "how you think about the\ncost of your application.",
+    "start": 390
+  },
+  {
+    "text": "So I wanted to make sure\nthat whatever we built",
+    "start": 392
+  },
+  {
+    "text": "was the most cost effective\nway of delivering this app.",
+    "start": 394
+  },
+  {
+    "text": "And so we had some tenets\nthat went along with this.",
+    "start": 398
+  },
+  {
+    "text": "We said that each team\nmember was responsible",
+    "start": 401
+  },
+  {
+    "text": "for one component.",
+    "start": 403
+  },
+  {
+    "text": "And there was no implementation sharing,",
+    "start": 405
+  },
+  {
+    "text": "so I couldn't just look at\nthe code of other people",
+    "start": 406
+  },
+  {
+    "text": "to see how their component worked.",
+    "start": 408
+  },
+  {
+    "text": "Each microservice produced\nhad to have its own API,",
+    "start": 410
+  },
+  {
+    "text": "its own events or consumer events",
+    "start": 414
+  },
+  {
+    "text": "to be able to participate in the system.",
+    "start": 416
+  },
+  {
+    "text": "And before doing anything",
+    "start": 420
+  },
+  {
+    "text": "we found a whiteboard\nin the conference room",
+    "start": 422
+  },
+  {
+    "text": "and we wrote out what this\napplication needed to do",
+    "start": 424
+  },
+  {
+    "text": "and it came down to about\nseven different things.",
+    "start": 427
+  },
+  {
+    "text": "First of all, we knew the\ncustomer had to scan a barcode,",
+    "start": 430
+  },
+  {
+    "text": "at that point we need to\ncheck if the store is open.",
+    "start": 433
+  },
+  {
+    "text": "And the reason for that is\nbecause of a race condition.",
+    "start": 436
+  },
+  {
+    "text": "If we just close the store,",
+    "start": 438
+  },
+  {
+    "text": "but they managed to sneak an order in",
+    "start": 439
+  },
+  {
+    "text": "just at the last moment,",
+    "start": 441
+  },
+  {
+    "text": "we want to check on the backend",
+    "start": 442
+  },
+  {
+    "text": "that the store is in fact still open.",
+    "start": 443
+  },
+  {
+    "text": "We want to get the barista capacity",
+    "start": 446
+  },
+  {
+    "text": "and that's important because",
+    "start": 448
+  },
+  {
+    "text": "if there's too many orders in the queue,",
+    "start": 449
+  },
+  {
+    "text": "we don't want to just add another order.",
+    "start": 450
+  },
+  {
+    "text": "Then at that point we want to\nwait for the customer order.",
+    "start": 453
+  },
+  {
+    "text": "So in the UI we give\nthem up to five minutes",
+    "start": 455
+  },
+  {
+    "text": "to make a choice about the drink",
+    "start": 457
+  },
+  {
+    "text": "and at that point if they\ndon't make the choice,",
+    "start": 458
+  },
+  {
+    "text": "we time out and we return\nthe token back to the queue",
+    "start": 460
+  },
+  {
+    "text": "and allow somebody else to make an order.",
+    "start": 463
+  },
+  {
+    "text": "Then we generate the human\nreadable order number.",
+    "start": 466
+  },
+  {
+    "text": "So instead of the goads\nthat we passed around,",
+    "start": 469
+  },
+  {
+    "text": "we see the numbers that are sequential,",
+    "start": 471
+  },
+  {
+    "text": "order one, order two and so forth.",
+    "start": 472
+  },
+  {
+    "text": "Then we wait for the barista.",
+    "start": 476
+  },
+  {
+    "text": "Now this is a tech demo,\nit's not a real coffee shop.",
+    "start": 477
+  },
+  {
+    "text": "So we decided that 15 minutes is probably",
+    "start": 479
+  },
+  {
+    "text": "the maximum amount of time.",
+    "start": 481
+  },
+  {
+    "text": "If we have to wait that long,",
+    "start": 483
+  },
+  {
+    "text": "something's gone wrong\nso we should cancel.",
+    "start": 484
+  },
+  {
+    "text": "And then finally we need to handle",
+    "start": 486
+  },
+  {
+    "text": "any sort of situations like cancellations.",
+    "start": 487
+  },
+  {
+    "text": "Customers can cancel drinks\n'cause they don't wanna wait",
+    "start": 491
+  },
+  {
+    "text": "or baristas may have to cancel\nif they're out of product.",
+    "start": 493
+  },
+  {
+    "text": "So there's some corner cases there.",
+    "start": 496
+  },
+  {
+    "text": "So once we had this whiteboard,",
+    "start": 498
+  },
+  {
+    "text": "we then decided to write\nit all in pseudo code.",
+    "start": 500
+  },
+  {
+    "text": "So we thought about what\nsort of lambda functions",
+    "start": 504
+  },
+  {
+    "text": "you'd need to be able to run\nsome of these requirements.",
+    "start": 506
+  },
+  {
+    "text": "And so on the left hand side",
+    "start": 508
+  },
+  {
+    "text": "we've got this order acceptance function",
+    "start": 510
+  },
+  {
+    "text": "and in our pseudo code",
+    "start": 512
+  },
+  {
+    "text": "this checks if the store is open,",
+    "start": 513
+  },
+  {
+    "text": "checks the barista's not too busy.",
+    "start": 515
+  },
+  {
+    "text": "If that's the case,",
+    "start": 517
+  },
+  {
+    "text": "it saves the DynamoDB,\notherwise it rejects.",
+    "start": 518
+  },
+  {
+    "text": "On the right hand side,",
+    "start": 521
+  },
+  {
+    "text": "we look at dealing with those timeouts",
+    "start": 522
+  },
+  {
+    "text": "and so we've got a bit of pseudo code",
+    "start": 525
+  },
+  {
+    "text": "that gets a list of all the open orders,",
+    "start": 526
+  },
+  {
+    "text": "iterates through the open list.",
+    "start": 527
+  },
+  {
+    "text": "And then if the timestamp compared to now",
+    "start": 529
+  },
+  {
+    "text": "versus the last action is too long,",
+    "start": 532
+  },
+  {
+    "text": "we can then cancel the order\nand so on and so forth.",
+    "start": 533
+  },
+  {
+    "text": "And as we were writing this,",
+    "start": 537
+  },
+  {
+    "text": "we realized this was\ncompletely the wrong approach",
+    "start": 538
+  },
+  {
+    "text": "because what we're really doing here",
+    "start": 540
+  },
+  {
+    "text": "is we're building a state machine",
+    "start": 542
+  },
+  {
+    "text": "and there's a few problems with this.",
+    "start": 543
+  },
+  {
+    "text": "So the first is that\non the right hand side",
+    "start": 546
+  },
+  {
+    "text": "when a number of open orders grows,",
+    "start": 548
+  },
+  {
+    "text": "the process of iterating through the list",
+    "start": 551
+  },
+  {
+    "text": "gets slower and slower.",
+    "start": 553
+  },
+  {
+    "text": "So that's not great,\nit's not very scalable.",
+    "start": 555
+  },
+  {
+    "text": "That doesn't meet one of our tenets.",
+    "start": 557
+  },
+  {
+    "text": "Also this works once per minute",
+    "start": 559
+  },
+  {
+    "text": "because we can use a schedule rule",
+    "start": 561
+  },
+  {
+    "text": "to invoke this through Lambda,",
+    "start": 563
+  },
+  {
+    "text": "but what happens if we need\nto do it every 15 seconds",
+    "start": 564
+  },
+  {
+    "text": "or some other time period that\ndoesn't really work either.",
+    "start": 566
+  },
+  {
+    "text": "That's hard to do.",
+    "start": 570
+  },
+  {
+    "text": "And so we realized this\nwasn't the right approach",
+    "start": 572
+  },
+  {
+    "text": "and we very quickly stopped trying",
+    "start": 573
+  },
+  {
+    "text": "to code a state machine solution.",
+    "start": 576
+  },
+  {
+    "text": "And instead what we did is we\nwent towards Workflow Studio.",
+    "start": 579
+  },
+  {
+    "text": "So this was a fairly\nnew feature at the time",
+    "start": 582
+  },
+  {
+    "text": "in step functions.",
+    "start": 584
+  },
+  {
+    "text": "And this is really interesting",
+    "start": 586
+  },
+  {
+    "text": "'cause what we could\ndo is take those steps",
+    "start": 587
+  },
+  {
+    "text": "on the white board and drag\nsnap the various services",
+    "start": 589
+  },
+  {
+    "text": "to the canvas to represent\nwhat the workflow should do.",
+    "start": 592
+  },
+  {
+    "text": "And it took us about a couple of hours",
+    "start": 597
+  },
+  {
+    "text": "but at that point we could\nthen put a test payload",
+    "start": 599
+  },
+  {
+    "text": "into an execution",
+    "start": 601
+  },
+  {
+    "text": "and see which way the\nworkflow would then flow,",
+    "start": 603
+  },
+  {
+    "text": "make sure it's doing what we expect.",
+    "start": 606
+  },
+  {
+    "text": "We could replace all of\nthat spaghetti pseudo code",
+    "start": 608
+  },
+  {
+    "text": "and use this very elegant,",
+    "start": 611
+  },
+  {
+    "text": "very simple way of representing",
+    "start": 613
+  },
+  {
+    "text": "what the workflow was.",
+    "start": 615
+  },
+  {
+    "text": "And then once you finish\nbuilding that out,",
+    "start": 617
+  },
+  {
+    "text": "you ended up with version\none of this workflow.",
+    "start": 620
+  },
+  {
+    "text": "So you can see the first\nstep is, is the store open?",
+    "start": 623
+  },
+  {
+    "text": "If so take a decision,",
+    "start": 626
+  },
+  {
+    "text": "otherwise check the capacity",
+    "start": 627
+  },
+  {
+    "text": "and so on and so forth.",
+    "start": 629
+  },
+  {
+    "text": "Now anytime there's a problem\nlike the store isn't open,",
+    "start": 631
+  },
+  {
+    "text": "we branch off to a step",
+    "start": 634
+  },
+  {
+    "text": "where we emit an event",
+    "start": 635
+  },
+  {
+    "text": "saying the store isn't open, what happens?",
+    "start": 637
+  },
+  {
+    "text": "We don't know yet.",
+    "start": 640
+  },
+  {
+    "text": "That's a problem for future James,",
+    "start": 641
+  },
+  {
+    "text": "but it's something we want to handle",
+    "start": 643
+  },
+  {
+    "text": "but just not at this point,",
+    "start": 644
+  },
+  {
+    "text": "so we can use the events",
+    "start": 645
+  },
+  {
+    "text": "to notice when we need to handle\nthose types of exceptions.",
+    "start": 647
+  },
+  {
+    "text": "We also like this because\nwe can pause anytime",
+    "start": 651
+  },
+  {
+    "text": "we need to wait for a customer",
+    "start": 654
+  },
+  {
+    "text": "or a barista five minutes, 15 minutes.",
+    "start": 656
+  },
+  {
+    "text": "We can use a task token\nto pause the workflow",
+    "start": 658
+  },
+  {
+    "text": "and wait to resume.",
+    "start": 661
+  },
+  {
+    "text": "And so this is kinda\nan interesting pattern",
+    "start": 663
+  },
+  {
+    "text": "because actually whether\nyou're waiting for five seconds",
+    "start": 665
+  },
+  {
+    "text": "or nine months, the workflow\nwill do this for you.",
+    "start": 668
+  },
+  {
+    "text": "You don't need to have\nsome sort of compute",
+    "start": 670
+  },
+  {
+    "text": "running periodically to check\nthe status of your timeout,",
+    "start": 672
+  },
+  {
+    "text": "so that again it comes back\nto being very low code.",
+    "start": 675
+  },
+  {
+    "text": "Now in this first version we're\nstill using Lambda functions",
+    "start": 678
+  },
+  {
+    "text": "for some of this custom logic",
+    "start": 681
+  },
+  {
+    "text": "and we figured out this\ncapacity status call",
+    "start": 682
+  },
+  {
+    "text": "through Lambda using the SDK",
+    "start": 685
+  },
+  {
+    "text": "and we've got a step that\ncreates an order number",
+    "start": 687
+  },
+  {
+    "text": "using a sequential counter\nin a DynamoDB table.",
+    "start": 689
+  },
+  {
+    "text": "So this was version one of the workflow",
+    "start": 693
+  },
+  {
+    "text": "and we like to think about\nthis as a conveyor belt.",
+    "start": 695
+  },
+  {
+    "text": "Essentially the order comes in,",
+    "start": 698
+  },
+  {
+    "text": "we wait for the customer to\ndecide what the order is,",
+    "start": 700
+  },
+  {
+    "text": "then we wait again for the barista.",
+    "start": 702
+  },
+  {
+    "text": "It handles a couple of exceptions",
+    "start": 704
+  },
+  {
+    "text": "and emits events as needed.",
+    "start": 706
+  },
+  {
+    "text": "So if you look at the architecture so far,",
+    "start": 710
+  },
+  {
+    "text": "this is what we've got.",
+    "start": 712
+  },
+  {
+    "text": "We've got this workflow\non the right hand side.",
+    "start": 713
+  },
+  {
+    "text": "We've got no frontend apps",
+    "start": 716
+  },
+  {
+    "text": "and we've got something on the left",
+    "start": 718
+  },
+  {
+    "text": "we know needs to be there,",
+    "start": 719
+  },
+  {
+    "text": "again, not sure what it is.",
+    "start": 720
+  },
+  {
+    "text": "But this workflow is going to exist",
+    "start": 722
+  },
+  {
+    "text": "by consuming and emitting events.",
+    "start": 724
+  },
+  {
+    "text": "And that's all we have.",
+    "start": 726
+  },
+  {
+    "text": "So next we think about",
+    "start": 730
+  },
+  {
+    "text": "how do we start the order process",
+    "start": 731
+  },
+  {
+    "text": "and this is where the\nQR code came to life.",
+    "start": 734
+  },
+  {
+    "text": "So we know that customers\nare gonna come to the booth",
+    "start": 736
+  },
+  {
+    "text": "and we're gonna show a QR code.",
+    "start": 738
+  },
+  {
+    "text": "Now in version one of this,",
+    "start": 741
+  },
+  {
+    "text": "we thought about printing a big QR code",
+    "start": 742
+  },
+  {
+    "text": "and sticking it on the booth",
+    "start": 744
+  },
+  {
+    "text": "and then it occurred to us",
+    "start": 746
+  },
+  {
+    "text": "that somebody might share this on Reddit",
+    "start": 747
+  },
+  {
+    "text": "and you're at re:Invent",
+    "start": 749
+  },
+  {
+    "text": "and basically your exhibit\nis being dusted by people",
+    "start": 751
+  },
+  {
+    "text": "who aren't here.",
+    "start": 753
+  },
+  {
+    "text": "So this seemed like a bad idea.",
+    "start": 755
+  },
+  {
+    "text": "We needed QR codes that could change",
+    "start": 756
+  },
+  {
+    "text": "and so if somebody was to\nshare them on social media,",
+    "start": 759
+  },
+  {
+    "text": "our maximum risk is really\njust a couple of minutes.",
+    "start": 761
+  },
+  {
+    "text": "And so this is where this idea\nof this QR service was born.",
+    "start": 764
+  },
+  {
+    "text": "Now we set five minutes as an interval,",
+    "start": 768
+  },
+  {
+    "text": "we allowed it to make 10 drinks per order.",
+    "start": 770
+  },
+  {
+    "text": "And because this is event based,",
+    "start": 773
+  },
+  {
+    "text": "it occurred to us pretty early",
+    "start": 774
+  },
+  {
+    "text": "we could do something clever here.",
+    "start": 776
+  },
+  {
+    "text": "So as you might know,",
+    "start": 778
+  },
+  {
+    "text": "serverless applications\nscale up incredibly quickly,",
+    "start": 779
+  },
+  {
+    "text": "but often things that are downstream",
+    "start": 782
+  },
+  {
+    "text": "don't scale up nearly as fast.",
+    "start": 784
+  },
+  {
+    "text": "So whether that's a database\nor various legacy systems,",
+    "start": 786
+  },
+  {
+    "text": "or in our case a human barista,",
+    "start": 789
+  },
+  {
+    "text": "you have to make sure\nyou protect those systems",
+    "start": 791
+  },
+  {
+    "text": "from scaling up.",
+    "start": 793
+  },
+  {
+    "text": "And we could do that here.",
+    "start": 794
+  },
+  {
+    "text": "Essentially we could\ncount the number of scans",
+    "start": 795
+  },
+  {
+    "text": "coming into the system",
+    "start": 797
+  },
+  {
+    "text": "and once we've hit a certain\nnumber of a period of time",
+    "start": 798
+  },
+  {
+    "text": "we can take the barcode away.",
+    "start": 801
+  },
+  {
+    "text": "And every time a code\nis scanned successfully,",
+    "start": 803
+  },
+  {
+    "text": "this microservice can then emit an event",
+    "start": 806
+  },
+  {
+    "text": "that would start that workflow\nthat we designed earlier.",
+    "start": 809
+  },
+  {
+    "text": "And so in terms of where this service",
+    "start": 814
+  },
+  {
+    "text": "lives on the architecture,",
+    "start": 815
+  },
+  {
+    "text": "it lives on the left hand\nside of the bus here,",
+    "start": 816
+  },
+  {
+    "text": "it's got a rest API",
+    "start": 819
+  },
+  {
+    "text": "so that the frontends\ncan can reach the service",
+    "start": 820
+  },
+  {
+    "text": "and then otherwise emits events",
+    "start": 823
+  },
+  {
+    "text": "to other parts of the system.",
+    "start": 825
+  },
+  {
+    "text": "Originally we used\nPostman for testing this,",
+    "start": 828
+  },
+  {
+    "text": "but very quickly we decided",
+    "start": 830
+  },
+  {
+    "text": "we wanted to build a\ncouple of skeleton UI's",
+    "start": 832
+  },
+  {
+    "text": "just to get a sense of what the flow was.",
+    "start": 834
+  },
+  {
+    "text": "And so those ordering and display apps",
+    "start": 836
+  },
+  {
+    "text": "were the first things\nthat we put together.",
+    "start": 838
+  },
+  {
+    "text": "Now inside this service",
+    "start": 841
+  },
+  {
+    "text": "there's two main methods\nthat make it work.",
+    "start": 843
+  },
+  {
+    "text": "So you've got the generate method,",
+    "start": 846
+  },
+  {
+    "text": "and this is an admin\nmethod that's protected",
+    "start": 848
+  },
+  {
+    "text": "so it can only be used by the\nadmin applications provided.",
+    "start": 850
+  },
+  {
+    "text": "This is what's responsible",
+    "start": 853
+  },
+  {
+    "text": "for generating the QR code random number.",
+    "start": 854
+  },
+  {
+    "text": "And it's just random,",
+    "start": 857
+  },
+  {
+    "text": "there's nothing particularly\nspecial about that.",
+    "start": 858
+  },
+  {
+    "text": "So this lambda function\ncreates the random number",
+    "start": 860
+  },
+  {
+    "text": "and you can call it multiple times",
+    "start": 863
+  },
+  {
+    "text": "over a five minute period.",
+    "start": 865
+  },
+  {
+    "text": "It breaks the day into five minute buckets",
+    "start": 866
+  },
+  {
+    "text": "and it will store that random\nnumber in a DynamoDB table.",
+    "start": 869
+  },
+  {
+    "text": "And on the validate side it\ndoes the same thing in reverse.",
+    "start": 873
+  },
+  {
+    "text": "So when you scan the QR\ncode with your phone,",
+    "start": 876
+  },
+  {
+    "text": "your phone decodes the QR code",
+    "start": 878
+  },
+  {
+    "text": "and passes along this random number",
+    "start": 880
+  },
+  {
+    "text": "along with the API call.",
+    "start": 881
+  },
+  {
+    "text": "And so that lambda\nfunction is just checking",
+    "start": 884
+  },
+  {
+    "text": "that the number you've\nprovided is in the table,",
+    "start": 885
+  },
+  {
+    "text": "and if it is,",
+    "start": 888
+  },
+  {
+    "text": "it then raises an event saying\nthat was a successful scan.",
+    "start": 889
+  },
+  {
+    "text": "So this is what it looks\nlike in that DynamoDB table.",
+    "start": 895
+  },
+  {
+    "text": "So we've got each row\nis a five minute window",
+    "start": 897
+  },
+  {
+    "text": "where the last code is a GSI,",
+    "start": 900
+  },
+  {
+    "text": "a global secondary index on the table,",
+    "start": 903
+  },
+  {
+    "text": "so we can query it very quickly.",
+    "start": 904
+  },
+  {
+    "text": "and we've got a number\nof available tokens,",
+    "start": 906
+  },
+  {
+    "text": "we're setting that to 10.",
+    "start": 908
+  },
+  {
+    "text": "And then each time this is scanned,",
+    "start": 910
+  },
+  {
+    "text": "that's then decremented in the table",
+    "start": 911
+  },
+  {
+    "text": "and at the point where it hits\nzero, it's no longer valid",
+    "start": 914
+  },
+  {
+    "text": "and then five minutes later,",
+    "start": 917
+  },
+  {
+    "text": "once the next code is retrieved,",
+    "start": 918
+  },
+  {
+    "text": "that adds another row to the table.",
+    "start": 919
+  },
+  {
+    "text": "So at this point we've got this endpoint",
+    "start": 924
+  },
+  {
+    "text": "that handles the IDs\nand scanning of QR codes",
+    "start": 927
+  },
+  {
+    "text": "and it can trigger an order to start,",
+    "start": 930
+  },
+  {
+    "text": "but now we need a way to\ninteract with the order.",
+    "start": 933
+  },
+  {
+    "text": "So there's several things we need to do.",
+    "start": 936
+  },
+  {
+    "text": "We need to make sure that customers",
+    "start": 937
+  },
+  {
+    "text": "can update and cancel orders.",
+    "start": 939
+  },
+  {
+    "text": "The baristas also can cancel",
+    "start": 941
+  },
+  {
+    "text": "or complete orders as they're completed.",
+    "start": 943
+  },
+  {
+    "text": "Task tokens that we're\ngenerating in that workflow",
+    "start": 945
+  },
+  {
+    "text": "that whenever we have to wait,",
+    "start": 948
+  },
+  {
+    "text": "they have to be stored somewhere.",
+    "start": 949
+  },
+  {
+    "text": "And then we've got this\ndisplay app and barista app",
+    "start": 951
+  },
+  {
+    "text": "that those need a list of\nopen and completed orders",
+    "start": 954
+  },
+  {
+    "text": "so they can show those on the displays.",
+    "start": 956
+  },
+  {
+    "text": "And we've got a few questions here",
+    "start": 959
+  },
+  {
+    "text": "that we're not sure about how to solve.",
+    "start": 960
+  },
+  {
+    "text": "So should we build a monolithic workflow?",
+    "start": 962
+  },
+  {
+    "text": "This happened very early on.",
+    "start": 966
+  },
+  {
+    "text": "We got back to the whiteboard",
+    "start": 967
+  },
+  {
+    "text": "and we charted out literally\nevery possible variant",
+    "start": 968
+  },
+  {
+    "text": "of what could happen between\na customer and a barista.",
+    "start": 971
+  },
+  {
+    "text": "And it ended up with hundreds\nof steps and we stopped,",
+    "start": 974
+  },
+  {
+    "text": "I think we've had too\nmuch coffee at that point.",
+    "start": 977
+  },
+  {
+    "text": "We stopped and said okay,\nthis isn't gonna work.",
+    "start": 979
+  },
+  {
+    "text": "'Cause the whole point of doing this",
+    "start": 980
+  },
+  {
+    "text": "is to get away from monoliths",
+    "start": 982
+  },
+  {
+    "text": "not to build another monolith.",
+    "start": 983
+  },
+  {
+    "text": "And so we just intuitively thought",
+    "start": 985
+  },
+  {
+    "text": "that wasn't really the right way to go.",
+    "start": 987
+  },
+  {
+    "text": "Then we considered about keeping those",
+    "start": 989
+  },
+  {
+    "text": "TaskTokens at the client.",
+    "start": 990
+  },
+  {
+    "text": "There's nothing particularly\nspecial about a TaskToken",
+    "start": 993
+  },
+  {
+    "text": "and it's just related to your\ncup of coffee and your order.",
+    "start": 994
+  },
+  {
+    "text": "So maybe we pass that back to the client",
+    "start": 998
+  },
+  {
+    "text": "and let it manage when it gets\nreturned to the .",
+    "start": 1000
+  },
+  {
+    "text": "But that doesn't really feel right",
+    "start": 1003
+  },
+  {
+    "text": "because what's happening is",
+    "start": 1004
+  },
+  {
+    "text": "you're taking a piece of backend data",
+    "start": 1005
+  },
+  {
+    "text": "and keeping it on the frontend.",
+    "start": 1007
+  },
+  {
+    "text": "If they change browsers, clear caches,",
+    "start": 1008
+  },
+  {
+    "text": "it's not really that great.",
+    "start": 1010
+  },
+  {
+    "text": "And then in terms of\nquerying all open workflows",
+    "start": 1013
+  },
+  {
+    "text": "for the list of open orders,",
+    "start": 1015
+  },
+  {
+    "text": "do we go to step functions",
+    "start": 1017
+  },
+  {
+    "text": "and pull a list of all of those executions",
+    "start": 1018
+  },
+  {
+    "text": "that are currently running and\npull some sort of metadata?",
+    "start": 1020
+  },
+  {
+    "text": "But the problem with\nthat is it gets very slow",
+    "start": 1023
+  },
+  {
+    "text": "as you've got more and more open orders,",
+    "start": 1025
+  },
+  {
+    "text": "that process is slowing down.",
+    "start": 1027
+  },
+  {
+    "text": "So again, not really a great\nway to approach the problem.",
+    "start": 1029
+  },
+  {
+    "text": "And all these problems came\ntogether at the same time",
+    "start": 1033
+  },
+  {
+    "text": "and that's really how we\nended up with this idea",
+    "start": 1036
+  },
+  {
+    "text": "of an order manager microservice.",
+    "start": 1038
+  },
+  {
+    "text": "And so this order manager microservice",
+    "start": 1041
+  },
+  {
+    "text": "solved all of these main problems.",
+    "start": 1043
+  },
+  {
+    "text": "It's got this rest API endpoint",
+    "start": 1045
+  },
+  {
+    "text": "for the UIs to communicate with it.",
+    "start": 1047
+  },
+  {
+    "text": "And again it consumes and\nemits events to the main bus.",
+    "start": 1049
+  },
+  {
+    "text": "And whenever the workflows\nemit those task tokens",
+    "start": 1053
+  },
+  {
+    "text": "to the event bus,",
+    "start": 1055
+  },
+  {
+    "text": "it then catches those and\nstores them in a DynamoDB table.",
+    "start": 1056
+  },
+  {
+    "text": "And so inside this, this\nbandage of microservice,",
+    "start": 1062
+  },
+  {
+    "text": "it's really just a standard\nserverless microservice",
+    "start": 1065
+  },
+  {
+    "text": "that's using API gateway,\nLambda and DynamoDB.",
+    "start": 1067
+  },
+  {
+    "text": "And it's listening to all\nthese events flowing through",
+    "start": 1071
+  },
+  {
+    "text": "about your orders",
+    "start": 1073
+  },
+  {
+    "text": "and then storing them in this table.",
+    "start": 1074
+  },
+  {
+    "text": "So anytime that now",
+    "start": 1075
+  },
+  {
+    "text": "that you need to get\na list of open orders,",
+    "start": 1077
+  },
+  {
+    "text": "we could query a GSI in\nDynamoDB very quickly.",
+    "start": 1078
+  },
+  {
+    "text": "Even today where we've got these\n80,000 orders in the table,",
+    "start": 1082
+  },
+  {
+    "text": "if we query for open orders,",
+    "start": 1085
+  },
+  {
+    "text": "we typically get that back\nwithin a couple of milliseconds",
+    "start": 1086
+  },
+  {
+    "text": "and so it doesn't slow down\nas the number of orders grows.",
+    "start": 1089
+  },
+  {
+    "text": "Now the order manager\nmicroservice in version one",
+    "start": 1093
+  },
+  {
+    "text": "looks a little bit like this.",
+    "start": 1096
+  },
+  {
+    "text": "And so each of the main functions",
+    "start": 1097
+  },
+  {
+    "text": "is handled by an API gateway method",
+    "start": 1100
+  },
+  {
+    "text": "followed by Lambda function.",
+    "start": 1103
+  },
+  {
+    "text": "And what we quickly realized",
+    "start": 1105
+  },
+  {
+    "text": "was there's a lot of duplication\nwhen you cancel an order,",
+    "start": 1107
+  },
+  {
+    "text": "it's updating a DynamoDB\ntable and resuming a workflow.",
+    "start": 1109
+  },
+  {
+    "text": "And then when you complete an order,",
+    "start": 1113
+  },
+  {
+    "text": "it updates the DynamoDB table",
+    "start": 1115
+  },
+  {
+    "text": "and it resumes a workflow,",
+    "start": 1116
+  },
+  {
+    "text": "and when you make an order\nand so on and so forth.",
+    "start": 1118
+  },
+  {
+    "text": "And what happens is you start to realize",
+    "start": 1120
+  },
+  {
+    "text": "that this is becoming that kind\nof tightly coupled code base",
+    "start": 1122
+  },
+  {
+    "text": "with a lot of duplication.",
+    "start": 1125
+  },
+  {
+    "text": "It's the same code in different folders.",
+    "start": 1127
+  },
+  {
+    "text": "When you're sharing this with your team,",
+    "start": 1129
+  },
+  {
+    "text": "this is a little bit awkward",
+    "start": 1130
+  },
+  {
+    "text": "and so it's fairly complicated",
+    "start": 1132
+  },
+  {
+    "text": "for something that's largely\ndoing something fairly simple.",
+    "start": 1134
+  },
+  {
+    "text": "So we had a couple of revisions to this.",
+    "start": 1137
+  },
+  {
+    "text": "The first was using direct integration.",
+    "start": 1140
+  },
+  {
+    "text": "So in cases where we had routes",
+    "start": 1143
+  },
+  {
+    "text": "that were just reading\nor writing to a table,",
+    "start": 1145
+  },
+  {
+    "text": "we didn't really need the\nlambda function there.",
+    "start": 1147
+  },
+  {
+    "text": "And so we're able to take\nthat lambda function out.",
+    "start": 1149
+  },
+  {
+    "text": "Now to do that we're\nusing something called",
+    "start": 1152
+  },
+  {
+    "text": "VTL, Velocity Template Language,",
+    "start": 1153
+  },
+  {
+    "text": "which API Gateway uses",
+    "start": 1156
+  },
+  {
+    "text": "and enables you to map\nthe request coming in",
+    "start": 1158
+  },
+  {
+    "text": "to the attributes in the DynamoDB table.",
+    "start": 1160
+  },
+  {
+    "text": "And this can be very useful.",
+    "start": 1164
+  },
+  {
+    "text": "Now perhaps not in our case so much",
+    "start": 1165
+  },
+  {
+    "text": "because the coffee ordering\nisn't that high capacity,",
+    "start": 1166
+  },
+  {
+    "text": "but where you have microservices,",
+    "start": 1169
+  },
+  {
+    "text": "where you might be handling\nmillions of requests,",
+    "start": 1171
+  },
+  {
+    "text": "this can give you a lot of scale",
+    "start": 1173
+  },
+  {
+    "text": "'cause you're taking a service out.",
+    "start": 1174
+  },
+  {
+    "text": "You're also mapping directly between",
+    "start": 1177
+  },
+  {
+    "text": "API Gateway and DynamoDB,",
+    "start": 1179
+  },
+  {
+    "text": "API Gateway natively starts at 10,000 TPS.",
+    "start": 1182
+  },
+  {
+    "text": "Many customers are much higher than that.",
+    "start": 1184
+  },
+  {
+    "text": "DynamoDB, you simply tweak\nup the IRS, RCUs or WCUs,",
+    "start": 1186
+  },
+  {
+    "text": "and by putting those services together",
+    "start": 1190
+  },
+  {
+    "text": "you can get this massive scale.",
+    "start": 1192
+  },
+  {
+    "text": "It also reduces the latency",
+    "start": 1194
+  },
+  {
+    "text": "because you're taking one service out.",
+    "start": 1195
+  },
+  {
+    "text": "And so this can be a\nreally interesting solution",
+    "start": 1197
+  },
+  {
+    "text": "for microservices that largely\ndoing CRUD type operations.",
+    "start": 1199
+  },
+  {
+    "text": "Now also in our microservice",
+    "start": 1206
+  },
+  {
+    "text": "we've got a couple of steps",
+    "start": 1208
+  },
+  {
+    "text": "are right based and\nthey're a bit more complex.",
+    "start": 1209
+  },
+  {
+    "text": "So when you submit an order,",
+    "start": 1211
+  },
+  {
+    "text": "we have to make sure that\nthe order you provided",
+    "start": 1213
+  },
+  {
+    "text": "actually is available.",
+    "start": 1215
+  },
+  {
+    "text": "So because the menu is nested JSON,",
+    "start": 1217
+  },
+  {
+    "text": "we've got a lambda function",
+    "start": 1219
+  },
+  {
+    "text": "that compares what you've provided",
+    "start": 1221
+  },
+  {
+    "text": "with what's in the\ncurrently supported menu",
+    "start": 1222
+  },
+  {
+    "text": "just to make sure it's there.",
+    "start": 1224
+  },
+  {
+    "text": "But we realized in that step\nwe could actually replace it",
+    "start": 1226
+  },
+  {
+    "text": "with a step functions workflow.",
+    "start": 1229
+  },
+  {
+    "text": "And so that PUT operation we took apart",
+    "start": 1231
+  },
+  {
+    "text": "and replaced that with a workflow.",
+    "start": 1233
+  },
+  {
+    "text": "And we decided not to stop there.",
+    "start": 1237
+  },
+  {
+    "text": "We thought, actually\nthis whole microservice",
+    "start": 1240
+  },
+  {
+    "text": "could be a workflow.",
+    "start": 1242
+  },
+  {
+    "text": "We simply remove everything\nwe've done so far",
+    "start": 1243
+  },
+  {
+    "text": "and have one single\nstep functions workflow",
+    "start": 1246
+  },
+  {
+    "text": "where the first step decides the state",
+    "start": 1248
+  },
+  {
+    "text": "is it create, read, update, delete,",
+    "start": 1251
+  },
+  {
+    "text": "and it takes the next step accordingly.",
+    "start": 1253
+  },
+  {
+    "text": "And you'll see in this workflow",
+    "start": 1256
+  },
+  {
+    "text": "there's now only one lambda function.",
+    "start": 1257
+  },
+  {
+    "text": "The rest of it is all\njust state transitions.",
+    "start": 1258
+  },
+  {
+    "text": "And so there are interesting\nbenefits to this.",
+    "start": 1262
+  },
+  {
+    "text": "You've got essentially\nyour entire microservice",
+    "start": 1264
+  },
+  {
+    "text": "being represented by ASL,",
+    "start": 1266
+  },
+  {
+    "text": "the language that step functions uses",
+    "start": 1268
+  },
+  {
+    "text": "makes versioning very easy",
+    "start": 1270
+  },
+  {
+    "text": "'cause you're using step\nfunctions versioning",
+    "start": 1272
+  },
+  {
+    "text": "as part of the service.",
+    "start": 1274
+  },
+  {
+    "text": "Also this approach might\nreduce your cost as well",
+    "start": 1276
+  },
+  {
+    "text": "in cases of lots of capacity,",
+    "start": 1278
+  },
+  {
+    "text": "with lots of Lambda functions,",
+    "start": 1279
+  },
+  {
+    "text": "could be a very cost effective solution.",
+    "start": 1281
+  },
+  {
+    "text": "So at this point we have a way\nto start the order workflow.",
+    "start": 1286
+  },
+  {
+    "text": "We interact with the order",
+    "start": 1289
+  },
+  {
+    "text": "but we've really got no way",
+    "start": 1291
+  },
+  {
+    "text": "to keep the frontends up to date.",
+    "start": 1292
+  },
+  {
+    "text": "And so we need to do several things here.",
+    "start": 1295
+  },
+  {
+    "text": "We've got to keep the web\napps in sync with the orders.",
+    "start": 1296
+  },
+  {
+    "text": "We've gotta respond to issues",
+    "start": 1300
+  },
+  {
+    "text": "like the stores opening and closing.",
+    "start": 1301
+  },
+  {
+    "text": "We've got to basically do\nall this close to real time",
+    "start": 1304
+  },
+  {
+    "text": "so customers get a sense\nof the events changing",
+    "start": 1307
+  },
+  {
+    "text": "and we have to be resilient enough",
+    "start": 1309
+  },
+  {
+    "text": "to be able to handle network dropouts.",
+    "start": 1311
+  },
+  {
+    "text": "Some of you may have noticed",
+    "start": 1313
+  },
+  {
+    "text": "that's a problem at conferences.",
+    "start": 1314
+  },
+  {
+    "text": "And so we have to make sure",
+    "start": 1315
+  },
+  {
+    "text": "that our system is resilient to that.",
+    "start": 1317
+  },
+  {
+    "text": "So in this notification problem,",
+    "start": 1320
+  },
+  {
+    "text": "again we came to a bunch of questions",
+    "start": 1321
+  },
+  {
+    "text": "that we didn't immediately\nknow the answers to.",
+    "start": 1323
+  },
+  {
+    "text": "Should we create polling APIs?",
+    "start": 1326
+  },
+  {
+    "text": "So we create a secondary API,",
+    "start": 1328
+  },
+  {
+    "text": "we provide the transaction ID",
+    "start": 1330
+  },
+  {
+    "text": "and see what the state of the order is",
+    "start": 1331
+  },
+  {
+    "text": "and we just have the\nfrontends pinging these APIs.",
+    "start": 1333
+  },
+  {
+    "text": "What about not doing it\nin the frontend at all?",
+    "start": 1336
+  },
+  {
+    "text": "We could use SMS, all the\ncustomers are on their phones.",
+    "start": 1339
+  },
+  {
+    "text": "We can simply have them\nreceive a text message",
+    "start": 1341
+  },
+  {
+    "text": "when the drink is ready.",
+    "start": 1344
+  },
+  {
+    "text": "That could work.",
+    "start": 1345
+  },
+  {
+    "text": "All about using API gateway WebSockets",
+    "start": 1347
+  },
+  {
+    "text": "as a possible option too.",
+    "start": 1349
+  },
+  {
+    "text": "So we evaluated all of those.",
+    "start": 1351
+  },
+  {
+    "text": "So thinking about this problem\na little bit more abstractly,",
+    "start": 1354
+  },
+  {
+    "text": "this is the problem you're trying to solve",
+    "start": 1357
+  },
+  {
+    "text": "when you're thinking\nabout these notifications.",
+    "start": 1359
+  },
+  {
+    "text": "And so in the state problem\nin distributed systems,",
+    "start": 1361
+  },
+  {
+    "text": "you've got a client,",
+    "start": 1364
+  },
+  {
+    "text": "the client makes a request to service A.",
+    "start": 1365
+  },
+  {
+    "text": "Service A then turns around\nservice B and does something,",
+    "start": 1367
+  },
+  {
+    "text": "and then service A only\nacknowledges to the client",
+    "start": 1371
+  },
+  {
+    "text": "but the client actually has no idea",
+    "start": 1375
+  },
+  {
+    "text": "what happened to the transaction.",
+    "start": 1376
+  },
+  {
+    "text": "Did it work? Did it fail?",
+    "start": 1378
+  },
+  {
+    "text": "Who knows? Not sure.",
+    "start": 1380
+  },
+  {
+    "text": "So how can we address this problem?",
+    "start": 1382
+  },
+  {
+    "text": "Well the traditional\nmethod for this is polling.",
+    "start": 1386
+  },
+  {
+    "text": "This has been really around since,",
+    "start": 1388
+  },
+  {
+    "text": "you know really the dawn of computers.",
+    "start": 1390
+  },
+  {
+    "text": "And the idea is you've got\nthis secondary endpoint",
+    "start": 1391
+  },
+  {
+    "text": "that you're pinging to see what the state",
+    "start": 1393
+  },
+  {
+    "text": "of your transaction is.",
+    "start": 1395
+  },
+  {
+    "text": "And this is actually the\ntechnology equivalent",
+    "start": 1396
+  },
+  {
+    "text": "of having your kids in the\nback of the car saying,",
+    "start": 1398
+  },
+  {
+    "text": "\"Are we there yet?",
+    "start": 1400
+  },
+  {
+    "text": "Are we there yet? Are we there yet?\"",
+    "start": 1401
+  },
+  {
+    "text": "And so the problem with this",
+    "start": 1404
+  },
+  {
+    "text": "is that if you have a randomly\ndistributed series of events",
+    "start": 1405
+  },
+  {
+    "text": "and you poll every 60 seconds,",
+    "start": 1407
+  },
+  {
+    "text": "on average you are gonna be\nout of date by 30 seconds.",
+    "start": 1410
+  },
+  {
+    "text": "What can you do where you\ncan poll every 30 seconds",
+    "start": 1414
+  },
+  {
+    "text": "and now you're out of date only\n15 seconds or poll every 10?",
+    "start": 1418
+  },
+  {
+    "text": "And what we see customers doing this,",
+    "start": 1422
+  },
+  {
+    "text": "they're basically tightening\nthe polling window",
+    "start": 1423
+  },
+  {
+    "text": "all the time,",
+    "start": 1425
+  },
+  {
+    "text": "increasing their compute cost",
+    "start": 1426
+  },
+  {
+    "text": "because you're making\nall these empty calls",
+    "start": 1427
+  },
+  {
+    "text": "with nothing coming back",
+    "start": 1429
+  },
+  {
+    "text": "and you're still not real time,",
+    "start": 1431
+  },
+  {
+    "text": "you haven't solved the problem.",
+    "start": 1432
+  },
+  {
+    "text": "And so we didn't like this approach.",
+    "start": 1433
+  },
+  {
+    "text": "We think polling is something\nyou should generally avoid.",
+    "start": 1435
+  },
+  {
+    "text": "The real answer is to use a WebSocket",
+    "start": 1439
+  },
+  {
+    "text": "because you think about your customers",
+    "start": 1441
+  },
+  {
+    "text": "using apps these days,",
+    "start": 1443
+  },
+  {
+    "text": "they've got email clients, maps\nclients, social media apps,",
+    "start": 1444
+  },
+  {
+    "text": "they're all essentially\napproximating real time.",
+    "start": 1447
+  },
+  {
+    "text": "This is the standard you have to provide",
+    "start": 1449
+  },
+  {
+    "text": "when you're building these web apps.",
+    "start": 1450
+  },
+  {
+    "text": "And so we knew that we\nwanted to use WebSockets,",
+    "start": 1453
+  },
+  {
+    "text": "but the problem is WebSockets\nare a little bit hard to use",
+    "start": 1455
+  },
+  {
+    "text": "because the way they work the frontend",
+    "start": 1458
+  },
+  {
+    "text": "makes the connection",
+    "start": 1460
+  },
+  {
+    "text": "and the connection never\ncloses from the backend.",
+    "start": 1461
+  },
+  {
+    "text": "And so the server keeps\nsending information",
+    "start": 1464
+  },
+  {
+    "text": "to keep the connection alive",
+    "start": 1466
+  },
+  {
+    "text": "and it's very clever but\nit's not easy to use.",
+    "start": 1467
+  },
+  {
+    "text": "We were very happy to\nfind the middle ground",
+    "start": 1471
+  },
+  {
+    "text": "that enabled us to do both.",
+    "start": 1473
+  },
+  {
+    "text": "And that was to use IoT Core.",
+    "start": 1474
+  },
+  {
+    "text": "So using the IoT Core servers,",
+    "start": 1477
+  },
+  {
+    "text": "you can think of this as\nbeing like AWS WebSockets.",
+    "start": 1478
+  },
+  {
+    "text": "Essentially we could pull\nthis into our service",
+    "start": 1482
+  },
+  {
+    "text": "and make it do the\nWebSocket management for us.",
+    "start": 1484
+  },
+  {
+    "text": "And this is a good situation,",
+    "start": 1487
+  },
+  {
+    "text": "anytime you've got partial information",
+    "start": 1488
+  },
+  {
+    "text": "coming back from your backend",
+    "start": 1490
+  },
+  {
+    "text": "where you might want to provide updates,",
+    "start": 1492
+  },
+  {
+    "text": "this is a good candidate.",
+    "start": 1494
+  },
+  {
+    "text": "So think about ride management\nor ride share services.",
+    "start": 1495
+  },
+  {
+    "text": "When you make a request for drivers",
+    "start": 1497
+  },
+  {
+    "text": "and you see drivers appearing on your map,",
+    "start": 1499
+  },
+  {
+    "text": "that's not an API call\nwhere they're pinging,",
+    "start": 1501
+  },
+  {
+    "text": "they're simply making a subscription.",
+    "start": 1503
+  },
+  {
+    "text": "And as drivers come into the zone,",
+    "start": 1505
+  },
+  {
+    "text": "it's appearing on your device.",
+    "start": 1507
+  },
+  {
+    "text": "So this is a very elegant\nsolution to the problem.",
+    "start": 1509
+  },
+  {
+    "text": "So what happens?",
+    "start": 1514
+  },
+  {
+    "text": "So essentially the IoT\nCore approach for real time",
+    "start": 1515
+  },
+  {
+    "text": "uses the MQTT protocol,",
+    "start": 1518
+  },
+  {
+    "text": "which is based around topics.",
+    "start": 1520
+  },
+  {
+    "text": "And so first the frontend\nmakes a subscription",
+    "start": 1522
+  },
+  {
+    "text": "to the topics that it's interested in.",
+    "start": 1524
+  },
+  {
+    "text": "And then we've got this\npublisher microservice",
+    "start": 1527
+  },
+  {
+    "text": "in the backend that's listening\nto events on the event bus",
+    "start": 1529
+  },
+  {
+    "text": "and the ones that's interested in",
+    "start": 1532
+  },
+  {
+    "text": "it's passing along back through\nthe publisher microservice",
+    "start": 1534
+  },
+  {
+    "text": "to those topics.",
+    "start": 1537
+  },
+  {
+    "text": "And then these messages are\nthen categorized those topics.",
+    "start": 1539
+  },
+  {
+    "text": "And here's one of the great things,",
+    "start": 1542
+  },
+  {
+    "text": "that handles the fan out for you.",
+    "start": 1544
+  },
+  {
+    "text": "Anytime a service handles\nfan out for you, by the way,",
+    "start": 1546
+  },
+  {
+    "text": "I think that's a win for developers.",
+    "start": 1549
+  },
+  {
+    "text": "So if you think about having",
+    "start": 1551
+  },
+  {
+    "text": "thousands of frontends out there",
+    "start": 1552
+  },
+  {
+    "text": "where they're listening to information,",
+    "start": 1553
+  },
+  {
+    "text": "this is a hard problem\nto solve by yourself.",
+    "start": 1555
+  },
+  {
+    "text": "Whereas if the service basically fans out",
+    "start": 1557
+  },
+  {
+    "text": "and gets that data to all those clients",
+    "start": 1559
+  },
+  {
+    "text": "for you with very little\ncode, that's great.",
+    "start": 1562
+  },
+  {
+    "text": "And this, the reason is this\nis a more difficult problem",
+    "start": 1565
+  },
+  {
+    "text": "than it sounds because on mobile phones,",
+    "start": 1567
+  },
+  {
+    "text": "apps can stop for any reason.",
+    "start": 1569
+  },
+  {
+    "text": "Customers can lose network\nconnection for any reason.",
+    "start": 1572
+  },
+  {
+    "text": "So you want to use a service",
+    "start": 1574
+  },
+  {
+    "text": "so when they come back\nthey can catch up messages",
+    "start": 1576
+  },
+  {
+    "text": "and this is something that\nIoT Core can do for you.",
+    "start": 1578
+  },
+  {
+    "text": "So there's lots of great functionality",
+    "start": 1581
+  },
+  {
+    "text": "you can use here and again\nwith very little custom code.",
+    "start": 1582
+  },
+  {
+    "text": "So to give you a sense of what\nthe custom code looks like,",
+    "start": 1587
+  },
+  {
+    "text": "so we're using Vue.js,",
+    "start": 1590
+  },
+  {
+    "text": "but if you're using anything\nlike React or Angular,",
+    "start": 1593
+  },
+  {
+    "text": "this is very similar.",
+    "start": 1595
+  },
+  {
+    "text": "So I've emitted a little\nbit of code at the top",
+    "start": 1597
+  },
+  {
+    "text": "that sets up the connection.",
+    "start": 1599
+  },
+  {
+    "text": "But you can see that on the\nrepo I share at the end.",
+    "start": 1600
+  },
+  {
+    "text": "This is the key thing,\nthese are the handlers.",
+    "start": 1603
+  },
+  {
+    "text": "So you've got three handlers\nyou have to care about.",
+    "start": 1606
+  },
+  {
+    "text": "One is when you first connect,",
+    "start": 1608
+  },
+  {
+    "text": "that's just making sure\nyou've got a connection.",
+    "start": 1609
+  },
+  {
+    "text": "Always good to check that.",
+    "start": 1611
+  },
+  {
+    "text": "Also, then you want to\ncheck if there's an error.",
+    "start": 1612
+  },
+  {
+    "text": "This should only happen if\nthere's a service disruption",
+    "start": 1614
+  },
+  {
+    "text": "or some other problem,",
+    "start": 1617
+  },
+  {
+    "text": "but you want to make\nsure you manage that too.",
+    "start": 1618
+  },
+  {
+    "text": "The third one's the really important one,",
+    "start": 1620
+  },
+  {
+    "text": "and this is when an event arrives.",
+    "start": 1622
+  },
+  {
+    "text": "So in this case a cup of\ncoffee is completed being made.",
+    "start": 1624
+  },
+  {
+    "text": "This event's passed through the event bus,",
+    "start": 1628
+  },
+  {
+    "text": "it comes through the publisher\nmicroservice, it lands here.",
+    "start": 1630
+  },
+  {
+    "text": "And all we do is we unpack that JSON",
+    "start": 1633
+  },
+  {
+    "text": "and then we update our app.",
+    "start": 1636
+  },
+  {
+    "text": "Here's the really cool thing.",
+    "start": 1638
+  },
+  {
+    "text": "So if you're using Vue.js or React,",
+    "start": 1639
+  },
+  {
+    "text": "the data models in these components,",
+    "start": 1641
+  },
+  {
+    "text": "all you have to do is\nchange the data model",
+    "start": 1643
+  },
+  {
+    "text": "with the updated state",
+    "start": 1645
+  },
+  {
+    "text": "and the UI takes care of itself.",
+    "start": 1647
+  },
+  {
+    "text": "So those UIs I showed you earlier",
+    "start": 1648
+  },
+  {
+    "text": "with the numbers whizzing\nacross the screen,",
+    "start": 1650
+  },
+  {
+    "text": "we didn't write that code,",
+    "start": 1652
+  },
+  {
+    "text": "we're just using the framework",
+    "start": 1653
+  },
+  {
+    "text": "to enable those realtime updates.",
+    "start": 1654
+  },
+  {
+    "text": "So it's a really good way\nof getting realtime events",
+    "start": 1656
+  },
+  {
+    "text": "and keeping that event type\nformatting from the backend",
+    "start": 1658
+  },
+  {
+    "text": "all the way through to the front.",
+    "start": 1662
+  },
+  {
+    "text": "And so this is the publisher microservice",
+    "start": 1665
+  },
+  {
+    "text": "that we slotted into\nthe architecture here.",
+    "start": 1668
+  },
+  {
+    "text": "And so amazingly, this is\nonly about 20 lines of code.",
+    "start": 1671
+  },
+  {
+    "text": "It's job in life is to be\ntriggered by an EventBridge rule.",
+    "start": 1674
+  },
+  {
+    "text": "It decides which events it cares about",
+    "start": 1677
+  },
+  {
+    "text": "and then routes those to\nthose topics in IoT Core.",
+    "start": 1678
+  },
+  {
+    "text": "Now one of the really\ninteresting things here",
+    "start": 1683
+  },
+  {
+    "text": "is you can combine approaches.",
+    "start": 1685
+  },
+  {
+    "text": "So you don't want to just\ncompletely ditch APIs",
+    "start": 1686
+  },
+  {
+    "text": "and do everything through a WebSocket.",
+    "start": 1689
+  },
+  {
+    "text": "I've seen some customers try\nto approach this problem.",
+    "start": 1690
+  },
+  {
+    "text": "WebSockets offer very lightweight messages",
+    "start": 1693
+  },
+  {
+    "text": "that essentially are just deltas,",
+    "start": 1695
+  },
+  {
+    "text": "they're changes in the application.",
+    "start": 1698
+  },
+  {
+    "text": "But remember, if you've got\na mobile app or a web app,",
+    "start": 1700
+  },
+  {
+    "text": "it can essentially restart at any time.",
+    "start": 1702
+  },
+  {
+    "text": "It's non-deterministic when it restarts.",
+    "start": 1704
+  },
+  {
+    "text": "And so when your app starts up,",
+    "start": 1706
+  },
+  {
+    "text": "it's a good idea to use an API call",
+    "start": 1708
+  },
+  {
+    "text": "to get the state of the world,",
+    "start": 1710
+  },
+  {
+    "text": "get the list of all your orders,",
+    "start": 1712
+  },
+  {
+    "text": "everything you care about\nin that initial API call.",
+    "start": 1713
+  },
+  {
+    "text": "And at the same time",
+    "start": 1716
+  },
+  {
+    "text": "you're making that\nsubscription on the backend",
+    "start": 1717
+  },
+  {
+    "text": "to the WebSocket to get those deltas.",
+    "start": 1719
+  },
+  {
+    "text": "And it's this combination,",
+    "start": 1722
+  },
+  {
+    "text": "when you put these together\nas then changes happen,",
+    "start": 1723
+  },
+  {
+    "text": "your application can then stay up to date.",
+    "start": 1726
+  },
+  {
+    "text": "It's an interesting\nthing here by using this",
+    "start": 1730
+  },
+  {
+    "text": "was that we had a situation in re:Invent,",
+    "start": 1733
+  },
+  {
+    "text": "we'd obviously built up,",
+    "start": 1736
+  },
+  {
+    "text": "not built out all of the\napplication functionality",
+    "start": 1736
+  },
+  {
+    "text": "we have today.",
+    "start": 1739
+  },
+  {
+    "text": "We ran out of soy milk,",
+    "start": 1740
+  },
+  {
+    "text": "everybody in the first\nyear was ordering soy milk",
+    "start": 1741
+  },
+  {
+    "text": "and we realized that we\nneeded to change the menu.",
+    "start": 1744
+  },
+  {
+    "text": "Of course we've not\nbuilt that functionality",
+    "start": 1746
+  },
+  {
+    "text": "and 'cause we don't know\nanything about coffee shops.",
+    "start": 1748
+  },
+  {
+    "text": "And so what we did is\nwe went to the backend",
+    "start": 1751
+  },
+  {
+    "text": "and we changed the menu service",
+    "start": 1753
+  },
+  {
+    "text": "and updated the table\ndirectly removing soy milk.",
+    "start": 1754
+  },
+  {
+    "text": "And we were absolutely shocked",
+    "start": 1758
+  },
+  {
+    "text": "when we walked outside to the booth",
+    "start": 1759
+  },
+  {
+    "text": "and we saw everybody's phones,",
+    "start": 1761
+  },
+  {
+    "text": "soy milk had disappeared.",
+    "start": 1762
+  },
+  {
+    "text": "And I think at the time we\nclaimed it was by intentional,",
+    "start": 1764
+  },
+  {
+    "text": "but it really wasn't.",
+    "start": 1767
+  },
+  {
+    "text": "And essentially what had\nhappened was exactly this.",
+    "start": 1768
+  },
+  {
+    "text": "You know the frontend apps had\nmade a request for the menu,",
+    "start": 1771
+  },
+  {
+    "text": "the DynamoDB table when it had that change",
+    "start": 1774
+  },
+  {
+    "text": "admitted that event\nthrough to the event bus,",
+    "start": 1777
+  },
+  {
+    "text": "that got picked up by\nthe publisher service",
+    "start": 1779
+  },
+  {
+    "text": "and then fanned out to all of\nthese frontends in the crowd.",
+    "start": 1781
+  },
+  {
+    "text": "So you get some really\ninteresting benefits",
+    "start": 1784
+  },
+  {
+    "text": "with this type of architecture.",
+    "start": 1785
+  },
+  {
+    "text": "And so at this point we've\ngot this final architecture",
+    "start": 1789
+  },
+  {
+    "text": "and this is the complete loop.",
+    "start": 1793
+  },
+  {
+    "text": "And so you can see the\nfrontends on the left,",
+    "start": 1794
+  },
+  {
+    "text": "they're making these rest API calls",
+    "start": 1796
+  },
+  {
+    "text": "that's coming in through the top.",
+    "start": 1798
+  },
+  {
+    "text": "The microservices are doing\nwhatever they need to do there,",
+    "start": 1800
+  },
+  {
+    "text": "passing off events to the event bus,",
+    "start": 1803
+  },
+  {
+    "text": "the order processing workflows\non the right hand side,",
+    "start": 1805
+  },
+  {
+    "text": "orchestrating each one of those workflows,",
+    "start": 1807
+  },
+  {
+    "text": "events coming back into the bus,",
+    "start": 1810
+  },
+  {
+    "text": "filtered by the publisher service",
+    "start": 1812
+  },
+  {
+    "text": "and then pushed out to those frontends.",
+    "start": 1813
+  },
+  {
+    "text": "So you have this flow all the way round.",
+    "start": 1815
+  },
+  {
+    "text": "One of the interesting things here is,",
+    "start": 1819
+  },
+  {
+    "text": "and we didn't really think\nabout this at the time,",
+    "start": 1820
+  },
+  {
+    "text": "is that those microservices",
+    "start": 1822
+  },
+  {
+    "text": "don't know anything\nabout each other at all.",
+    "start": 1823
+  },
+  {
+    "text": "They're completely decoupled.",
+    "start": 1825
+  },
+  {
+    "text": "Each one of them simply consumes",
+    "start": 1827
+  },
+  {
+    "text": "and publishes an event,",
+    "start": 1829
+  },
+  {
+    "text": "has no idea it's part of\na coffee machine process.",
+    "start": 1830
+  },
+  {
+    "text": "So the whole parts of this\nreally are totally decoupled.",
+    "start": 1832
+  },
+  {
+    "text": "So let's look at the\nsoftware lessons learned.",
+    "start": 1839
+  },
+  {
+    "text": "I think in any software project\nyou make a lot of mistakes",
+    "start": 1842
+  },
+  {
+    "text": "and you learn a lot of\nlessons for next time.",
+    "start": 1845
+  },
+  {
+    "text": "And in the 20 odd years\nI've been building things,",
+    "start": 1848
+  },
+  {
+    "text": "I still make loads of mistakes.",
+    "start": 1850
+  },
+  {
+    "text": "And so I like to look at the end",
+    "start": 1851
+  },
+  {
+    "text": "and figure out what we\ncould have done better.",
+    "start": 1853
+  },
+  {
+    "text": "And hopefully some of these things",
+    "start": 1855
+  },
+  {
+    "text": "are things you can bring\nto your own projects",
+    "start": 1856
+  },
+  {
+    "text": "as you start to build with\nevent driven architectures.",
+    "start": 1858
+  },
+  {
+    "text": "So what should events contain?",
+    "start": 1863
+  },
+  {
+    "text": "So we've talked a bit\nabout events very loosely",
+    "start": 1865
+  },
+  {
+    "text": "but not ever defined what it is.",
+    "start": 1867
+  },
+  {
+    "text": "So producers create events,",
+    "start": 1870
+  },
+  {
+    "text": "consumers have no control whatsoever",
+    "start": 1872
+  },
+  {
+    "text": "over what's in an event.",
+    "start": 1874
+  },
+  {
+    "text": "And on the screen on the left",
+    "start": 1877
+  },
+  {
+    "text": "you can see this is what\nan event looks like.",
+    "start": 1879
+  },
+  {
+    "text": "It's just JSON.",
+    "start": 1880
+  },
+  {
+    "text": "So if you can write JSON,\nyou can write an event.",
+    "start": 1881
+  },
+  {
+    "text": "Now the envelope attributes",
+    "start": 1885
+  },
+  {
+    "text": "that are shown on the screen\nsource, account, time, region,",
+    "start": 1887
+  },
+  {
+    "text": "those are provided by\nthe EventBridge service.",
+    "start": 1890
+  },
+  {
+    "text": "You have no control over those.",
+    "start": 1892
+  },
+  {
+    "text": "They'll just always be there.",
+    "start": 1893
+  },
+  {
+    "text": "But everything in blue is yours.",
+    "start": 1895
+  },
+  {
+    "text": "The detail, the detail type",
+    "start": 1896
+  },
+  {
+    "text": "and the source, it's entirely your choice.",
+    "start": 1898
+  },
+  {
+    "text": "And that's good and bad isn't it?",
+    "start": 1901
+  },
+  {
+    "text": "Because essentially different teams meet,",
+    "start": 1902
+  },
+  {
+    "text": "they can do different things",
+    "start": 1904
+  },
+  {
+    "text": "with what goes in those blue sections.",
+    "start": 1906
+  },
+  {
+    "text": "And one of the first questions we came to",
+    "start": 1909
+  },
+  {
+    "text": "in our team that was working\nin a decoupled way was,",
+    "start": 1910
+  },
+  {
+    "text": "should you produce fat\nevents or thin events?",
+    "start": 1914
+  },
+  {
+    "text": "What do I mean by that?",
+    "start": 1918
+  },
+  {
+    "text": "Well a fat event would be,",
+    "start": 1918
+  },
+  {
+    "text": "this is order number two, it's\na cappuccino, it's by James.",
+    "start": 1920
+  },
+  {
+    "text": "It costs $4.50, not in Vegas but $4.50.",
+    "start": 1923
+  },
+  {
+    "text": "A thin event would be\nit's order number two",
+    "start": 1928
+  },
+  {
+    "text": "and it's on the receiving service",
+    "start": 1931
+  },
+  {
+    "text": "to then look up what that order is.",
+    "start": 1933
+  },
+  {
+    "text": "What's the right approach here?",
+    "start": 1935
+  },
+  {
+    "text": "It honestly depends on\nwhat you're building,",
+    "start": 1937
+  },
+  {
+    "text": "but it's something you need to\nthink about fairly early on.",
+    "start": 1939
+  },
+  {
+    "text": "Also, versioning is another factor",
+    "start": 1942
+  },
+  {
+    "text": "because these events change\nas you're producing them.",
+    "start": 1944
+  },
+  {
+    "text": "And because you have no\nidea who consumers are,",
+    "start": 1947
+  },
+  {
+    "text": "somebody might be listening,\nsomebody might not.",
+    "start": 1950
+  },
+  {
+    "text": "You have to assume the moment\nyou're publishing an event",
+    "start": 1953
+  },
+  {
+    "text": "that somebody is listening",
+    "start": 1955
+  },
+  {
+    "text": "and if you're gonna change the event,",
+    "start": 1957
+  },
+  {
+    "text": "you probably ought to provide",
+    "start": 1958
+  },
+  {
+    "text": "some sort of versioning information",
+    "start": 1959
+  },
+  {
+    "text": "so you don't accidentally\nbreak them downstream.",
+    "start": 1961
+  },
+  {
+    "text": "So events are immutable,\nobservable and temporal.",
+    "start": 1966
+  },
+  {
+    "text": "And so what events should you generate?",
+    "start": 1969
+  },
+  {
+    "text": "So here are the events I pulled out",
+    "start": 1972
+  },
+  {
+    "text": "from the system towards the end",
+    "start": 1974
+  },
+  {
+    "text": "and there're about 15 or so events.",
+    "start": 1976
+  },
+  {
+    "text": "And the interesting thing is that",
+    "start": 1978
+  },
+  {
+    "text": "some of these aren't used, yet.",
+    "start": 1979
+  },
+  {
+    "text": "And that's an important point",
+    "start": 1983
+  },
+  {
+    "text": "when you're working with events",
+    "start": 1984
+  },
+  {
+    "text": "because publishing more\nevents than you need",
+    "start": 1985
+  },
+  {
+    "text": "helps future you, future your team",
+    "start": 1988
+  },
+  {
+    "text": "building functionality\nthat maybe you don't know",
+    "start": 1991
+  },
+  {
+    "text": "you need at this point in time.",
+    "start": 1993
+  },
+  {
+    "text": "And so this is very different",
+    "start": 1996
+  },
+  {
+    "text": "to the API world when you think about it",
+    "start": 1997
+  },
+  {
+    "text": "because you can generate all these events,",
+    "start": 1999
+  },
+  {
+    "text": "step functions makes events,\nyour workflows make events.",
+    "start": 2001
+  },
+  {
+    "text": "When you build things with APIs",
+    "start": 2004
+  },
+  {
+    "text": "you typically don't build an API",
+    "start": 2005
+  },
+  {
+    "text": "with the view that\nsomeone's not gonna use it.",
+    "start": 2007
+  },
+  {
+    "text": "Whereas with events",
+    "start": 2009
+  },
+  {
+    "text": "you might well need to just publish events",
+    "start": 2010
+  },
+  {
+    "text": "and maybe they never get used.",
+    "start": 2012
+  },
+  {
+    "text": "It's a very different problem.",
+    "start": 2014
+  },
+  {
+    "text": "Naming conventions also become\nfairly important early on",
+    "start": 2016
+  },
+  {
+    "text": "because an event could be\ncalled anything you'd like.",
+    "start": 2019
+  },
+  {
+    "text": "And so we decided early on\nthat this worked for us,",
+    "start": 2022
+  },
+  {
+    "text": "microservice.ThingThatHappened.",
+    "start": 2024
+  },
+  {
+    "text": "And the past tense was important",
+    "start": 2027
+  },
+  {
+    "text": "because events are immutable",
+    "start": 2029
+  },
+  {
+    "text": "and so being in the past\ntense really represents that",
+    "start": 2031
+  },
+  {
+    "text": "yeah, this thing happened\nand it's never gonna change",
+    "start": 2034
+  },
+  {
+    "text": "just because a coffee order gets canceled,",
+    "start": 2036
+  },
+  {
+    "text": "doesn't undo the original\ncoffee order event.",
+    "start": 2038
+  },
+  {
+    "text": "You've just now got two events.",
+    "start": 2041
+  },
+  {
+    "text": "Another early question that\ncame along was an EventBridge,",
+    "start": 2045
+  },
+  {
+    "text": "do you need one bus or two?",
+    "start": 2048
+  },
+  {
+    "text": "So you already have one default bus",
+    "start": 2050
+  },
+  {
+    "text": "that's already on in every\nregion of your AWS account",
+    "start": 2052
+  },
+  {
+    "text": "and that's where AWS events get thrown",
+    "start": 2056
+  },
+  {
+    "text": "from all the services that you use today.",
+    "start": 2058
+  },
+  {
+    "text": "And so you're likely,",
+    "start": 2060
+  },
+  {
+    "text": "you've got a bus full of\nevents going on already.",
+    "start": 2061
+  },
+  {
+    "text": "But the question is here,",
+    "start": 2063
+  },
+  {
+    "text": "do you want to add more events to this bus",
+    "start": 2065
+  },
+  {
+    "text": "or have a separate bus?",
+    "start": 2068
+  },
+  {
+    "text": "Now if you add more\nevents to the default bus,",
+    "start": 2070
+  },
+  {
+    "text": "you're arguably helping with extensibility",
+    "start": 2072
+  },
+  {
+    "text": "because other teams in your organization,",
+    "start": 2075
+  },
+  {
+    "text": "other people who can see the bus",
+    "start": 2076
+  },
+  {
+    "text": "have more access and visibility\ninto what you're producing,",
+    "start": 2078
+  },
+  {
+    "text": "and so that could be\nhelpful for helping them.",
+    "start": 2082
+  },
+  {
+    "text": "Of course that might be\nnot what you want to do,",
+    "start": 2084
+  },
+  {
+    "text": "you might have events\nwhere for security reasons",
+    "start": 2086
+  },
+  {
+    "text": "you don't want other people to see them.",
+    "start": 2088
+  },
+  {
+    "text": "And so essentially that second custom bus",
+    "start": 2090
+  },
+  {
+    "text": "can act as almost a security boundary",
+    "start": 2092
+  },
+  {
+    "text": "if you decide to use that instead.",
+    "start": 2095
+  },
+  {
+    "text": "And there's a bit more\nto this because events,",
+    "start": 2097
+  },
+  {
+    "text": "there's a lot of security controls",
+    "start": 2098
+  },
+  {
+    "text": "where you can control who\nsees which attributes.",
+    "start": 2100
+  },
+  {
+    "text": "But largely speaking of\nthat initial decision",
+    "start": 2102
+  },
+  {
+    "text": "is about this choice",
+    "start": 2104
+  },
+  {
+    "text": "of do you want to allow other people",
+    "start": 2106
+  },
+  {
+    "text": "to see what's going on\nin your application?",
+    "start": 2109
+  },
+  {
+    "text": "And so that's an early trade off.",
+    "start": 2111
+  },
+  {
+    "text": "Also thinking about discovery of events",
+    "start": 2116
+  },
+  {
+    "text": "is something we're not considered either",
+    "start": 2118
+  },
+  {
+    "text": "because when your app is\nproducing all these events",
+    "start": 2119
+  },
+  {
+    "text": "and you've got separate teams",
+    "start": 2122
+  },
+  {
+    "text": "building separate microservices,",
+    "start": 2123
+  },
+  {
+    "text": "they don't know what\nevents you're producing.",
+    "start": 2125
+  },
+  {
+    "text": "And these events are also\nchanging in development.",
+    "start": 2128
+  },
+  {
+    "text": "And so there's a few things\nyou can do here that can help.",
+    "start": 2129
+  },
+  {
+    "text": "One is we use Schema\nRegistry and EventBridge.",
+    "start": 2132
+  },
+  {
+    "text": "So this is easy to use\nyou simply on your bus,",
+    "start": 2134
+  },
+  {
+    "text": "it captures all of the events\nthat are coming through",
+    "start": 2138
+  },
+  {
+    "text": "and basically creates a very tidy registry",
+    "start": 2140
+  },
+  {
+    "text": "of what's going on in your application.",
+    "start": 2142
+  },
+  {
+    "text": "There are also some open\nsource tools like Atlas,",
+    "start": 2145
+  },
+  {
+    "text": "and so Atlas was created by\nsomebody called David Boyne",
+    "start": 2147
+  },
+  {
+    "text": "who's on my team now,",
+    "start": 2150
+  },
+  {
+    "text": "but before he joined\nAWS, he built this tool.",
+    "start": 2151
+  },
+  {
+    "text": "We discovered this and\nthis is great because",
+    "start": 2154
+  },
+  {
+    "text": "you could visualize all\nthe microservices you have",
+    "start": 2156
+  },
+  {
+    "text": "and the flow of events\nbetween those microservices.",
+    "start": 2159
+  },
+  {
+    "text": "So that was very helpful.",
+    "start": 2161
+  },
+  {
+    "text": "We also decided that documenting\nearly on was important",
+    "start": 2164
+  },
+  {
+    "text": "because it's not always obvious\nwhat you mean in your event.",
+    "start": 2167
+  },
+  {
+    "text": "If you have something\nlike price as a field",
+    "start": 2170
+  },
+  {
+    "text": "and you put in a price of\nfour spot 50, is that $4.50?",
+    "start": 2173
+  },
+  {
+    "text": "Is it in euros, pounds,\nis it pence? What is it?",
+    "start": 2177
+  },
+  {
+    "text": "And so you realize that\nactually documenting the event",
+    "start": 2180
+  },
+  {
+    "text": "can help consumers of the\nevents understand what you mean.",
+    "start": 2183
+  },
+  {
+    "text": "So testing by event injection\nwas also another fun thing.",
+    "start": 2189
+  },
+  {
+    "text": "So we originally tested by\ncalling APIs using artillery",
+    "start": 2192
+  },
+  {
+    "text": "and we've got these secured APIs",
+    "start": 2196
+  },
+  {
+    "text": "we're having to create JSON web tokens",
+    "start": 2198
+  },
+  {
+    "text": "for the testing process,",
+    "start": 2199
+  },
+  {
+    "text": "throw all these orders at the API.",
+    "start": 2201
+  },
+  {
+    "text": "And we realized we didn't\nneed to do this actually",
+    "start": 2202
+  },
+  {
+    "text": "we could essentially simulate the event",
+    "start": 2205
+  },
+  {
+    "text": "that incoming microservice could produce",
+    "start": 2207
+  },
+  {
+    "text": "and simply throw the\nevents on the event bus",
+    "start": 2209
+  },
+  {
+    "text": "at much higher volume.",
+    "start": 2211
+  },
+  {
+    "text": "So we created this robot\ntester where it did two things.",
+    "start": 2213
+  },
+  {
+    "text": "It acted like a customer placing\ntens of thousands of orders",
+    "start": 2216
+  },
+  {
+    "text": "and it also acted as a\nbarista filling those orders",
+    "start": 2219
+  },
+  {
+    "text": "as quickly as possible",
+    "start": 2222
+  },
+  {
+    "text": "so we could test the\nthroughput of the system.",
+    "start": 2223
+  },
+  {
+    "text": "It was really useful.",
+    "start": 2224
+  },
+  {
+    "text": "Also, there's a really great feature",
+    "start": 2227
+  },
+  {
+    "text": "called archive and replay in EventBridge.",
+    "start": 2228
+  },
+  {
+    "text": "Again, you just turn this on on your bus",
+    "start": 2231
+  },
+  {
+    "text": "and this will archive all of the events",
+    "start": 2233
+  },
+  {
+    "text": "coming in through your bus.",
+    "start": 2235
+  },
+  {
+    "text": "Now why would you want to do this?",
+    "start": 2237
+  },
+  {
+    "text": "Well if you've got a\nbusy production system,",
+    "start": 2238
+  },
+  {
+    "text": "and you want to make changes",
+    "start": 2239
+  },
+  {
+    "text": "and then test what those\nlook like in development,",
+    "start": 2241
+  },
+  {
+    "text": "you can take a day of data",
+    "start": 2244
+  },
+  {
+    "text": "that's live data from the\nsystem, from the archive",
+    "start": 2245
+  },
+  {
+    "text": "and play that in your dev environment.",
+    "start": 2247
+  },
+  {
+    "text": "It gives you a much better idea",
+    "start": 2249
+  },
+  {
+    "text": "of what your changes are\ngoing to do in the system.",
+    "start": 2250
+  },
+  {
+    "text": "Also, another really simple one",
+    "start": 2254
+  },
+  {
+    "text": "was if you can create one rule",
+    "start": 2255
+  },
+  {
+    "text": "and send all of your events\ninto the bus and log out",
+    "start": 2257
+  },
+  {
+    "text": "want that rule to a\nCloudWatch logs output.",
+    "start": 2260
+  },
+  {
+    "text": "So you're just essentially\nlogging everything",
+    "start": 2264
+  },
+  {
+    "text": "that goes through the bus.",
+    "start": 2265
+  },
+  {
+    "text": "In dev and test,",
+    "start": 2266
+  },
+  {
+    "text": "this is a great way to\nsee what's happening.",
+    "start": 2267
+  },
+  {
+    "text": "You probably don't want\nto turn it on in prod",
+    "start": 2269
+  },
+  {
+    "text": "because of the amount of data,",
+    "start": 2271
+  },
+  {
+    "text": "but in the development process",
+    "start": 2272
+  },
+  {
+    "text": "that's saved us a lot of time.",
+    "start": 2274
+  },
+  {
+    "text": "Now in the communication\nbetween microservices,",
+    "start": 2278
+  },
+  {
+    "text": "in EDA this is a little bit different",
+    "start": 2280
+  },
+  {
+    "text": "and again takes a bit\nof time to get used to.",
+    "start": 2283
+  },
+  {
+    "text": "So you've got this event flow",
+    "start": 2285
+  },
+  {
+    "text": "that's driving the application\nas events are emitted",
+    "start": 2286
+  },
+  {
+    "text": "and triggering other\nparts of the application,",
+    "start": 2289
+  },
+  {
+    "text": "other microservices,",
+    "start": 2291
+  },
+  {
+    "text": "that's what's causing things to happen.",
+    "start": 2292
+  },
+  {
+    "text": "And so the events are choreographing",
+    "start": 2295
+  },
+  {
+    "text": "the services between them",
+    "start": 2296
+  },
+  {
+    "text": "while step functions\norchestrates the transactions.",
+    "start": 2298
+  },
+  {
+    "text": "And it's important to know\nwhen you should use each.",
+    "start": 2302
+  },
+  {
+    "text": "And we actually got this\nwrong a couple of times,",
+    "start": 2304
+  },
+  {
+    "text": "it's easy to accidentally feel",
+    "start": 2306
+  },
+  {
+    "text": "that you need to orchestrate\nacross microservices",
+    "start": 2308
+  },
+  {
+    "text": "'cause it's very\ncomforting having something",
+    "start": 2311
+  },
+  {
+    "text": "that knows about retry and error handling",
+    "start": 2312
+  },
+  {
+    "text": "watching those events.",
+    "start": 2315
+  },
+  {
+    "text": "But you end up building a\nmonolith if you do this.",
+    "start": 2316
+  },
+  {
+    "text": "And it's also easy to go the other way",
+    "start": 2318
+  },
+  {
+    "text": "and decide you don't need orchestration.",
+    "start": 2320
+  },
+  {
+    "text": "You can do it all in events,",
+    "start": 2322
+  },
+  {
+    "text": "but often that doesn't save you any time",
+    "start": 2324
+  },
+  {
+    "text": "and creates a lot of unnecessary events,",
+    "start": 2325
+  },
+  {
+    "text": "a lot of extra code.",
+    "start": 2327
+  },
+  {
+    "text": "And so knowing where the\nseparation is can save you",
+    "start": 2328
+  },
+  {
+    "text": "a lot of time and reduce the\namount of code that you create.",
+    "start": 2330
+  },
+  {
+    "text": "These microservice on the\nleft are completely decoupled",
+    "start": 2335
+  },
+  {
+    "text": "and they emit events with\nno knowledge of each other.",
+    "start": 2338
+  },
+  {
+    "text": "And that's another really powerful part",
+    "start": 2340
+  },
+  {
+    "text": "of when you're building using EDA.",
+    "start": 2342
+  },
+  {
+    "text": "When we wanted to build this\nlarge application at the end,",
+    "start": 2347
+  },
+  {
+    "text": "we had about a dozen microservices",
+    "start": 2350
+  },
+  {
+    "text": "with a step functions workflow\nand all the other parts.",
+    "start": 2352
+  },
+  {
+    "text": "And originally we had one AWS SAM template",
+    "start": 2354
+  },
+  {
+    "text": "and I'm not sure if you've used SAM,",
+    "start": 2357
+  },
+  {
+    "text": "but it's a bit like CDK or Terraform.",
+    "start": 2358
+  },
+  {
+    "text": "We ended up with this massive template",
+    "start": 2360
+  },
+  {
+    "text": "and the problem was occasionally",
+    "start": 2362
+  },
+  {
+    "text": "when we made certain\nchanges and deployed them,",
+    "start": 2364
+  },
+  {
+    "text": "it would do things like\ntear down resources",
+    "start": 2366
+  },
+  {
+    "text": "we didn't want to tear down",
+    "start": 2368
+  },
+  {
+    "text": "like the Cognito user\npool or the event bus.",
+    "start": 2370
+  },
+  {
+    "text": "And so what we did instead",
+    "start": 2372
+  },
+  {
+    "text": "is we came up with the\nidea of a core template",
+    "start": 2374
+  },
+  {
+    "text": "that would contain the main things",
+    "start": 2376
+  },
+  {
+    "text": "that would never change.",
+    "start": 2377
+  },
+  {
+    "text": "The bus name, the Cognito\nsetup and so forth.",
+    "start": 2378
+  },
+  {
+    "text": "And then each microservice\nended up having its own template",
+    "start": 2382
+  },
+  {
+    "text": "and so we could deploy those separately",
+    "start": 2384
+  },
+  {
+    "text": "and that made it much\nsimpler and much faster",
+    "start": 2387
+  },
+  {
+    "text": "when we're deploying\nchanges to the application.",
+    "start": 2389
+  },
+  {
+    "text": "And we did the same thing with\nthe order processing workflow",
+    "start": 2391
+  },
+  {
+    "text": "that again was its own SAM template,",
+    "start": 2394
+  },
+  {
+    "text": "but it made it worthwhile\nin this type of design",
+    "start": 2396
+  },
+  {
+    "text": "to break up these monolithic deployments.",
+    "start": 2398
+  },
+  {
+    "text": "Now there's a few useful patterns\nthat I think also emerged",
+    "start": 2403
+  },
+  {
+    "text": "that we think we can\nuse in future projects",
+    "start": 2407
+  },
+  {
+    "text": "and hopefully you can find\nsome of these useful as well.",
+    "start": 2409
+  },
+  {
+    "text": "So you might've heard of CQRS,",
+    "start": 2415
+  },
+  {
+    "text": "this command query\nresponsibility separation,",
+    "start": 2417
+  },
+  {
+    "text": "which is a very sort of\nmouthy long way to say",
+    "start": 2419
+  },
+  {
+    "text": "that you're simply separating the paths",
+    "start": 2422
+  },
+  {
+    "text": "that update or read data.",
+    "start": 2424
+  },
+  {
+    "text": "And this is very useful",
+    "start": 2427
+  },
+  {
+    "text": "when you're building distributed systems",
+    "start": 2428
+  },
+  {
+    "text": "or systems that have to scale.",
+    "start": 2429
+  },
+  {
+    "text": "And so in this, what happened was",
+    "start": 2432
+  },
+  {
+    "text": "we did this by accident,",
+    "start": 2434
+  },
+  {
+    "text": "by having those APIs\ncoming in on the input",
+    "start": 2435
+  },
+  {
+    "text": "and then on the way out\ngoing out over WebSockets.",
+    "start": 2438
+  },
+  {
+    "text": "But I've not actually seen\nthis in other applications",
+    "start": 2441
+  },
+  {
+    "text": "and so I'm not sure if we're the first",
+    "start": 2443
+  },
+  {
+    "text": "to have come up with this idea,",
+    "start": 2444
+  },
+  {
+    "text": "but creating CQRS over\nWebSockets of web apps",
+    "start": 2446
+  },
+  {
+    "text": "afforded us quite a lot of flexibility.",
+    "start": 2449
+  },
+  {
+    "text": "And so this can be very useful as a design",
+    "start": 2452
+  },
+  {
+    "text": "when you're trying to update",
+    "start": 2454
+  },
+  {
+    "text": "everyone about something happening.",
+    "start": 2455
+  },
+  {
+    "text": "One example of this is\nwhen the coffee store",
+    "start": 2457
+  },
+  {
+    "text": "opens or closes,",
+    "start": 2460
+  },
+  {
+    "text": "remember we've got those barista tablets",
+    "start": 2462
+  },
+  {
+    "text": "and the baristas can hit\nthe open or close button",
+    "start": 2463
+  },
+  {
+    "text": "when they want to change\nthe state of the store.",
+    "start": 2466
+  },
+  {
+    "text": "So how would you do this?",
+    "start": 2470
+  },
+  {
+    "text": "So if you imagine you've got three tablets",
+    "start": 2471
+  },
+  {
+    "text": "and you've got a hundred people outside",
+    "start": 2473
+  },
+  {
+    "text": "and you've got the screens,",
+    "start": 2474
+  },
+  {
+    "text": "how do you get those\nmessages out to everything",
+    "start": 2475
+  },
+  {
+    "text": "to indicate the state is closed?",
+    "start": 2477
+  },
+  {
+    "text": "And this enables that to become\na very easy problem to solve",
+    "start": 2480
+  },
+  {
+    "text": "because the barista tablet",
+    "start": 2482
+  },
+  {
+    "text": "where they close or open the store",
+    "start": 2484
+  },
+  {
+    "text": "simply makes a call to a config\nservice to make the change.",
+    "start": 2485
+  },
+  {
+    "text": "And at that point what happens",
+    "start": 2489
+  },
+  {
+    "text": "is that the service updates\ndone by DynamoDB table,",
+    "start": 2491
+  },
+  {
+    "text": "all those events track\naround these various systems",
+    "start": 2494
+  },
+  {
+    "text": "and then get published out.",
+    "start": 2497
+  },
+  {
+    "text": "And then the thing that\nmade the original request",
+    "start": 2498
+  },
+  {
+    "text": "to open or close the store\nalso receives that event.",
+    "start": 2501
+  },
+  {
+    "text": "So until that happens\nis an appending state",
+    "start": 2503
+  },
+  {
+    "text": "waiting to find out if the\nopen or close happened.",
+    "start": 2506
+  },
+  {
+    "text": "It's a very elegant way to\nsolve this type of problem.",
+    "start": 2509
+  },
+  {
+    "text": "Now the way it works under the hood",
+    "start": 2514
+  },
+  {
+    "text": "is also worth taking apart",
+    "start": 2516
+  },
+  {
+    "text": "in a little bit more detail as well.",
+    "start": 2517
+  },
+  {
+    "text": "So with CQRS, with WebSockets,",
+    "start": 2519
+  },
+  {
+    "text": "we've got these events coming through.",
+    "start": 2521
+  },
+  {
+    "text": "We've got this publisher microservice,",
+    "start": 2522
+  },
+  {
+    "text": "the Lambda functions routing between",
+    "start": 2524
+  },
+  {
+    "text": "what it sees in the event",
+    "start": 2525
+  },
+  {
+    "text": "and what are the topics in\nthe IoT Core configuration.",
+    "start": 2527
+  },
+  {
+    "text": "And this works with a very\nlarge number of subscribers,",
+    "start": 2531
+  },
+  {
+    "text": "and it's actually a\nvery cost effective way",
+    "start": 2534
+  },
+  {
+    "text": "to push those messages out.",
+    "start": 2536
+  },
+  {
+    "text": "But what we found was when\nyou've got applications",
+    "start": 2539
+  },
+  {
+    "text": "where you've got\ncustomers and admin users,",
+    "start": 2542
+  },
+  {
+    "text": "there's certain topic configurations",
+    "start": 2544
+  },
+  {
+    "text": "that start to appear\nand it becomes a pattern",
+    "start": 2547
+  },
+  {
+    "text": "that's worth being aware of.",
+    "start": 2548
+  },
+  {
+    "text": "So you've got this first type of topic,",
+    "start": 2551
+  },
+  {
+    "text": "which is just for the user.",
+    "start": 2553
+  },
+  {
+    "text": "This is your cup of coffee.",
+    "start": 2554
+  },
+  {
+    "text": "So when your coffee is ready,\nit goes down to a topic",
+    "start": 2556
+  },
+  {
+    "text": "that only you have permission to see",
+    "start": 2558
+  },
+  {
+    "text": "and that topic is secured using IAM",
+    "start": 2561
+  },
+  {
+    "text": "when you first log in with Cognito.",
+    "start": 2563
+  },
+  {
+    "text": "So the message coming to\nyou and just you are secure.",
+    "start": 2565
+  },
+  {
+    "text": "And so that's useful when",
+    "start": 2568
+  },
+  {
+    "text": "it's just something that\none person cares about",
+    "start": 2569
+  },
+  {
+    "text": "in your application.",
+    "start": 2571
+  },
+  {
+    "text": "Then you've got this second type topic B,",
+    "start": 2575
+  },
+  {
+    "text": "which are more general.",
+    "start": 2577
+  },
+  {
+    "text": "And these are used by the the admin apps",
+    "start": 2578
+  },
+  {
+    "text": "like the TV app and the barista",
+    "start": 2580
+  },
+  {
+    "text": "where they need to know about",
+    "start": 2582
+  },
+  {
+    "text": "changes across multiple orders.",
+    "start": 2582
+  },
+  {
+    "text": "Here we can use wild cards in the topics",
+    "start": 2585
+  },
+  {
+    "text": "so that we can pass along\nthose messages in bulk.",
+    "start": 2587
+  },
+  {
+    "text": "So if all of you have coffee orders,",
+    "start": 2590
+  },
+  {
+    "text": "the TV screen is getting a notification",
+    "start": 2592
+  },
+  {
+    "text": "for each one of those changes",
+    "start": 2594
+  },
+  {
+    "text": "and the individual\napplications on the phone",
+    "start": 2596
+  },
+  {
+    "text": "are not receiving these messages.",
+    "start": 2598
+  },
+  {
+    "text": "This isn't a customer channel,\nit's simply an admin channel.",
+    "start": 2600
+  },
+  {
+    "text": "And then you've got this third type,",
+    "start": 2603
+  },
+  {
+    "text": "which is the global setup",
+    "start": 2605
+  },
+  {
+    "text": "where absolutely everything\nthat's connected needs to know",
+    "start": 2607
+  },
+  {
+    "text": "those are for emergencies or changes,",
+    "start": 2609
+  },
+  {
+    "text": "you know, the store is open or closed,",
+    "start": 2611
+  },
+  {
+    "text": "something that happens of that nature.",
+    "start": 2613
+  },
+  {
+    "text": "And everybody who is on the system,",
+    "start": 2614
+  },
+  {
+    "text": "whether they're a customer\nor an admin channel",
+    "start": 2616
+  },
+  {
+    "text": "would subscribe to these.",
+    "start": 2619
+  },
+  {
+    "text": "There's a couple other things we could do",
+    "start": 2622
+  },
+  {
+    "text": "is we can use the rules\nin the EventBridge bus",
+    "start": 2623
+  },
+  {
+    "text": "to then route very\nclearly to those topics.",
+    "start": 2625
+  },
+  {
+    "text": "And so we want to keep\ntrue to the JSON format",
+    "start": 2628
+  },
+  {
+    "text": "that's going around.",
+    "start": 2631
+  },
+  {
+    "text": "We can simply map that and\npass that along to those topics",
+    "start": 2632
+  },
+  {
+    "text": "and allow the frontends then",
+    "start": 2635
+  },
+  {
+    "text": "to unpack the information\nthat's being received.",
+    "start": 2637
+  },
+  {
+    "text": "We can also use content filtering rules",
+    "start": 2640
+  },
+  {
+    "text": "and EventBridge and wildcards,",
+    "start": 2641
+  },
+  {
+    "text": "so we can pass along\nlarge numbers of messages",
+    "start": 2643
+  },
+  {
+    "text": "such as the order subscription.",
+    "start": 2646
+  },
+  {
+    "text": "And so you don't need\nto set up custom rules",
+    "start": 2648
+  },
+  {
+    "text": "for every single type and that\ncan save a lot of time too.",
+    "start": 2649
+  },
+  {
+    "text": "So orchestration and\nchoreography are two words",
+    "start": 2655
+  },
+  {
+    "text": "that typically strike fear into people",
+    "start": 2658
+  },
+  {
+    "text": "because they're easy to mix up\nand get the wrong way around,",
+    "start": 2660
+  },
+  {
+    "text": "but actually as concepts,",
+    "start": 2662
+  },
+  {
+    "text": "they're really important to know",
+    "start": 2663
+  },
+  {
+    "text": "as you build out these\ntypes of applications.",
+    "start": 2665
+  },
+  {
+    "text": "Orchestration is what\nyou want to think about",
+    "start": 2668
+  },
+  {
+    "text": "when you've got microservices",
+    "start": 2670
+  },
+  {
+    "text": "where you need very tight\ncontrol over what's happening.",
+    "start": 2672
+  },
+  {
+    "text": "Think about something\nlike a payment service.",
+    "start": 2674
+  },
+  {
+    "text": "If you're processing a credit card,",
+    "start": 2676
+  },
+  {
+    "text": "typically lots of things can go wrong.",
+    "start": 2677
+  },
+  {
+    "text": "You want to be able to retry,",
+    "start": 2680
+  },
+  {
+    "text": "have very elegant error handling.",
+    "start": 2681
+  },
+  {
+    "text": "You don't want to accidentally\ncharge a customer twice.",
+    "start": 2682
+  },
+  {
+    "text": "It's a great idea to use\nan orchestration service",
+    "start": 2685
+  },
+  {
+    "text": "to manage that type of operation.",
+    "start": 2688
+  },
+  {
+    "text": "Whereas choreography is most of the time",
+    "start": 2689
+  },
+  {
+    "text": "what you'll be using for\ncommunicating between events.",
+    "start": 2692
+  },
+  {
+    "text": "The more you apply orchestration\nacross multiple services,",
+    "start": 2695
+  },
+  {
+    "text": "the more you're creating\nsomething that's monolithic.",
+    "start": 2698
+  },
+  {
+    "text": "So generally the idea is the\norchestration would exist",
+    "start": 2700
+  },
+  {
+    "text": "within a microservice boundary",
+    "start": 2703
+  },
+  {
+    "text": "and the choreography is what\nexists between microservices.",
+    "start": 2705
+  },
+  {
+    "text": "And if you just remember that,",
+    "start": 2709
+  },
+  {
+    "text": "that's an easy way of thinking about",
+    "start": 2710
+  },
+  {
+    "text": "how you put them together.",
+    "start": 2712
+  },
+  {
+    "text": "But if you do it right,",
+    "start": 2713
+  },
+  {
+    "text": "what you end up with is a very,\nvery low code implementation",
+    "start": 2714
+  },
+  {
+    "text": "that can save you a lot of time",
+    "start": 2717
+  },
+  {
+    "text": "as you add new microservices",
+    "start": 2719
+  },
+  {
+    "text": "and make changes to your application.",
+    "start": 2720
+  },
+  {
+    "text": "Now we took this one step further",
+    "start": 2724
+  },
+  {
+    "text": "because we obviously had\nall these microservices",
+    "start": 2726
+  },
+  {
+    "text": "that are being developed by our team,",
+    "start": 2727
+  },
+  {
+    "text": "but as we rolled out this feature",
+    "start": 2730
+  },
+  {
+    "text": "or the application to all\nthese different conferences",
+    "start": 2732
+  },
+  {
+    "text": "in different parts of the world,",
+    "start": 2734
+  },
+  {
+    "text": "other AWS teams wanted to\nadd extra functionality.",
+    "start": 2735
+  },
+  {
+    "text": "And we thought this would be interesting",
+    "start": 2739
+  },
+  {
+    "text": "is to add an extension component,",
+    "start": 2740
+  },
+  {
+    "text": "something that can listen to the bus",
+    "start": 2742
+  },
+  {
+    "text": "and then route those events to code",
+    "start": 2744
+  },
+  {
+    "text": "that we've not written or managed.",
+    "start": 2746
+  },
+  {
+    "text": "And so we created this idea",
+    "start": 2748
+  },
+  {
+    "text": "called serverlesspresso extensions.",
+    "start": 2749
+  },
+  {
+    "text": "We documented how it worked",
+    "start": 2752
+  },
+  {
+    "text": "and we put it on our internal system",
+    "start": 2753
+  },
+  {
+    "text": "to allow our teams to\nbuild extra functionality",
+    "start": 2755
+  },
+  {
+    "text": "for our system.",
+    "start": 2757
+  },
+  {
+    "text": "And what was amazing is that",
+    "start": 2759
+  },
+  {
+    "text": "over the course of a few months,",
+    "start": 2760
+  },
+  {
+    "text": "we saw people create\nthese types of extensions,",
+    "start": 2761
+  },
+  {
+    "text": "like an average wait time,",
+    "start": 2764
+  },
+  {
+    "text": "something that just listens",
+    "start": 2766
+  },
+  {
+    "text": "to all the events flowing through",
+    "start": 2767
+  },
+  {
+    "text": "and deciding how long something is taking.",
+    "start": 2768
+  },
+  {
+    "text": "I think you'll see that\non the expo hall today.",
+    "start": 2770
+  },
+  {
+    "text": "In other parts, they built ChatOps",
+    "start": 2772
+  },
+  {
+    "text": "where they could integrate with Slack",
+    "start": 2774
+  },
+  {
+    "text": "and other messaging systems,",
+    "start": 2776
+  },
+  {
+    "text": "so that if there were any problems,",
+    "start": 2777
+  },
+  {
+    "text": "they could catch those",
+    "start": 2778
+  },
+  {
+    "text": "and receive those messages\nthrough chat applications.",
+    "start": 2780
+  },
+  {
+    "text": "Or business metrics dashboards,\nif you want to get a sense",
+    "start": 2783
+  },
+  {
+    "text": "of how the application is\nperforming and what's going on.",
+    "start": 2785
+  },
+  {
+    "text": "We saw a lot of custom\ndashboards being built.",
+    "start": 2788
+  },
+  {
+    "text": "So this became a very powerful way",
+    "start": 2791
+  },
+  {
+    "text": "of opening up the application",
+    "start": 2792
+  },
+  {
+    "text": "very broadly to other people who weren't,",
+    "start": 2794
+  },
+  {
+    "text": "you know, involved with our team.",
+    "start": 2797
+  },
+  {
+    "text": "And it also meant they could produce code",
+    "start": 2798
+  },
+  {
+    "text": "that wasn't part of our CICD pipeline.",
+    "start": 2799
+  },
+  {
+    "text": "We didn't need to test it,",
+    "start": 2802
+  },
+  {
+    "text": "but it gave them the ability",
+    "start": 2803
+  },
+  {
+    "text": "to build whatever they needed to build.",
+    "start": 2805
+  },
+  {
+    "text": "Now this week at re:Invent\nyou'll see a new thing",
+    "start": 2809
+  },
+  {
+    "text": "that the DA team has produced\ncalled ServerlessVideo.",
+    "start": 2811
+  },
+  {
+    "text": "And so this is a serverless\nstreaming application",
+    "start": 2814
+  },
+  {
+    "text": "that enables you to\nbroadcast from your phone",
+    "start": 2816
+  },
+  {
+    "text": "and watch what else is\nhappening at re:Invent.",
+    "start": 2818
+  },
+  {
+    "text": "And so it'll be in the expo hall",
+    "start": 2821
+  },
+  {
+    "text": "and you can take part",
+    "start": 2822
+  },
+  {
+    "text": "and broadcast videos with each other.",
+    "start": 2823
+  },
+  {
+    "text": "But the interesting thing\nabout this application,",
+    "start": 2826
+  },
+  {
+    "text": "we started building this\nabout three or four months ago",
+    "start": 2827
+  },
+  {
+    "text": "and we weren't intending originally",
+    "start": 2829
+  },
+  {
+    "text": "to build an EDA based app,",
+    "start": 2831
+  },
+  {
+    "text": "but very quickly a lot of\nthe lessons we'd learned",
+    "start": 2833
+  },
+  {
+    "text": "from building serverlesspresso\nbecame useful here.",
+    "start": 2835
+  },
+  {
+    "text": "And so interestingly,",
+    "start": 2838
+  },
+  {
+    "text": "the end architecture looked\na lot like serverlesspresso.",
+    "start": 2839
+  },
+  {
+    "text": "We have the similar sort of thing",
+    "start": 2843
+  },
+  {
+    "text": "where the microservices on the left,",
+    "start": 2844
+  },
+  {
+    "text": "they're receiving\ninformation by rest APIs,",
+    "start": 2845
+  },
+  {
+    "text": "they're pushing information\nback out of a WebSockets.",
+    "start": 2849
+  },
+  {
+    "text": "We've actually got web RTC\nand a couple of other things,",
+    "start": 2851
+  },
+  {
+    "text": "but that's all on the left.",
+    "start": 2853
+  },
+  {
+    "text": "We've got this event bus in the middle",
+    "start": 2855
+  },
+  {
+    "text": "that's essentially routing and\ncoordinating all this traffic",
+    "start": 2856
+  },
+  {
+    "text": "between these different services.",
+    "start": 2859
+  },
+  {
+    "text": "And then on the right hand side",
+    "start": 2861
+  },
+  {
+    "text": "you've got the orchestration pieces",
+    "start": 2862
+  },
+  {
+    "text": "where we've got a plugin base system",
+    "start": 2865
+  },
+  {
+    "text": "and it's all being orchestrated\nwith step functions.",
+    "start": 2867
+  },
+  {
+    "text": "And so accidentally we found\nthis pattern was very useful",
+    "start": 2870
+  },
+  {
+    "text": "for building a very, very\ndifferent application.",
+    "start": 2872
+  },
+  {
+    "text": "You know, apart from the\nfact it looks like this,",
+    "start": 2875
+  },
+  {
+    "text": "it really has nothing to do",
+    "start": 2877
+  },
+  {
+    "text": "with the coffee ordering microservice.",
+    "start": 2878
+  },
+  {
+    "text": "Also, if you're moving for\nthe event driven world,",
+    "start": 2883
+  },
+  {
+    "text": "and I think probably many of us have,",
+    "start": 2885
+  },
+  {
+    "text": "there's a few things\nthat are a bit awkward",
+    "start": 2887
+  },
+  {
+    "text": "and you have need to get your hands around",
+    "start": 2890
+  },
+  {
+    "text": "when you start building with EDA.",
+    "start": 2891
+  },
+  {
+    "text": "In API based systems, you often\nsee these types of diagrams",
+    "start": 2894
+  },
+  {
+    "text": "for something like an order\nprocessing architecture",
+    "start": 2898
+  },
+  {
+    "text": "and they look very tidy",
+    "start": 2901
+  },
+  {
+    "text": "because they're showing\nyou the happy path.",
+    "start": 2902
+  },
+  {
+    "text": "One service calls the\nAPI of the next service,",
+    "start": 2904
+  },
+  {
+    "text": "calls the API of the next\nservice and so forth.",
+    "start": 2907
+  },
+  {
+    "text": "But what happens is that\nwhen you have problems,",
+    "start": 2910
+  },
+  {
+    "text": "it doesn't look like this anymore.",
+    "start": 2912
+  },
+  {
+    "text": "You end up with these microservices",
+    "start": 2914
+  },
+  {
+    "text": "calling backwards upstream to other APIs",
+    "start": 2916
+  },
+  {
+    "text": "trying to make changes\nwhenever something goes wrong.",
+    "start": 2919
+  },
+  {
+    "text": "And what you find with these\nAPI based microservices",
+    "start": 2922
+  },
+  {
+    "text": "is you've built a monolith.",
+    "start": 2926
+  },
+  {
+    "text": "This is very monolithic building,",
+    "start": 2927
+  },
+  {
+    "text": "all these very tightly bound microservices",
+    "start": 2928
+  },
+  {
+    "text": "that you need to be able to coordinate",
+    "start": 2931
+  },
+  {
+    "text": "when something goes wrong.",
+    "start": 2932
+  },
+  {
+    "text": "And what happens here is that",
+    "start": 2934
+  },
+  {
+    "text": "as the complexity grows\nin your API based system",
+    "start": 2935
+  },
+  {
+    "text": "and you have downstream\nand upstream consumers",
+    "start": 2938
+  },
+  {
+    "text": "who are working with you,",
+    "start": 2940
+  },
+  {
+    "text": "you just become part of this",
+    "start": 2942
+  },
+  {
+    "text": "where other APIs are\nalso calling into you.",
+    "start": 2944
+  },
+  {
+    "text": "And you'll start to find the system",
+    "start": 2946
+  },
+  {
+    "text": "gets to be more and more\nfragile and less and less agile.",
+    "start": 2948
+  },
+  {
+    "text": "Now if you take this type of API system,",
+    "start": 2952
+  },
+  {
+    "text": "which I've, you know, I've seen many times",
+    "start": 2954
+  },
+  {
+    "text": "in things we've built,",
+    "start": 2955
+  },
+  {
+    "text": "and you move that to the EDA based world,",
+    "start": 2957
+  },
+  {
+    "text": "it actually looks like this.",
+    "start": 2960
+  },
+  {
+    "text": "And this is fascinating to me",
+    "start": 2962
+  },
+  {
+    "text": "because all of those services",
+    "start": 2963
+  },
+  {
+    "text": "are still there in this diagram,",
+    "start": 2965
+  },
+  {
+    "text": "but they're just\ncommunicating through the bus.",
+    "start": 2967
+  },
+  {
+    "text": "And if you have the same\nproblem where for example,",
+    "start": 2969
+  },
+  {
+    "text": "the fulfillment service\ncan no longer fulfill",
+    "start": 2971
+  },
+  {
+    "text": "and it has a problem,",
+    "start": 2973
+  },
+  {
+    "text": "it simply raises an event to\nindicate it's got that problem",
+    "start": 2975
+  },
+  {
+    "text": "and other services can listen\nto those events as needed",
+    "start": 2977
+  },
+  {
+    "text": "and take action as needed as well.",
+    "start": 2981
+  },
+  {
+    "text": "Also, as you add more\nmicroservices to this,",
+    "start": 2984
+  },
+  {
+    "text": "you're not having to think about upstream",
+    "start": 2986
+  },
+  {
+    "text": "and downstream APIs.",
+    "start": 2988
+  },
+  {
+    "text": "You can simply add them as consumers",
+    "start": 2990
+  },
+  {
+    "text": "and producers of events\nwith their own APIs as well.",
+    "start": 2992
+  },
+  {
+    "text": "So suddenly it becomes\nmuch more extensible.",
+    "start": 2995
+  },
+  {
+    "text": "And actually I think in all the time",
+    "start": 2998
+  },
+  {
+    "text": "I've been building these things,",
+    "start": 3000
+  },
+  {
+    "text": "I think this is the magic of EDA.",
+    "start": 3002
+  },
+  {
+    "text": "So as developers,",
+    "start": 3004
+  },
+  {
+    "text": "I think the hardest problem\nwe have to deal with",
+    "start": 3005
+  },
+  {
+    "text": "on a daily basis is the fact",
+    "start": 3008
+  },
+  {
+    "text": "you don't know what you have to build",
+    "start": 3009
+  },
+  {
+    "text": "three or six months from now.",
+    "start": 3010
+  },
+  {
+    "text": "You know, you think you've\ngot the requirements,",
+    "start": 3012
+  },
+  {
+    "text": "but things change so fast.",
+    "start": 3014
+  },
+  {
+    "text": "And so you're trying\nto build architectures",
+    "start": 3015
+  },
+  {
+    "text": "that give you this extensibility",
+    "start": 3017
+  },
+  {
+    "text": "so that six months from now",
+    "start": 3019
+  },
+  {
+    "text": "you can keep up with customer demand.",
+    "start": 3020
+  },
+  {
+    "text": "And I think this is something that EDA",
+    "start": 3023
+  },
+  {
+    "text": "gives you a lot of power as a developer",
+    "start": 3024
+  },
+  {
+    "text": "and I became converted when\nI saw the power of this.",
+    "start": 3026
+  },
+  {
+    "text": "One example of this was",
+    "start": 3030
+  },
+  {
+    "text": "about a week before we\nwent live at re:Invent,",
+    "start": 3031
+  },
+  {
+    "text": "we had a request to make a\nchange to the application",
+    "start": 3034
+  },
+  {
+    "text": "to build an order journey report",
+    "start": 3037
+  },
+  {
+    "text": "where shows every microservice",
+    "start": 3040
+  },
+  {
+    "text": "that your coffee order went through",
+    "start": 3042
+  },
+  {
+    "text": "as it went through our system.",
+    "start": 3044
+  },
+  {
+    "text": "And we panic thinking this is a disaster",
+    "start": 3046
+  },
+  {
+    "text": "because you have to basically",
+    "start": 3048
+  },
+  {
+    "text": "change the application\na week before re:Invent,",
+    "start": 3049
+  },
+  {
+    "text": "retest everything, what do you do?",
+    "start": 3051
+  },
+  {
+    "text": "And then we realize,",
+    "start": 3054
+  },
+  {
+    "text": "no we don't because it's EDA,\nit's actually very simple.",
+    "start": 3055
+  },
+  {
+    "text": "We simply build the order\njourney microservice, add it on,",
+    "start": 3058
+  },
+  {
+    "text": "it listens to the coffee\norders that are coming through,",
+    "start": 3061
+  },
+  {
+    "text": "creates the report,",
+    "start": 3064
+  },
+  {
+    "text": "and the only code change we made",
+    "start": 3065
+  },
+  {
+    "text": "was to put a button on the frontend",
+    "start": 3067
+  },
+  {
+    "text": "that could access that report.",
+    "start": 3069
+  },
+  {
+    "text": "So it really does give you\nmuch greater flexibility.",
+    "start": 3070
+  },
+  {
+    "text": "Now also they've got this",
+    "start": 3075
+  },
+  {
+    "text": "CRUD workflow using step functions,",
+    "start": 3076
+  },
+  {
+    "text": "which again, we tested\nin their microservice.",
+    "start": 3080
+  },
+  {
+    "text": "I think it could be very useful",
+    "start": 3082
+  },
+  {
+    "text": "for many CRUD based microservices.",
+    "start": 3083
+  },
+  {
+    "text": "And why is that?",
+    "start": 3085
+  },
+  {
+    "text": "Well, there's several things you can do.",
+    "start": 3086
+  },
+  {
+    "text": "You've got one API Gateway endpoint",
+    "start": 3088
+  },
+  {
+    "text": "that starts that service.",
+    "start": 3090
+  },
+  {
+    "text": "The first step decides what\nCRUD action it's taking",
+    "start": 3091
+  },
+  {
+    "text": "and then use service integrations\ndirectly wherever you can",
+    "start": 3094
+  },
+  {
+    "text": "and only use Lambda functions\nwhere you need custom code.",
+    "start": 3097
+  },
+  {
+    "text": "This can help reduce\ncomplexity of your application",
+    "start": 3101
+  },
+  {
+    "text": "because you've got one ASL file\nfor your whole microservice",
+    "start": 3103
+  },
+  {
+    "text": "and that basically can reduce\na massive amount of code",
+    "start": 3107
+  },
+  {
+    "text": "down to one single file.",
+    "start": 3110
+  },
+  {
+    "text": "It can make your monitoring\nand debugging that much easier",
+    "start": 3112
+  },
+  {
+    "text": "because you can see in step functions",
+    "start": 3114
+  },
+  {
+    "text": "when something has gone\nwrong very clearly.",
+    "start": 3116
+  },
+  {
+    "text": "You can use the versioning\nand the service.",
+    "start": 3118
+  },
+  {
+    "text": "It may be something\nthat's very cost effective",
+    "start": 3120
+  },
+  {
+    "text": "if you're pulling out lots\nof custom compute from this",
+    "start": 3122
+  },
+  {
+    "text": "and doing it directly in your workflow,",
+    "start": 3125
+  },
+  {
+    "text": "you might also use something\nlike express workflows",
+    "start": 3127
+  },
+  {
+    "text": "to make it work even quicker\nfor very high throughput.",
+    "start": 3130
+  },
+  {
+    "text": "That could also reduce your cost.",
+    "start": 3133
+  },
+  {
+    "text": "Something definitely worth\nthinking about and looking at.",
+    "start": 3134
+  },
+  {
+    "text": "Using workflows to manage\nwaiting was an early win,",
+    "start": 3139
+  },
+  {
+    "text": "but I think it's something we've all built",
+    "start": 3142
+  },
+  {
+    "text": "and written in code somewhere",
+    "start": 3144
+  },
+  {
+    "text": "as having some sort of time-based system",
+    "start": 3145
+  },
+  {
+    "text": "that pause to see if you've\ntimed out on something.",
+    "start": 3148
+  },
+  {
+    "text": "And you know, if you're waiting\nnine months or six months",
+    "start": 3151
+  },
+  {
+    "text": "or 15 seconds, you have a job that run",
+    "start": 3154
+  },
+  {
+    "text": "as checking to see if\nsomething needs to time out.",
+    "start": 3156
+  },
+  {
+    "text": "You don't need to do that.",
+    "start": 3158
+  },
+  {
+    "text": "You can have a workflow manage\nthe whole thing for you.",
+    "start": 3159
+  },
+  {
+    "text": "You simply start the\nworkflow and tell it to wait.",
+    "start": 3161
+  },
+  {
+    "text": "A workflow can wait up to one year",
+    "start": 3165
+  },
+  {
+    "text": "and you still only pay\nfor one state transition.",
+    "start": 3166
+  },
+  {
+    "text": "So it can be a very cost effective way",
+    "start": 3169
+  },
+  {
+    "text": "of managing waiting at scale as well.",
+    "start": 3171
+  },
+  {
+    "text": "The way you do this is that essentially",
+    "start": 3174
+  },
+  {
+    "text": "you have this workflow",
+    "start": 3176
+  },
+  {
+    "text": "and you pass the TaskToken\nout of the workflow.",
+    "start": 3177
+  },
+  {
+    "text": "You then in your code, when\nyou're ready to resume,",
+    "start": 3181
+  },
+  {
+    "text": "pass that back into your\nstep functions process",
+    "start": 3183
+  },
+  {
+    "text": "and it will then restart the\nworkflow up to one year later.",
+    "start": 3187
+  },
+  {
+    "text": "You can use the SDK or the API,\nvery simple, very low code.",
+    "start": 3190
+  },
+  {
+    "text": "So I said at the very beginning",
+    "start": 3197
+  },
+  {
+    "text": "that we were thinking about cost,",
+    "start": 3198
+  },
+  {
+    "text": "very seriously when we\nbuilt this application.",
+    "start": 3200
+  },
+  {
+    "text": "I wanted to able to stand here today",
+    "start": 3204
+  },
+  {
+    "text": "and tell you we built\nsomething's cost effective.",
+    "start": 3206
+  },
+  {
+    "text": "And I think we managed to do that.",
+    "start": 3208
+  },
+  {
+    "text": "You know, if you think about\nthis being a highly available,",
+    "start": 3210
+  },
+  {
+    "text": "scalable application that\nsupports thousands of drinks,",
+    "start": 3212
+  },
+  {
+    "text": "using the serverless approach\nwas very cost effective.",
+    "start": 3214
+  },
+  {
+    "text": "We ran this for a month,",
+    "start": 3218
+  },
+  {
+    "text": "we went through our AWS bill",
+    "start": 3219
+  },
+  {
+    "text": "and we took apart what it cost by service",
+    "start": 3221
+  },
+  {
+    "text": "and this is what it looked like.",
+    "start": 3223
+  },
+  {
+    "text": "So on a day where we did\nnearly a thousand drinks,",
+    "start": 3225
+  },
+  {
+    "text": "we found that SNS is the most expensive",
+    "start": 3227
+  },
+  {
+    "text": "because it's sending the text messages",
+    "start": 3230
+  },
+  {
+    "text": "and essentially however\nyou send text messages,",
+    "start": 3231
+  },
+  {
+    "text": "it costs more money than you hope.",
+    "start": 3233
+  },
+  {
+    "text": "So that's one number.",
+    "start": 3236
+  },
+  {
+    "text": "But the rest of the services altogether,",
+    "start": 3237
+  },
+  {
+    "text": "we're running the entire\nplatform for less than $1 a day.",
+    "start": 3239
+  },
+  {
+    "text": "And on days where we don't have",
+    "start": 3242
+  },
+  {
+    "text": "any events happening whatsoever,",
+    "start": 3244
+  },
+  {
+    "text": "it doesn't cost us anything at all.",
+    "start": 3245
+  },
+  {
+    "text": "And so I truly believe\nthat this is actually",
+    "start": 3247
+  },
+  {
+    "text": "one of the most cost effective ways",
+    "start": 3248
+  },
+  {
+    "text": "of approaching this type of problem.",
+    "start": 3250
+  },
+  {
+    "text": "So this QR code gives you a\nlink to everything in this deck",
+    "start": 3255
+  },
+  {
+    "text": "and other resources, including\nthe code of the applications",
+    "start": 3258
+  },
+  {
+    "text": "so you can deploy your\nown servelesspresso.",
+    "start": 3261
+  },
+  {
+    "text": "But here are some of the things",
+    "start": 3263
+  },
+  {
+    "text": "that we just talked about today.",
+    "start": 3264
+  },
+  {
+    "text": "So from a design point of view,",
+    "start": 3266
+  },
+  {
+    "text": "we liked the idea of\nstarting with the workflow",
+    "start": 3268
+  },
+  {
+    "text": "and then thinking about the frontends,",
+    "start": 3270
+  },
+  {
+    "text": "then building microservices and\nadding them on as we needed.",
+    "start": 3272
+  },
+  {
+    "text": "That worked really well\nin this type of project.",
+    "start": 3274
+  },
+  {
+    "text": "In our microservices, we\ncommunicated with events",
+    "start": 3278
+  },
+  {
+    "text": "instead of using private APIs.",
+    "start": 3281
+  },
+  {
+    "text": "Remember, private APIs can\nbe challenging to set up",
+    "start": 3282
+  },
+  {
+    "text": "'cause you have VPCs and\nother considerations,",
+    "start": 3284
+  },
+  {
+    "text": "whereas where events\nare private by default.",
+    "start": 3287
+  },
+  {
+    "text": "And so this became an effective way",
+    "start": 3289
+  },
+  {
+    "text": "of having microservices\ncommunicate with each other.",
+    "start": 3290
+  },
+  {
+    "text": "Wherever you have real\ntime frontends involved,",
+    "start": 3295
+  },
+  {
+    "text": "think about using IoT Core.",
+    "start": 3297
+  },
+  {
+    "text": "Many customers don't know about this,",
+    "start": 3299
+  },
+  {
+    "text": "but actually it's a\nvery low code, scalable,",
+    "start": 3300
+  },
+  {
+    "text": "inexpensive way to bring real\ntime back to your frontend",
+    "start": 3303
+  },
+  {
+    "text": "and continue that event\njourney from the backend",
+    "start": 3306
+  },
+  {
+    "text": "through to the frontend.",
+    "start": 3308
+  },
+  {
+    "text": "And then combining\norchestration with choreography",
+    "start": 3312
+  },
+  {
+    "text": "is really kind of magic.",
+    "start": 3315
+  },
+  {
+    "text": "It gives you extraordinary\ncapability as a developer",
+    "start": 3317
+  },
+  {
+    "text": "to increase the\nextensibility of your code,",
+    "start": 3319
+  },
+  {
+    "text": "reduce the amount of code",
+    "start": 3321
+  },
+  {
+    "text": "that you have in the whole application,",
+    "start": 3323
+  },
+  {
+    "text": "and also reduce your cost.",
+    "start": 3324
+  },
+  {
+    "text": "Now, one other website I\nwanted to share with you",
+    "start": 3328
+  },
+  {
+    "text": "very quickly is called Serverless Land.",
+    "start": 3330
+  },
+  {
+    "text": "This is something that's\nmanaged by the DA team",
+    "start": 3332
+  },
+  {
+    "text": "and it contains news, blogs, videos,",
+    "start": 3333
+  },
+  {
+    "text": "and hundreds of patterns\nthat can help you get started",
+    "start": 3336
+  },
+  {
+    "text": "as you start building serverless apps.",
+    "start": 3339
+  },
+  {
+    "text": "So it's available 24/7\nat serverlessland.com.",
+    "start": 3341
+  },
+  {
+    "text": "And also AWS Re:Invent\nis all about learning",
+    "start": 3346
+  },
+  {
+    "text": "and the learning doesn't\nstop any sessions.",
+    "start": 3348
+  },
+  {
+    "text": "So think about looking at skill builder,",
+    "start": 3351
+  },
+  {
+    "text": "ramp up guides and digital\nbadges to learn more about",
+    "start": 3353
+  },
+  {
+    "text": "how serverless solutions can be built.",
+    "start": 3356
+  },
+  {
+    "text": "And there's a link at the bottom",
+    "start": 3358
+  },
+  {
+    "text": "that shares all of these\ns12d.com/serverless-learning.",
+    "start": 3359
+  },
+  {
+    "text": "Thank you very much for your time today.",
+    "start": 3365
+  },
+  {
+    "text": "It's been an absolute pleasure.",
+    "start": 3366
+  },
+  {
+    "text": "I hope you enjoy the rest of your week",
+    "start": 3367
+  },
+  {
+    "text": "here at AWS Re:Invent.",
+    "start": 3369
+  },
+  {
+    "text": "Thank you.",
+    "start": 3372
+  }
+]
