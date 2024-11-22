@@ -18,7 +18,7 @@ export default defineNuxtConfig({
         '@nuxtjs/google-fonts',
     ],
     css: [
-        '@/assets/global.css',
+        '@/assets/global.scss',
         '@/assets/styles/variables.scss'
     ],
     quasar: {
