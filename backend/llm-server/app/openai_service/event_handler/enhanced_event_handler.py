@@ -31,7 +31,6 @@ class EnhancedExplanationEventHandler(AsyncAssistantEventHandler):
     @override
     async def on_text_delta(self, delta, snapshot):
         self.enhanced_explanation_data += delta.value
-        #asyncio.run(self.kafka_producer.send_and_wait(self.kafka_topic, value=delta.value.encode('utf-8')))
 
     @override
     async def on_message_done(self, message):
@@ -49,14 +48,12 @@ class EnhancedExplanationEventHandler(AsyncAssistantEventHandler):
         except Exception as e:
             logger.error(f"설명문을 저장하는 데 실패했습니다: {e}")
 
-        json_explanation_data = json.loads(self.enhanced_explanation_data)
-
         # LLMResultMessage 형식의 메시지 생성
         complete_message = LLMResultMessage(
             noteId=self.note_id,
             startTime=int(self.outline_start_time),
             commentaryOrder=self.chunk_index-1,
-            content=json_explanation_data["explanation"],
+            content=self.enhanced_explanation_data,
         )
 
         # 메시지를 JSON으로 직렬화하여 Kafka에 전송

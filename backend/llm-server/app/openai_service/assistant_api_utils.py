@@ -1,6 +1,11 @@
 import os
 from dotenv import load_dotenv
 from openai import AsyncOpenAI, AsyncAssistantEventHandler
+from tenacity import (
+    retry,
+    stop_after_attempt,
+    wait_random_exponential,
+)  # for exponential backoff
 
 from loguru import logger
 
@@ -93,6 +98,11 @@ async def run_stream(assistant_id: str, thread_id: str, event_handler: AsyncAssi
     ) as stream:
         await stream.until_done()
     logger.success("스트리밍 완료.")
+
+@retry(wait=wait_random_exponential(multiplier=1, max=60), stop=stop_after_attempt(5))
+async def run_stream_with_backoff(assistant_id: str, thread_id: str, event_handler_factory, instructions, event_handler_factory_dto):
+    event_handler = await event_handler_factory(event_handler_factory_dto)
+    await run_stream(assistant_id, thread_id, event_handler, instructions)
 
 
 # 스레드에서 메시지 목록 가져오기 함수
