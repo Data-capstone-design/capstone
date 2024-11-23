@@ -1,0 +1,13 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/technote-db
+
+logging:
+  level:
+    org:
+      springframework:
+        data: DEBUG
+    com:
+      mongodb: DEBUG
+    org.mongodb.driver: DEBUG

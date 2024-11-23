@@ -3,7 +3,7 @@ package com.technote.core.web.dto;
 import java.util.List;
 
 public record NoteHttpResponse(
-        String id,
+        String noteId,
         String videoId,
         String title,
         String userLevel,
