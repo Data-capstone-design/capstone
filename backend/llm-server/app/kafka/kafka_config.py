@@ -1,6 +1,6 @@
 import os
 
-KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_A", "localhost:9092") # 예: 로컬 호스트에 설치된 Kafka 브로커
+KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BROKER", "localhost:9092") # 예: 로컬 호스트에 설치된 Kafka 브로커
 
 #topic
 LLM_REQUEST_EVENTS = "llm_request_events" #STT에서 요청

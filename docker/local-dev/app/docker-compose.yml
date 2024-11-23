@@ -1,0 +1,39 @@
+services:
+  api-server:
+    build:
+      context: ../../../backend/api-server
+    ports:
+      - "8080:8080"
+    environment:
+      PROFILE: local-dev
+    networks:
+      - technote-network
+  stt-server:
+    build:
+      context: ../../../backend/stt-server
+    container_name: stt-server
+    ports:
+      - "8000:8000"
+    environment:
+      KAFKA_BROKER: technote-kafka:9092
+      SERVER_NAME: stt-server
+    networks:
+      - technote-network
+
+  llm-server:
+    build:
+      context: ../../../backend/llm-server
+    env_file:
+      - ../../../backend/llm-server/.env
+    container_name: llm-server
+    ports:
+      - "8001:8001"
+    environment:
+      KAFKA_BROKER: technote-kafka:9092
+      SERVER_NAME: llm-server
+      PYTHONPATH: /llm-server
+    networks:
+      - technote-network
+networks:
+  technote-network:
+    external: true
