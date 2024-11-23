@@ -1,6 +1,5 @@
 package com.technote.client.kafka.consumer;
 
-import com.technote.client.kafka.dto.NoteOutlineDto;
 import com.technote.client.kafka.event.CreateNoteOutlineEvent;
 import com.technote.client.kafka.mapper.NoteEventMapper;
 import lombok.RequiredArgsConstructor;

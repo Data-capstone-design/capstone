@@ -1,4 +1,4 @@
-package com.technote.client.kafka.dto;
+package com.technote.client.kafka.consumer;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ public record NoteOutlineDto(
       List<NoteOutlineContent> segments
 ) {
     public record NoteOutlineContent (
-            String startTime,
+            int startTime,
             String title,
             String summary
     ) {

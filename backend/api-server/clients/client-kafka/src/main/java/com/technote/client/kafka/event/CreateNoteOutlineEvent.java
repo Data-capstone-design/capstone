@@ -10,7 +10,7 @@ public record CreateNoteOutlineEvent(
 ) {
     @Builder
     public record CreateNoteOutlineEventSegment (
-            String startTime,
+            int startTime,
             String title,
             String summary
     ) {

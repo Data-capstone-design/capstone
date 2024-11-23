@@ -1,7 +1,7 @@
 package com.technote.client.kafka.config;
 
-import com.technote.client.kafka.dto.NoteCommentaryDto;
-import com.technote.client.kafka.dto.NoteOutlineDto;
+import com.technote.client.kafka.consumer.NoteCommentaryDto;
+import com.technote.client.kafka.consumer.NoteOutlineDto;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
