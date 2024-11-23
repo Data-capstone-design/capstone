@@ -16,6 +16,7 @@ def _basic_prompts():
         "create_indices": lambda full_original_text=None: (
 
             "Please read the content below the prompt and identify the \"main\" topics. "
+            "Each topic should contain important content about the subject"
             "For each topic, provide a start timestamp, title, and brief summary in a structured JSON format. "
             "Make sure topics are ordered by start timestamp"
             "Follow this exact structure in your output:\n\n"
@@ -28,16 +29,23 @@ def _basic_prompts():
             f"{full_original_text}"
             ),
         "create_explanation":lambda chunk_original_text=None: (
-            "Please"
-            "read the contents under the prompt and generate an explanation suitable for a 6th-grade reading level.Use only the content found in this file to create your response.Do not include any information that is not directly contained in the file."
+            "Please read the following text and generate an explanation suitable for a **basic-level audience**. Use **friendly and everyday language** to make the explanation simple and relatable. Ensure that the output is written at a **Flesch-Kincaid Grade Level of approximately 6**. Follow the **exact format provided below**, and avoid including any information outside of this structure."
+            "do not omit important message of the script and generate explanation that help to understand hard concepts"
 
             "### Explanation Format:"
-            "- ** Simple Explanation of the Paragraph **: Provide a brief, simple explanation of the paragraph's main topic or technology."
+            "- **Explanation of the Topic(remove the text and put the title of this outline here)**:" 
+            "Provide a clear summary of the main topic or concept discussed in the input text. Use friendly and conversational language."
 
-            "- ** Technical Terms and Definitions **:"
-            "- List each IT-related technical term found in the paragraph and provide a simple explanation for each term, suitable for a 6th-grade reading level.Use analogies or relatable examples if necessary to make the term easy to understand."
+            "- **IT Domain Terms and Definitions**:"
+            "Identify IT-related technical terms in the input text and explain each term in a way that's easy to understand. Use analogies or examples from daily life to make the explanation relatable. For example:"
+                "- *\"Cloud Computing\"*:"
+                "Imagine storing your favorite photos and videos in a magical online photo album that you can access from any device, anywhere. That’s what cloud computing does for your data."
 
-            "The only output should follow this format and should not include the original file content or any additional text."
+            "### Output Requirements:"
+            "- Write in clear and simple language that a 6th grader could understand."
+            "- Include only the simplified explanation and term definitions in the output." 
+            "- Do not include the original text, additional comments, or any unrelated information."
+
 
             "content start from here:"
             f"{chunk_original_text}"
@@ -57,9 +65,8 @@ def _basic_prompts():
         "create_enhanced_explanation": lambda chunk_explanation=None, chunk_feedback=None: (
             "Please improve the created explanation based on the feedback generated about the explanation above."
             "Generate the explanation according to the format of the original explanation."
-            "use the startTime of the original text given at the first message as int type not as form of a time stamp"
-            "Follow this exact structure in your output:\n\n"
-            "{\"startTime\": \"<Start Timestamp>\", \"explanation\":\"<enhanced explanation>\"}"
+            "only include explanation about the outline and do not add any additional text that is not related to the topic"
+            "And Translate to Korean,when translating explanation in korean, you should check the context of the text to choose appropriate word, especially technical words ,if it is important vocabulary then show it like english(영어)"
         )
     }
 

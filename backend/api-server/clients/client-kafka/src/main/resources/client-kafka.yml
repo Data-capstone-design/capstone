@@ -3,13 +3,10 @@
 spring.config.activate.on-profile: local
 
 kafka:
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: localhost:29092
 
 ---
 spring.config.activate.on-profile: local-dev
 
 kafka:
-  bootstrap-servers: technote-network:9092
-
-
-
+  bootstrap-servers: technote-kafka:9092
