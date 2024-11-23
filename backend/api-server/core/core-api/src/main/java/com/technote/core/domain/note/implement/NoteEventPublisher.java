@@ -1,6 +1,6 @@
 package com.technote.core.domain.note.implement;
 
-import com.technote.client.kafka.dto.NoteInfoDto;
+import com.technote.client.kafka.producer.NoteInfoDto;
 import com.technote.client.kafka.producer.NoteInfoProducer;
 import com.technote.core.enums.UserLevel;
 import lombok.RequiredArgsConstructor;

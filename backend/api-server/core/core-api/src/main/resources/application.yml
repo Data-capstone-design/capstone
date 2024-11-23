@@ -1,4 +1,18 @@
+spring.profiles.active: local
+
+spring:
+  config:
+    import:
+      - client-kafka.yml
+      - db-mongo.yml
+
 server:
   servlet:
     session:
       timeout: 20m
+
+---
+spring.config.activate.on-profile: local
+
+---
+spring.config.activate.on-profile: local-dev

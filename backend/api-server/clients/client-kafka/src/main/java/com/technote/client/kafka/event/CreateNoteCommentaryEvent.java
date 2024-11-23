@@ -5,7 +5,8 @@ import lombok.Builder;
 @Builder
 public record CreateNoteCommentaryEvent(
         String noteId,
-        long startTime,
+        int startTime,
+        int orderIndex,
         String content
 ) {
 }

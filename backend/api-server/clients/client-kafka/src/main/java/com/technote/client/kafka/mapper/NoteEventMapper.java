@@ -1,7 +1,7 @@
 package com.technote.client.kafka.mapper;
 
-import com.technote.client.kafka.dto.NoteCommentaryDto;
-import com.technote.client.kafka.dto.NoteOutlineDto;
+import com.technote.client.kafka.consumer.NoteCommentaryDto;
+import com.technote.client.kafka.consumer.NoteOutlineDto;
 import com.technote.client.kafka.event.CreateNoteCommentaryEvent;
 import com.technote.client.kafka.event.CreateNoteOutlineEvent;
 import com.technote.client.kafka.event.CreateNoteOutlineEvent.CreateNoteOutlineEventSegment;

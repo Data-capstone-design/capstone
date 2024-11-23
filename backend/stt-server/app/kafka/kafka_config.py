@@ -1,5 +1,6 @@
 # app/kafka/kafka_config.py
 import json
+import os
 
 from aiokafka import AIOKafkaConsumer
 
@@ -7,7 +8,7 @@ from app.kafka.producers.kafka_producer_manager import AsyncProducer
 from loguru import logger
 
 # Kafka 서버 주소 (IP:포트 형식으로 작성)
-KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"  # 예: 로컬 호스트에 설치된 Kafka 브로커
+KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BROKER", "localhost:9092")  # 예: 로컬 호스트에 설치된 Kafka 브로커
 
 #topic
 NOTE_STT_COMMAND = "note-stt-command"

@@ -17,13 +17,13 @@ public record NoteVO (
 ){
     @Builder
     public record CommentaryVO(
-            double startTime,
+            int startTime,
             String content
     ) {}
 
     @Builder
     public record SegmentVO(
-            double startTime,
+            int startTime,
             String title,
             String summary
     ) {}

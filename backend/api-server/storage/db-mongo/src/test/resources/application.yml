@@ -1,0 +1,8 @@
+logging:
+  level:
+    org:
+      springframework:
+        data: DEBUG
+    com:
+      mongodb: DEBUG
+    org.mongodb.driver: DEBUG

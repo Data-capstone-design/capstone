@@ -1,0 +1,16 @@
+
+---
+spring.config.activate.on-profile: local
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/technote-db
+
+---
+spring.config.activate.on-profile: local-dev
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://technote-mongo:27017/technote-db
