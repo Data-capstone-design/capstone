@@ -5,6 +5,7 @@ __pycache__/
 *.pyc
 *.pyo
 capstone_storage/
+transcripts/
 
 # Nuxt dev/build outputs
 .output

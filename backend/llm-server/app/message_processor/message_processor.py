@@ -1,9 +1,15 @@
 import asyncio
 import json
 import re
+import time
 
+from app.domain.event_handler_factory_dto import EventHandlerFactoryDTO
+from app.domain.generation_process import GenerationProcess
 from app.domain.kafka_message.llm_request_message import LlmRequestMessage
+from app.domain.kafka_message.llm_result_message import LLMResultMessage
+from app.kafka.kafka_config import LLM_COMMENTARY_EVENTS
 from app.openai_service.event_handler.enhanced_event_handler import EnhancedExplanationEventHandler
+from app.openai_service.event_handler.event_handler_factory import event_handler_factory
 
 from app.openai_service.event_handler.explanation_event_handler import ExplanationEventHandler
 from app.openai_service.event_handler.feedback_event_handler import FeedbackEventHandler
@@ -51,7 +57,12 @@ class MessageProcessor:
             stage="create_indices",
             full_original_text=text
         )
-        run = await run_stream(self.index_assistant.id, thread.id, event_handler=IndexEventHandler(note_id=self.note_id, producer=self.producer), instructions=instruction)
+        handler_dto = EventHandlerFactoryDTO(
+            process_stage = GenerationProcess.OUTLINE_GENERATION,
+            note_id=self.note_id,
+            kafka_producer=self.producer
+        )
+        run = await run_stream_with_backoff(self.index_assistant.id, thread.id, event_handler_factory=event_handler_factory, instructions=instruction, event_handler_factory_dto=handler_dto)
 
     async def create_explanations(self, dir_path):
         logger.info("설명문 생성 시작 - 분할된 텍스트 파일들 병렬 처리")
@@ -77,9 +88,6 @@ class MessageProcessor:
     # 병렬적으로 수행하기 위해 create explanation으로 asyncio로 thread를 개수만큼 바로 생성하고 요구를  보내도록 수정하기
     async def create_chunk_explanation(self, chunk_file_path, chunk_index):
         thread = await create_thread()
-        event_handler = ExplanationEventHandler(
-             note_id=self.note_id, chunk_index=chunk_index
-        )
 
         logger.info(f"설명문 생성 시작 | 파일: {chunk_file_path} | Thread ID: {thread.id} | 청크: {chunk_index + 1}/{self.total_chunks}")
         chunk_text = await read_text_file(
@@ -89,8 +97,12 @@ class MessageProcessor:
             stage="create_explanation",
             chunk_original_text=chunk_text
         )
-
-        await run_stream(self.explanation_assistant.id, thread.id, event_handler=event_handler, instructions=instruction)
+        handler_dto = EventHandlerFactoryDTO(
+            process_stage=GenerationProcess.EXPLANATION_GENERATION,
+            note_id=self.note_id,
+            chunk_index=chunk_index
+        )
+        await run_stream_with_backoff(self.explanation_assistant.id, thread.id, event_handler_factory=event_handler_factory, instructions=instruction, event_handler_factory_dto=handler_dto)
 
         logger.info(f"설명문 생성 완료 | Thread ID: {thread.id} | 청크: {chunk_index}/{self.total_chunks}")
         return thread
@@ -103,18 +115,19 @@ class MessageProcessor:
         logger.info("모든 피드백 생성 작업이 완료되었습니다.")
 
     async def create_chunk_feedback(self, thread, chunk_index):
-        feedback_event_handler = FeedbackEventHandler(
-            thread_id=thread.id,  note_id=self.note_id, chunk_index=chunk_index
-        )
-
         logger.info(f"피드백 생성 시작 | Thread ID: {thread.id} | 청크: {chunk_index}/{self.total_chunks}")
         instruction = load_prompt(
             explanation_level = self.explanation_level,
             stage = "create_feedback",
         )
-
+        handler_dto = EventHandlerFactoryDTO(
+            process_stage=GenerationProcess.FEEDBACK_GENERATION,
+            note_id=self.note_id,
+            chunk_index=chunk_index,
+            thread_id=thread.id
+        )
         logger.info("instruction 생성완료")
-        await run_stream(self.explanation_assistant.id, thread.id, event_handler=feedback_event_handler, instructions=instruction)
+        await run_stream_with_backoff(self.explanation_assistant.id, thread.id, event_handler_factory=event_handler_factory, instructions=instruction, event_handler_factory_dto=handler_dto)
 
         logger.info(f"피드백 생성 완료 | Thread ID: {thread.id} | 청크: {chunk_index}/{self.total_chunks}")
 
@@ -125,19 +138,31 @@ class MessageProcessor:
 
         await asyncio.gather(*tasks)
         logger.info("모든 피드백 반영 설명문 생성 작업이 완료되었습니다.")
+        complete_message = LLMResultMessage(
+            noteId=self.note_id,
+            startTime=0,
+            commentaryOrder=-1,
+            content="END"
+        )
+        await self.producer.send_message(topic=LLM_COMMENTARY_EVENTS, message=complete_message.model_dump_json())
+        logger.info("완료 메시지를 전송했습니다.")
+
 
     async def create_enhanced_chunk_explanation(self, thread, chunk_index, outline_start_time):
-        enhanced_explanation_event_handler = EnhancedExplanationEventHandler(
-            thread_id=thread.id, note_id=self.note_id,outline_start_time=outline_start_time ,chunk_index=chunk_index, kafka_producer=self.producer
-        )
-
         logger.info(f"피드백 반영 설명문 생성 시작 | Thread ID: {thread.id} | 청크: {chunk_index}/{self.total_chunks}")
         instruction = load_prompt(
             explanation_level = self.explanation_level,
             stage="create_enhanced_explanation",
         )
-
-        await run_stream(self.explanation_assistant.id, thread.id, event_handler=enhanced_explanation_event_handler, instructions=instruction)
+        handler_dto = EventHandlerFactoryDTO(
+            process_stage=GenerationProcess.ENHANCED_EXPLANATION_GENERATION,
+            note_id=self.note_id,
+            chunk_index=chunk_index,
+            outline_start_time=outline_start_time,
+            thread_id=thread.id,
+            kafka_producer=self.producer
+        )
+        await run_stream_with_backoff(self.explanation_assistant.id, thread.id, event_handler_factory=event_handler_factory, instructions=instruction, event_handler_factory_dto=handler_dto)
 
 
     async def process_transcript(self, message: LlmRequestMessage):
@@ -156,7 +181,9 @@ class MessageProcessor:
         transcription_chunks_path = TextUtils.split_by_toc(note_id=message.noteId, toc_filepath=index_path)
         # 목차별 설명문 생성
         chunk_resource_list = await self.create_explanations(transcription_chunks_path)
+        time.sleep(3)
         # 목차별 설명문 피드백 수행
         await self.create_feedbacks_for_explanations(chunk_resource_list)
+        time.sleep(3)
         # 목차별 피드백 반영 설명문 생성
         await self.create_enhanced_explanations(chunk_resource_list, outline_start_time_list)
