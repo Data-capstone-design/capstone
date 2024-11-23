@@ -13,4 +13,4 @@ spring.config.activate.on-profile: local-dev
 spring:
   data:
     mongodb:
-      uri: mongodb://technote-network:27017/technote-db
+      uri: mongodb://technote-mongo:27017/technote-db
