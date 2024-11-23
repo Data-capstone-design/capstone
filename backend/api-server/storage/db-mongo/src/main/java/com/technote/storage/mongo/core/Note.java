@@ -39,14 +39,14 @@ public class Note {
     @Getter
     @Builder
     public static class Commentary {
-        private double startTime;
+        private int startTime;
         private String content;
     }
 
     @Getter
     @Builder
     public static class Segment {
-        private double startTime;
+        private int startTime;
         private String title;
         private String summary;
     }

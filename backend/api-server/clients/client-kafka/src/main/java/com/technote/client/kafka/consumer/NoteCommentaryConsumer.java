@@ -1,6 +1,5 @@
 package com.technote.client.kafka.consumer;
 
-import com.technote.client.kafka.dto.NoteCommentaryDto;
 import com.technote.client.kafka.event.CreateNoteCommentaryEvent;
 import com.technote.client.kafka.mapper.NoteEventMapper;
 import lombok.RequiredArgsConstructor;
