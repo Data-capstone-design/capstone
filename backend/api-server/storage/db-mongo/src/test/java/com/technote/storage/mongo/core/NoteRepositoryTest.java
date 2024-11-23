@@ -3,6 +3,7 @@ package com.technote.storage.mongo.core;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.technote.core.enums.UserLevel;
+import com.technote.storage.mongo.DbMongoTestApplication;
 import com.technote.storage.mongo.core.Note.Commentary;
 import java.util.List;
 import java.util.Optional;
@@ -12,13 +13,20 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-@DataMongoTest
-@ActiveProfiles("test")
+@Testcontainers
+@SpringBootTest(classes = DbMongoTestApplication.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class NoteRepositoryTest {
+
+    @Container
+    private static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:7");
 
     @Autowired
     private NoteRepository noteRepository;
@@ -26,6 +34,13 @@ class NoteRepositoryTest {
     @BeforeEach
     void setUp() {
         noteRepository.deleteAll();
+    }
+
+    @DynamicPropertySource
+    static void containersProperties(DynamicPropertyRegistry registry) {
+        mongoDBContainer.start();
+        registry.add("spring.data.mongodb.host", mongoDBContainer::getHost);
+        registry.add("spring.data.mongodb.port", mongoDBContainer::getFirstMappedPort);
     }
 
     @Nested

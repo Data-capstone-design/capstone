@@ -12,7 +12,7 @@ allprojects {
 
 subprojects {
 	group = 'com.technote'
-	version = '0.0.1-SNAPSHOT'
+	version = '0.0.1'
 
 	apply plugin: 'java-library'
 	apply plugin: 'org.springframework.boot'

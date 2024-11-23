@@ -13,6 +13,7 @@ public class NoteCommentaryConsumer {
 
     private final ApplicationEventPublisher eventPublisher;
 
+
     @KafkaListener(
             topics = "note-commentary-created-events",
             groupId = "group_1",

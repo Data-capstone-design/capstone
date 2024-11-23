@@ -1,0 +1,15 @@
+
+---
+spring.config.activate.on-profile: local
+
+kafka:
+  bootstrap-servers: localhost:9092
+
+---
+spring.config.activate.on-profile: local-dev
+
+kafka:
+  bootstrap-servers: technote-network:9092
+
+
+
