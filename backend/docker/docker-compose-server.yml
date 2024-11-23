@@ -1,23 +1,26 @@
 services:
   stt-server:
-    image: seedege/stt-server:1.0.0
+    image: seedege/stt-server:1.7.0
     container_name: stt-server
     ports:
-      - "8000:8000"  # Server 1 포트
+      - "8000:8000"
     environment:
-      KAFKA_BROKER: kafka:9092  # Kafka 브로커 주소
+      KAFKA_BROKER: technote-kafka:9092
       SERVER_NAME: stt-server
     networks:
       - docker_app-network
 
   llm-server:
-    image: seedege/llm-server:1.0.0
+    image: seedege/llm-server:1.11.0
+    env_file:
+      - ../llm-server/.env
     container_name: llm-server
     ports:
-      - "8001:8001"  # Server 2 포트
+      - "8001:8001"
     environment:
-      KAFKA_BROKER: kafka:9092  # Kafka 브로커 주소
+      KAFKA_BROKER: technote-kafka:9092
       SERVER_NAME: llm-server
+      PYTHONPATH: /llm-server
     networks:
       - docker_app-network
 
@@ -35,3 +38,4 @@ services:
 networks:
   docker_app-network:
     external: true
+    driver: bridge
