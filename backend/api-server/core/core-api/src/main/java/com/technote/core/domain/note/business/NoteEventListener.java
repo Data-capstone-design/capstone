@@ -8,11 +8,10 @@ import com.technote.core.domain.note.implement.NoteVO.SegmentVO;
 import com.technote.core.domain.note.implement.SseEventSender;
 import com.technote.core.support.error.CustomException;
 import com.technote.core.support.error.ErrorType;
-import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -25,11 +24,6 @@ public class NoteEventListener {
     private final ObjectMapper objectMapper;
     private final SseEventSender sseEventSender;
     private final NoteStorageHandler noteStorageHandler;
-
-    @PostConstruct
-    public void init() {
-        log.info("NoteEventListener Bean 등록됨");
-    }
 
     @EventListener
     public void handleCreateNoteCommentaryEvent(CreateNoteCommentaryEvent event) {
