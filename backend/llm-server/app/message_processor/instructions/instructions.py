@@ -20,7 +20,7 @@ def _basic_prompts():
             "For each topic, provide a start timestamp, title, and brief summary in a structured JSON format. "
             "Make sure topics are ordered by start timestamp"
             "Follow this exact structure in your output:\n\n"
-            "[{\"startTime\": \"<Start Timestamp>\",\"title\": \"<Topic Title>\",\"summary\": \"<Brief summary of the topic>\"},{\"start_time\": \"<Start Timestamp>\",\"index\": \"<Topic Title>\",\"summary\": \"<Brief summary of the topic>\"},...]"
+            "[{\"startTime\": \"<Start Timestamp>\",\"title\": \"<Topic Title>\",\"summary\": \"<Brief summary of the topic>\"},{\"startTime\": \"<Start Timestamp>\",\"index\": \"<Topic Title>\",\"summary\": \"<Brief summary of the topic>\"},...]"
             "Output should contain only the JSON array with `start_time`, `index`, and `summary` fields for each topic. "
             "Do not add any additional text, explanations, or comments outside of the JSON array."
             
