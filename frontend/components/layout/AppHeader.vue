@@ -25,12 +25,12 @@ const toHome = () => {
 </script>
 <style scoped>
 .logo {
-  width:230px;
+  width:150px;
 }
 
 @media (max-width: 768px) {
   .logo {
-    width: 100px;
+    width: 60px;
   }
 }
 

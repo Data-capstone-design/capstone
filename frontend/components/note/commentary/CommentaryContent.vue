@@ -1,9 +1,10 @@
 <template>
   <div ref="scrollableContent" class="s-Scroller q-pa-sm" style="overflow-y: auto">
     <CommentaryItem
-        v-for="commentary in commentaries"
-        :key="commentary.startTime"
+        v-for="(commentary, index) in commentaries"
         :commentary="commentary"
+        :index="index"
+        :key="commentary.startTime"
     />
   </div>
 </template>

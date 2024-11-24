@@ -73,7 +73,7 @@ onMounted(async () => {
   await loadYouTubeAPI();
   initializePlayer();
   const {videoId, userLevel, status} = noteStore.getNoteInfo()
-
+  console.log("노트 생성 상태", status);
   if (status == NoteStatus.NOT_EXIST) {
     const response = await noteStore.fetchCreateNote(videoId, userLevel);
     const {noteId} = response.data;
@@ -82,6 +82,8 @@ onMounted(async () => {
   } else if (status == NoteStatus.IN_PROGRESS) {
     const response = await noteStore.fetchNote(videoId, userLevel);
     const {noteId, outline, commentaries} = response.data;
+    console.log(noteId, outline, commentaries);
+
 
     if (outline.length) {
       noteStore.setNoteGenerateStatus(NoteGenerateStatus.COMMENTARY_GENERATING);
@@ -89,18 +91,23 @@ onMounted(async () => {
       for (const commentary of commentaries) {
         await commentaryStore.addCommentary(commentary.startTime, commentary.htmlContent);
       }
+      noteStore.setTotalCommentaryCount(outline.length);
+      noteStore.addCurrentCommentaryCount(commentaries.length);
     } else {
       noteStore.setNoteGenerateStatus(NoteGenerateStatus.OUTLINE_GENERATING);
     }
     eventSource = connectSse(noteId);
   }
 
-  else if (status == NoteStatus.COMPLETE) {
+  else if (status == NoteStatus.COMPLETED) {
+    noteStore.setNoteGenerateStatus(NoteGenerateStatus.COMPLETE_GENERATED);
     const response = await noteStore.fetchNote(videoId, userLevel);
+    console.log(response);
     const { outline, commentaries} = response.data;
+    console.log(outline, commentaries)
     outlineStore.setNoteOutline(outline);
     for (const commentary of commentaries) {
-      await commentaryStore.addCommentary(commentary.startTime, commentary.htmlContent);
+      await commentaryStore.addCommentary(commentary.startTime, commentary.content);
     }
   }
 });

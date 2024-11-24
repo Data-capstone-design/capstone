@@ -18,9 +18,11 @@ export const useEventSource = () => {
         });
 
         eventSource.addEventListener('commentary', async (e: any) => {
+            console.log('새로운 해설 생성');
             const data = JSON.parse(e.data);
             const { startTime, content } = data;
             await commentaryStore.addCommentary(startTime, content);
+            noteStore.addCurrentCommentaryCount();
         });
 
         eventSource.addEventListener('outline', (e: any) => {
@@ -28,9 +30,12 @@ export const useEventSource = () => {
             const { segments } = data;
             outlineStore.setNoteOutline(segments);
             noteStore.setNoteGenerateStatus(NoteGenerateStatus.COMMENTARY_GENERATING);
+            noteStore.setTotalCommentaryCount(segments.length);
         });
 
         eventSource.addEventListener('complete', (e: any) => {
+            console.log("해설 생성 완료")
+            commentaryStore.sortCommentaries();
             noteStore.setNoteGenerateStatus(NoteGenerateStatus.COMPLETE_GENERATED);
         })
 

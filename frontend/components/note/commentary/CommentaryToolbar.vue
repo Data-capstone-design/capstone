@@ -1,10 +1,14 @@
 <template>
-  <header class="fixed-header flex justify-between mb-2">
-    <VideoControls v-if="isNoteGenerateCompleted"/>
-    <NoteControls v-if="isNoteGenerateCompleted"/>
-    <div class="text-center full-width" v-else>
-      {{noteGenerateStatus}} . . .
+  <header class="fixed-header flex justify-between mb-2" v-if="isNoteGenerateCompleted">
+    <VideoControls/>
+    <NoteControls/>
+  </header>
+  <header class="fixed-header flex" v-else>
+    <div class="text-center full-width flex  items-center justify-center">
+      <span class="text-weight-medium" style="font-size: 1.4rem">{{noteGenerateStatus}}. . .</span>
+      <CommentaryProgressBar v-if="isCommentaryGenerating"/>
     </div>
+
   </header>
 </template>
 
@@ -14,7 +18,9 @@ import { NoteGenerateStatus, useNoteStore} from "~/stores/noteStore";
 const noteStore = useNoteStore();
 
 const noteGenerateStatus = computed(()=> noteStore.noteGenerateStatus);
-const isNoteGenerateCompleted = computed(()=> noteStore.noteGenerateStatus == NoteGenerateStatus.COMPLETE_GENERATED)
+const isNoteGenerateCompleted = computed(()=> noteStore.noteGenerateStatus == NoteGenerateStatus.COMPLETE_GENERATED);
+const isCommentaryGenerating = computed(() => noteStore.noteGenerateStatus == NoteGenerateStatus.COMMENTARY_GENERATING);
+
 </script>
 
 <style scoped>
