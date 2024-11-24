@@ -29,6 +29,7 @@ pre {
   font-size: 0.9em;
 }
 
+
 .content-section {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 0.5rem;
@@ -81,6 +82,11 @@ pre {
     line-height: 100%;
     letter-spacing: normal;
   }
+}
+
+/* Quasar */
+.q-checkbox__label {
+  padding-bottom: 4px !important;
 }
 
 .markdown-content {

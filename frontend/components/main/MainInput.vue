@@ -25,6 +25,8 @@
             :key="level.value"
             v-model="checkboxStates[level.value]"
             :label="level.label"
+            :class="`checkbox-with-box ${level.value}`"
+            class="q-mx-md"
             @update:model-value="selectCheckbox(level.value)"
             color="black"
         />
@@ -85,3 +87,39 @@ const handleSubmit = async (): Promise<void> => {
   }
 };
 </script>
+
+<style scoped>
+.checkbox-with-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+}
+
+
+.checkbox-with-box::after {
+  position:absolute;
+  right: -1.1rem;
+  bottom: .6rem;
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 10px;
+}
+
+.checkbox-with-box.BASIC::after {
+  background-color: yellow;
+}
+
+/* INTERMEDIATE -> 파란색 박스 */
+.checkbox-with-box.INTERMEDIATE::after {
+  background-color: blue;
+}
+
+/* ADVANCED -> 빨간색 박스 */
+.checkbox-with-box.ADVANCED::after {
+  background-color: red;
+}
+
+
+</style>
