@@ -1,10 +1,13 @@
 package com.technote.storage.mongo.core;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
+import com.technote.core.enums.NoteStatus;
 import com.technote.core.enums.UserLevel;
 import com.technote.storage.mongo.DbMongoTestApplication;
 import com.technote.storage.mongo.core.Note.Commentary;
+import com.technote.storage.mongo.core.Note.Segment;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,10 +29,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 class NoteRepositoryTest {
 
     @Container
-    private static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:7");
+    static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:7");
 
     @Autowired
-    private NoteRepository noteRepository;
+    NoteRepository noteRepository;
 
     @BeforeEach
     void setUp() {
@@ -46,8 +49,8 @@ class NoteRepositoryTest {
     @Nested
     class findByVideoIdAndUserLevel_메서드는 {
 
-        private final String givenVideoId = "video123";
-        private final UserLevel givenUserLevel = UserLevel.BASIC;
+        final String givenVideoId = "video123";
+        final UserLevel givenUserLevel = UserLevel.BASIC;
 
         @Nested
         class 저장된_Note가_존재하고_videoId와_userLevel이_일치하는_경우 {
@@ -59,10 +62,17 @@ class NoteRepositoryTest {
                         .userLevel(givenUserLevel)
                         .title("스프링 컨퍼런스")
                         .commentaries(List.of(
-                                Commentary.builder().startTime(0).content("첫 번째 코멘트").build()
+                                Commentary.builder()
+                                        .startTime(0)
+                                        .content("첫 번째 코멘트")
+                                        .build()
                         ))
                         .outline(List.of(
-                                Note.Segment.builder().startTime(0).title("도입부").summary("도입부 요약").build()
+                                Segment.builder()
+                                        .startTime(0)
+                                        .title("도입부")
+                                        .summary("도입부 요약")
+                                        .build()
                         ))
                         .build();
                 noteRepository.save(note);
@@ -73,8 +83,10 @@ class NoteRepositoryTest {
                 Optional<Note> result = noteRepository.findByVideoIdAndUserLevel(givenVideoId, givenUserLevel);
 
                 assertThat(result).isPresent();
-                assertThat(result.get().getVideoId()).isEqualTo(givenVideoId);
-                assertThat(result.get().getUserLevel()).isEqualTo(givenUserLevel);
+                assertThat(result.get()
+                        .getVideoId()).isEqualTo(givenVideoId);
+                assertThat(result.get()
+                        .getUserLevel()).isEqualTo(givenUserLevel);
             }
         }
 
@@ -97,7 +109,7 @@ class NoteRepositoryTest {
         @Nested
         class 저장된_Note가_존재하고_userLevel이_다른_경우 {
 
-            private final UserLevel invalidUserLevel = UserLevel.ADVANCED;
+            final UserLevel invalidUserLevel = UserLevel.ADVANCED;
 
             @BeforeEach
             void setUpContext() {
@@ -120,7 +132,7 @@ class NoteRepositoryTest {
         @Nested
         class 저장된_Note가_존재하고_videoId가_다른_경우 {
 
-            private final String invalidVideoId = "video999";
+            final String invalidVideoId = "video999";
 
             @BeforeEach
             void setUpContext() {
@@ -143,8 +155,8 @@ class NoteRepositoryTest {
         @Nested
         class 저장된_Note가_존재하고_videoId와_userLevel이_모두_다른_경우 {
 
-            private final String invalidVideoId = "video999";
-            private final UserLevel invalidUserLevel = UserLevel.ADVANCED;
+            final String invalidVideoId = "video999";
+            final UserLevel invalidUserLevel = UserLevel.ADVANCED;
 
             @BeforeEach
             void setUpContext() {
@@ -166,28 +178,34 @@ class NoteRepositoryTest {
     }
 
 
-
     @Nested
     class existsByVideoIdAndUserLevel_메서드는 {
 
-        private final String givenVideoId = "video123";
-        private final UserLevel givenUserLevel = UserLevel.BASIC;
+        final String givenVideoId = "video123";
+        final UserLevel givenUserLevel = UserLevel.BASIC;
 
         @Nested
         class 저장된_Note가_존재하고_videoId와_userLevel이_일치하는_경우 {
 
             @BeforeEach
             void setUpContext() {
-                // Arrange: Note 저장
+
                 Note note = Note.builder()
                         .videoId(givenVideoId)
                         .userLevel(givenUserLevel)
                         .title("스프링 컨퍼런스")
                         .commentaries(List.of(
-                                Commentary.builder().startTime(0).content("첫 번째 코멘트").build()
+                                Commentary.builder()
+                                        .startTime(0)
+                                        .content("첫 번째 코멘트")
+                                        .build()
                         ))
                         .outline(List.of(
-                                Note.Segment.builder().startTime(0).title("도입부").summary("도입부 요약").build()
+                                Segment.builder()
+                                        .startTime(0)
+                                        .title("도입부")
+                                        .summary("도입부 요약")
+                                        .build()
                         ))
                         .build();
                 noteRepository.save(note);
@@ -220,7 +238,7 @@ class NoteRepositoryTest {
         @Nested
         class 저장된_Note가_존재하고_userLevel이_다른_경우 {
 
-            private final UserLevel invalidUserLevel = UserLevel.ADVANCED;
+            final UserLevel invalidUserLevel = UserLevel.ADVANCED;
 
             @BeforeEach
             void setUpContext() {
@@ -243,7 +261,7 @@ class NoteRepositoryTest {
         @Nested
         class 저장된_Note가_존재하고_videoId가_다른_경우 {
 
-            private final String invalidVideoId = "video3312213";
+            final String invalidVideoId = "video3312213";
 
             @BeforeEach
             void setUpContext() {
@@ -269,7 +287,7 @@ class NoteRepositoryTest {
 
         @Nested
         class noteId_에_해당하는_Note가_존재하는_경우 {
-            private String givenNoteId;
+            String givenNoteId;
 
             @BeforeEach
             void setUpContext() {
@@ -280,13 +298,15 @@ class NoteRepositoryTest {
                         .commentaries(List.of(
                                 Commentary.builder()
                                         .startTime(0)
-                                        .content("초기 코멘트: 도입부 설명").build()
+                                        .content("초기 코멘트: 도입부 설명")
+                                        .build()
                         ))
                         .outline(List.of(
-                                Note.Segment.builder()
+                                Segment.builder()
                                         .startTime(0)
                                         .title("Introduction")
-                                        .summary("스프링 프레임워크의 도입부를 설명").build()
+                                        .summary("스프링 프레임워크의 도입부를 설명")
+                                        .build()
                         ))
                         .build();
                 noteRepository.save(note);
@@ -298,10 +318,12 @@ class NoteRepositoryTest {
                 List<Commentary> updatedCommentaries = List.of(
                         Commentary.builder()
                                 .startTime(0)
-                                .content("스프링 프레임워크는 자바 기반 경량 애플리케이션 개발 프레임워크입니다.").build(),
+                                .content("스프링 프레임워크는 자바 기반 경량 애플리케이션 개발 프레임워크입니다.")
+                                .build(),
                         Commentary.builder()
                                 .startTime(15)
-                                .content("스프링은 의존성 주입(DI)과 AOP를 지원합니다.").build()
+                                .content("스프링은 의존성 주입(DI)과 AOP를 지원합니다.")
+                                .build()
                 );
                 noteRepository.setCommentaries(givenNoteId, updatedCommentaries);
 
@@ -322,7 +344,8 @@ class NoteRepositoryTest {
                 List<Commentary> updatedCommentaries = List.of(
                         Commentary.builder()
                                 .startTime(0)
-                                .content("스프링은 의존성 주입(DI)과 AOP를 지원합니다.").build()
+                                .content("스프링은 의존성 주입(DI)과 AOP를 지원합니다.")
+                                .build()
                 );
                 noteRepository.setCommentaries("nonExistentNoteId", updatedCommentaries);
 
@@ -335,11 +358,10 @@ class NoteRepositoryTest {
     @Nested
     class updateCommentaryContentByOrder_메서드는 {
 
-        private String givenNoteId;
+        String givenNoteId;
 
         @BeforeEach
         void setUpContext() {
-            // Context: Note를 저장하여 테스트 데이터 초기화
             Note note = Note.builder()
                     .videoId("video123")
                     .userLevel(UserLevel.BASIC)
@@ -359,7 +381,7 @@ class NoteRepositoryTest {
                                     .build()
                     ))
                     .outline(List.of(
-                            Note.Segment.builder()
+                            Segment.builder()
                                     .startTime(0)
                                     .title("Introduction")
                                     .summary("도입부 설명")
@@ -367,7 +389,7 @@ class NoteRepositoryTest {
                     ))
                     .build();
             Note savedNote = noteRepository.save(note);
-            givenNoteId = savedNote.getId(); // Note의 ID 저장
+            givenNoteId = savedNote.getId();
         }
 
         @Nested
@@ -379,7 +401,6 @@ class NoteRepositoryTest {
                 String newContent = "수정된 두 번째 코멘트";
                 noteRepository.updateCommentaryContentByOrder(givenNoteId, orderIndex, newContent);
 
-                // Validation: 업데이트된 Note를 확인
                 Optional<Note> updatedNote = noteRepository.findById(givenNoteId);
                 assertThat(updatedNote).isPresent();
                 Note actualNote = updatedNote.get();
@@ -394,6 +415,99 @@ class NoteRepositoryTest {
                 assertThat(actualNote.getCommentaries()
                         .get(2)
                         .getContent()).isEqualTo("세 번째 코멘트");
+            }
+        }
+    }
+
+    @Nested
+    class setStatusToComplete_메서드는 {
+        @Nested
+        class 주어진_noteId에_해당하는_노트가_존재할_경우 {
+
+            String givenNoteId;
+
+            @BeforeEach
+            void setUpContext() {
+                Note note = Note.builder()
+                        .videoId("video123")
+                        .userLevel(UserLevel.BASIC)
+                        .title("Spring Framework Overview")
+                        .status(NoteStatus.IN_PROGRESS)
+                        .build();
+                Note savedNote = noteRepository.save(note);
+                givenNoteId = savedNote.getId();
+            }
+
+            @Test
+            void status를_완료로_변경한다() {
+                noteRepository.setStatusToComplete(givenNoteId);
+
+                Optional<Note> result = noteRepository.findById(givenNoteId);
+                assertThat(result).isPresent();
+                Note updatedNote = result.get();
+                assertThat(updatedNote.getStatus()).isEqualTo(NoteStatus.COMPLETED);
+            }
+        }
+    }
+
+    @Nested
+    class setOutline_메서드는 {
+        @Nested
+        class 주어진_noteId에_해당하는_노트가_존재할_경우 {
+            String givenNoteId;
+            List<Segment> givenSegments;
+
+            @BeforeEach
+            void setUpContext() {
+                Note note = Note.builder()
+                        .videoId("video123")
+                        .userLevel(UserLevel.BASIC)
+                        .title("Spring Framework Overview")
+                        .status(NoteStatus.IN_PROGRESS)
+                        .build();
+                Note savedNote = noteRepository.save(note);
+                givenNoteId = savedNote.getId();
+
+
+                givenSegments = List.of(
+                        Segment.builder()
+                                .startTime(0)
+                                .title("Introduction")
+                                .summary("도입부 설명")
+                                .build(),
+                        Segment.builder()
+                                .startTime(0)
+                                .title("Content")
+                                .summary("내용 설명")
+                                .build()
+                );
+
+            }
+
+            @Test
+            void 노트의_목차를_segments로_설정한다() {
+                noteRepository.setOutline(givenNoteId, givenSegments);
+
+                Optional<Note> result = noteRepository.findById(givenNoteId);
+                assertThat(result).isPresent();
+                Note actualNote = result.get();
+
+                assertThat(actualNote.getOutline())
+                        .usingRecursiveFieldByFieldElementComparator()
+                        .containsExactlyElementsOf(givenSegments);
+            }
+        }
+
+        @Nested
+        class 주어진_noteId에_해당하는_노트가_존재하지_않을_경우 {
+            final String notExistNoteId = "adsfaerwrfadfdagaqwerwer";
+            final List<Segment> givenSegments = List.of();
+
+            @Test
+            void 예외를_던지지_않고_아무_동작도_하지_않는다(){
+                assertThatCode(() -> {
+                    noteRepository.setOutline(notExistNoteId,givenSegments);
+                }).doesNotThrowAnyException();
             }
         }
     }

@@ -10,18 +10,27 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @Component
 @RequiredArgsConstructor
 public class SseEventSender {
+    private static final String CONNECT_EVENT_NAME = "connect";
+    private static final String OUTLINE_EVENT_NAME = "outline";
+    private static final String COMMENTARY_EVENT_NAME = "commentary";
+    private static final String COMPLETE_EVENT_NAME = "complete";
+
     private final SseEmitterManager sseEmitterManager;
 
     public void sendConnectEvent(String noteId, String sessionId) {
-        sendEvent(noteId, sessionId, "connect", "send connect event");
+        sendEvent(noteId, sessionId, CONNECT_EVENT_NAME, "");
     }
 
-    public void broadcastNoteCommentaryEvent(String noteId, String data) {
-        broadcastEvent(noteId, "commentary", data);
+    public void broadcastOutlineEvent(String noteId, String data) {
+        broadcastEvent(noteId, OUTLINE_EVENT_NAME, data);
     }
 
-    public void broadcastNoteOutlineEvent(String noteId, String data) {
-        broadcastEvent(noteId, "outline", data);
+    public void broadcastCommentaryEvent(String noteId, String data) {
+        broadcastEvent(noteId, COMMENTARY_EVENT_NAME, data);
+    }
+
+    public void broadcastCompleteEvent(String noteId) {
+        broadcastEvent(noteId, COMPLETE_EVENT_NAME, "");
     }
 
     private void sendEvent(String noteId, String sessionId, String eventName, String data) {

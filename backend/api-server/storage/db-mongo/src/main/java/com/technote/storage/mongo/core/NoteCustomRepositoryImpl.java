@@ -1,6 +1,8 @@
 package com.technote.storage.mongo.core;
 
+import com.technote.core.enums.NoteStatus;
 import com.technote.storage.mongo.core.Note.Commentary;
+import com.technote.storage.mongo.core.Note.Segment;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -24,6 +26,20 @@ public class NoteCustomRepositoryImpl implements NoteCustomRepository {
     public void updateCommentaryContentByOrder(String noteId, int orderIndex, String content) {
         Query query = new Query(Criteria.where("_id").is(noteId));
         Update update = new Update().set("commentaries." + orderIndex + ".content", content);
+        mongoTemplate.updateFirst(query, update, Note.class);
+    }
+
+    @Override
+    public void setStatusToComplete(String noteId) {
+        Query query = new Query(Criteria.where("_id").is(noteId));
+        Update update = new Update().set("status", NoteStatus.COMPLETED);
+        mongoTemplate.updateFirst(query, update, Note.class);
+    }
+
+    @Override
+    public void setOutline(String noteId, List<Segment> segments) {
+        Query query = new Query(Criteria.where("_id").is(noteId));
+        Update update = new Update().set("outline", segments);
         mongoTemplate.updateFirst(query, update, Note.class);
     }
 }

@@ -12,6 +12,7 @@ public class NoteEventMapper {
                 .noteId(noteCommentaryDto.noteId())
                 .startTime(noteCommentaryDto.startTime())
                 .content(noteCommentaryDto.content())
+                .orderIndex(noteCommentaryDto.commentaryOrder())
                 .build();
     }
 

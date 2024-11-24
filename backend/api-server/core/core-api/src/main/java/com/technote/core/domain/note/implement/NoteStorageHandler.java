@@ -8,6 +8,7 @@ import com.technote.core.support.error.CustomException;
 import com.technote.core.support.error.ErrorType;
 import com.technote.storage.mongo.core.Note;
 import com.technote.storage.mongo.core.Note.Commentary;
+import com.technote.storage.mongo.core.Note.Segment;
 import com.technote.storage.mongo.core.NoteRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +75,10 @@ public class NoteStorageHandler {
                 .build();
     }
 
+    public void setStatusToCompleted(String noteId) {
+        noteRepository.setStatusToComplete(noteId);
+    }
+
     public void setNoteCommentariesBasedOnOutline(String noteId, List<SegmentVO> segments) {
         List<Commentary> commentaries = segments.stream()
                 .map((segment -> Commentary.builder()
@@ -86,5 +91,15 @@ public class NoteStorageHandler {
 
     public void updateCommentaryByOrder(String noteId, int orderIndex,  String content) {
         noteRepository.updateCommentaryContentByOrder(noteId, orderIndex, content);
+    }
+
+    public void setNoteOutline(String noteId, List<SegmentVO> segments) {
+        List<Segment> outline = segments.stream().map(segment -> Segment.builder()
+                .startTime(segment.startTime())
+                .title(segment.title())
+                .summary(segment.summary())
+                .build()
+        ).toList();
+        noteRepository.setOutline(noteId, outline);
     }
 }
