@@ -41,7 +41,6 @@ public class NoteController {
             @RequestParam String videoId,
             @RequestParam String userLevel
     ) {
-        log.info("videoId={} userLevel={} 노트 조회 요청 들어옴", videoId, userLevel);
         var result = noteService.getNote(videoId, UserLevel.fromValue(userLevel));
         return ApiResponse.success(NoteHttpMapper.toNoteHttpResponse(result));
     }
@@ -65,11 +64,12 @@ public class NoteController {
         return noteSseService.connect(noteId, session.getId());
     }
 
-    @GetMapping
+    @GetMapping("/preview")
     public ApiResponse<PagedNotePreviewsHttpResponse> getMainPageNotes(
             @RequestParam(required = false) String lastId,
             @RequestParam(defaultValue = "10") int pageSize
     ) {
+        log.info("lastId={}, pageSize={}", lastId, pageSize);
         var result = noteService.getMainPageNotes(lastId, pageSize);
         return ApiResponse.success(NoteHttpMapper.toPagedNotePreviewsHttpResponse(result));
     }

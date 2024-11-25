@@ -18,6 +18,12 @@ subprojects {
 	apply plugin: 'org.springframework.boot'
 	apply plugin: 'io.spring.dependency-management'
 
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.3"
+		}
+	}
+
 
 	java {
 		toolchain {
@@ -27,7 +33,6 @@ subprojects {
 
 	dependencies {
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
 		compileOnly 'org.projectlombok:lombok'
 		annotationProcessor 'org.projectlombok:lombok'
 	}
