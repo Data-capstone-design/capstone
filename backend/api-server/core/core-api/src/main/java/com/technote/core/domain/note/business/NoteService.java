@@ -1,5 +1,6 @@
 package com.technote.core.domain.note.business;
 
+import com.technote.client.feign.VideoTitleClient;
 import com.technote.core.domain.note.dto.PagedNotePreviewsDto;
 import com.technote.core.domain.note.implement.NoteEventPublisher;
 import com.technote.core.domain.note.implement.NoteStorageHandler;
@@ -18,9 +19,11 @@ import org.springframework.stereotype.Service;
 public class NoteService {
     private final NoteEventPublisher noteEventPublisher;
     private final NoteStorageHandler noteStorageHandler;
+    private final VideoTitleClient videoTitleClient;
 
     public String createNote(String videoId, UserLevel userLevel) {
-        String noteId = noteStorageHandler.saveNote(videoId, userLevel);
+        String noteTitle = videoTitleClient.getNoteTitle(videoId).noteTitle();
+        String noteId = noteStorageHandler.saveNote(videoId, userLevel, noteTitle);
         noteEventPublisher.publishCreateNoteEvent(videoId, userLevel, noteId);
         return noteId;
     }
@@ -35,6 +38,7 @@ public class NoteService {
 
     public PagedNotePreviewsDto getMainPageNotes(String lastId, int pageSize) {
         List<NotePreviewVO> notePreviews = noteStorageHandler.getPagedNotes(lastId, pageSize);
+        log.info("notePreviews {}", notePreviews);
         boolean isEmpty = notePreviews.isEmpty();
         String nextCursor = isEmpty ? null : notePreviews.get(notePreviews.size() -1).id();
         boolean hasMore = !isEmpty && noteStorageHandler.hasMoreNotes(nextCursor);

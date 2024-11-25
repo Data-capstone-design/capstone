@@ -8,6 +8,7 @@ jar {
 
 dependencies {
     implementation project(':clients:client-kafka')
+    implementation project(':clients:client-feign')
     implementation project(':core:core-enum')
     implementation project(':storage:db-mongo')
 	implementation 'org.springframework.boot:spring-boot-starter-web'

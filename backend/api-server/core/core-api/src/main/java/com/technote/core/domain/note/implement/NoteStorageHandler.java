@@ -12,6 +12,7 @@ import com.technote.storage.mongo.core.Note;
 import com.technote.storage.mongo.core.Note.Commentary;
 import com.technote.storage.mongo.core.Note.Segment;
 import com.technote.storage.mongo.core.NoteRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +23,15 @@ import org.springframework.stereotype.Component;
 public class NoteStorageHandler {
     private final NoteRepository noteRepository;
 
-    public String saveNote(String videoId, UserLevel userLevel) {
+
+    public String saveNote(String videoId, UserLevel userLevel, String title) {
         boolean isExist = noteRepository.existsByVideoIdAndUserLevel(videoId, userLevel);
         if (isExist) {
             throw new CustomException(ErrorType.NOTE_ALREADY_EXIST);
         }
-
         Note newNote = Note.builder()
                 .videoId(videoId)
+                .title(title)
                 .userLevel(userLevel)
                 .status(NoteStatus.IN_PROGRESS)
                 .outline(new ArrayList<>())

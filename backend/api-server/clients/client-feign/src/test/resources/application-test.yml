@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            loggerLevel: FULL
+
+logging:
+  level:
+    feign: DEBUG
+    com.technote.client.feign: DEBUG
