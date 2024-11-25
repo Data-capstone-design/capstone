@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technote.client.kafka.event.CreateNoteCommentaryEvent;
 import com.technote.client.kafka.event.CreateNoteOutlineEvent;
 import com.technote.core.domain.note.implement.NoteStorageHandler;
-import com.technote.core.domain.note.implement.NoteVO.SegmentVO;
+import com.technote.core.domain.note.vo.NoteVO.SegmentVO;
 import com.technote.core.domain.note.implement.SseEventSender;
 import com.technote.core.support.error.CustomException;
 import com.technote.core.support.error.ErrorType;

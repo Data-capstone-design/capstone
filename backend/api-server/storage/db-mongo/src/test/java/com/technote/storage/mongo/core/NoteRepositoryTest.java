@@ -10,6 +10,8 @@ import com.technote.storage.mongo.core.Note.Commentary;
 import com.technote.storage.mongo.core.Note.Segment;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MongoDBContainer;
@@ -64,7 +67,7 @@ class NoteRepositoryTest {
                         .commentaries(List.of(
                                 Commentary.builder()
                                         .startTime(0)
-                                        .content("첫 번째 코멘트")
+                                        .content("첫 번째 해설")
                                         .build()
                         ))
                         .outline(List.of(
@@ -197,7 +200,7 @@ class NoteRepositoryTest {
                         .commentaries(List.of(
                                 Commentary.builder()
                                         .startTime(0)
-                                        .content("첫 번째 코멘트")
+                                        .content("첫 번째 해설")
                                         .build()
                         ))
                         .outline(List.of(
@@ -298,7 +301,7 @@ class NoteRepositoryTest {
                         .commentaries(List.of(
                                 Commentary.builder()
                                         .startTime(0)
-                                        .content("초기 코멘트: 도입부 설명")
+                                        .content("초기 해설: 도입부 설명")
                                         .build()
                         ))
                         .outline(List.of(
@@ -369,22 +372,37 @@ class NoteRepositoryTest {
                     .commentaries(List.of(
                             Commentary.builder()
                                     .startTime(0)
-                                    .content("첫 번째 코멘트")
+                                    .content("첫 번째 해설")
                                     .build(),
                             Commentary.builder()
                                     .startTime(10)
-                                    .content("두 번째 코멘트")
+                                    .content("두 번째 해설")
                                     .build(),
                             Commentary.builder()
                                     .startTime(20)
-                                    .content("세 번째 코멘트")
+                                    .content("세 번째 해설")
                                     .build()
                     ))
                     .outline(List.of(
                             Segment.builder()
                                     .startTime(0)
                                     .title("Introduction")
-                                    .summary("도입부 설명")
+                                    .summary("스프링 소개")
+                                    .build(),
+                            Segment.builder()
+                                    .startTime(10)
+                                    .title("DI & IoC")
+                                    .summary("DI IoC 설명")
+                                    .build(),
+                            Segment.builder()
+                                    .startTime(20)
+                                    .title("Servlet")
+                                    .summary("서블릿 설명")
+                                    .build(),
+                            Segment.builder()
+                                    .startTime(30)
+                                    .title("Spring data")
+                                    .summary("Spring data 설명")
                                     .build()
                     ))
                     .build();
@@ -398,7 +416,7 @@ class NoteRepositoryTest {
             @Test
             void 특정_인덱스의_Commentary_내용을_업데이트한다() {
                 int orderIndex = 1;
-                String newContent = "수정된 두 번째 코멘트";
+                String newContent = "수정된 두 번째 해설";
                 noteRepository.updateCommentaryContentByOrder(givenNoteId, orderIndex, newContent);
 
                 Optional<Note> updatedNote = noteRepository.findById(givenNoteId);
@@ -411,10 +429,10 @@ class NoteRepositoryTest {
 
                 assertThat(actualNote.getCommentaries()
                         .get(0)
-                        .getContent()).isEqualTo("첫 번째 코멘트");
+                        .getContent()).isEqualTo("첫 번째 해설");
                 assertThat(actualNote.getCommentaries()
                         .get(2)
-                        .getContent()).isEqualTo("세 번째 코멘트");
+                        .getContent()).isEqualTo("세 번째 해설");
             }
         }
     }
@@ -476,7 +494,7 @@ class NoteRepositoryTest {
                                 .summary("도입부 설명")
                                 .build(),
                         Segment.builder()
-                                .startTime(0)
+                                .startTime(10)
                                 .title("Content")
                                 .summary("내용 설명")
                                 .build()
@@ -511,4 +529,200 @@ class NoteRepositoryTest {
             }
         }
     }
+
+    @Nested
+    class GetPagedNotes_메서드는 {
+
+        @Nested
+        class 페이징할_데이터가_1페이지보다_많은_경우 {
+
+            final int givenPageSize = 5;
+            final int givenTotalNoteCount = 7;
+
+            @BeforeEach
+            void setUpContext() {
+
+                IntStream.rangeClosed(1, givenTotalNoteCount)
+                        .mapToObj(i -> Note.builder()
+                                .videoId("video" + i)
+                                .userLevel(UserLevel.BASIC)
+                                .title("테크영상 " + i)
+                                .commentaries(List.of(
+                                        Commentary.builder()
+                                                .startTime(i)
+                                                .content("해설 " + i)
+                                                .build()
+                                ))
+                                .outline(List.of(
+                                        Segment.builder()
+                                                .startTime(i)
+                                                .title("제목 " + i)
+                                                .summary("요약 " + i)
+                                                .build()
+                                ))
+                                .build())
+                        .forEach(noteRepository::save);
+            }
+
+            @Test
+            void 첫_페이지를_요청하면_지정된_givenPageSize만큼의_모든_노트를_반환한다() {
+
+                List<Note> result = noteRepository.getPagedNotes(null, givenPageSize);
+
+
+                assertThat(result).hasSize(givenPageSize);
+                assertThat(result)
+                        .extracting(Note::getTitle)
+                        .containsExactly("테크영상 1", "테크영상 2", "테크영상 3", "테크영상 4", "테크영상 5");
+            }
+
+            @Test
+            void lastId를_기준으로_다음_페이지를_요청하면_페이지에_해당하는_모든_노트를_반환한다() {
+
+                List<Note> firstPage = noteRepository.getPagedNotes(null, givenPageSize);
+                String lastId = firstPage.get(firstPage.size() - 1).getId();
+
+                List<Note> result = noteRepository.getPagedNotes(lastId, givenPageSize);
+
+                assertThat(result).hasSize(givenTotalNoteCount - givenPageSize);
+                assertThat(result)
+                        .extracting(Note::getTitle)
+                        .containsExactly("테크영상 6", "테크영상 7");
+            }
+        }
+
+        @Nested
+        class 페이징할_데이터가_1페이지보다_적은_경우 {
+
+            final int givenPageSize = 5;
+            final int givenTotalNoteCount = 3;
+
+            @BeforeEach
+            void setUpContext() {
+
+                IntStream.rangeClosed(1, 3)
+                        .mapToObj(i -> Note.builder()
+                                .videoId("video" + i)
+                                .userLevel(UserLevel.BASIC)
+                                .title("테크영상 " + i)
+                                .commentaries(List.of(
+                                        Commentary.builder()
+                                                .startTime(0)
+                                                .content("해설 " + i)
+                                                .build()
+                                ))
+                                .outline(List.of(
+                                        Segment.builder()
+                                                .startTime(0)
+                                                .title("제목 " + i)
+                                                .summary("요약 " + i)
+                                                .build()
+                                ))
+                                .build())
+                        .forEach(noteRepository::save);
+            }
+
+            @Test
+            void 저장된_모든_데이터를_반환한다() {
+
+                List<Note> result = noteRepository.getPagedNotes(null, givenPageSize);
+
+                assertThat(result).hasSize(givenTotalNoteCount);
+                assertThat(result)
+                        .extracting(Note::getTitle)
+                        .containsExactly("테크영상 1", "테크영상 2", "테크영상 3");
+            }
+        }
+
+        @Nested
+        class 저장된_데이터가_없는_경우 {
+
+            final int givenPageSize = 5;
+
+            @BeforeEach
+            void clearContext() {
+                noteRepository.deleteAll();
+            }
+
+            @Test
+            void 빈_List를_반환한다() {
+
+                List<Note> result =  noteRepository.getPagedNotes(null, givenPageSize);
+
+
+                assertThat(result).isEmpty();
+            }
+        }
+    }
+
+    @Nested
+    class hasMoreNotes_메서드는 {
+
+        @Nested
+        class lastId_이후에_데이터가_존재하는_경우 {
+
+            final int givenTotalNoteCount = 10;
+            List<String> givenNoteIds;
+
+            @BeforeEach
+            void setUpContext() {
+
+                IntStream.rangeClosed(1, givenTotalNoteCount)
+                        .mapToObj(i -> Note.builder()
+                                .title("테크영상 " + i)
+                                .videoId("video" + i)
+                                .userLevel(UserLevel.BASIC)
+                                .build())
+                        .forEach(noteRepository::save);
+
+                var allNotes = noteRepository.findAll(Sort.by(Sort.Direction.ASC, "_id"));
+                givenNoteIds = allNotes.stream().map(Note::getId)
+                        .toList();
+            }
+
+            @Test
+            void true를_반환한다() {
+                String lastId = givenNoteIds.get(4);
+
+                boolean result = noteRepository.hasMoreNotes(lastId);
+
+                assertThat(result).isTrue();
+            }
+        }
+
+        @Nested
+        class lastId_이후에_데이터가_존재하지_않는_경우 {
+
+            final int givenTotalNoteCount = 5;
+            List<String> givenNoteIds;
+
+
+            @BeforeEach
+            void setUpContext() {
+
+                IntStream.rangeClosed(1, givenTotalNoteCount)
+                        .mapToObj(i -> Note.builder()
+                                .title("테크영상 " + i)
+                                .videoId("video" + i)
+                                .userLevel(UserLevel.BASIC)
+                                .build())
+                        .forEach(noteRepository::save);
+
+                var allNotes = noteRepository.findAll(Sort.by(Sort.Direction.ASC, "_id"));
+                givenNoteIds = allNotes.stream().map(Note::getId)
+                        .toList();
+            }
+
+            @Test
+            void false를_반환한다() {
+                String lastId = givenNoteIds.get(givenTotalNoteCount - 1);
+
+                boolean result = noteRepository.hasMoreNotes(lastId);
+
+                assertThat(result).isFalse();
+            }
+        }
+    }
+
+
 }

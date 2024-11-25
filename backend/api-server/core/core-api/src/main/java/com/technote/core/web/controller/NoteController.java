@@ -7,6 +7,7 @@ import com.technote.core.support.response.ApiResponse;
 import com.technote.core.web.dto.CreateNoteHttpRequest;
 import com.technote.core.web.dto.CreateNoteHttpResponse;
 import com.technote.core.web.dto.NoteStatusHttpResponse;
+import com.technote.core.web.dto.PagedNotePreviewsHttpResponse;
 import com.technote.core.web.mapper.NoteHttpMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -40,6 +41,7 @@ public class NoteController {
             @RequestParam String videoId,
             @RequestParam String userLevel
     ) {
+        log.info("videoId={} userLevel={} 노트 조회 요청 들어옴", videoId, userLevel);
         var result = noteService.getNote(videoId, UserLevel.fromValue(userLevel));
         return ApiResponse.success(NoteHttpMapper.toNoteHttpResponse(result));
     }
@@ -61,5 +63,14 @@ public class NoteController {
         HttpSession session = request.getSession(true);
         log.info("Connect to sse: noteId={}, sessionId={}", noteId, session.getId());
         return noteSseService.connect(noteId, session.getId());
+    }
+
+    @GetMapping
+    public ApiResponse<PagedNotePreviewsHttpResponse> getMainPageNotes(
+            @RequestParam(required = false) String lastId,
+            @RequestParam(defaultValue = "10") int pageSize
+    ) {
+        var result = noteService.getMainPageNotes(lastId, pageSize);
+        return ApiResponse.success(NoteHttpMapper.toPagedNotePreviewsHttpResponse(result));
     }
 }
