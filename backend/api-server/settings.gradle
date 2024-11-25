@@ -1,5 +1,6 @@
 include 'clients:client-kafka'
+include 'clients:client-feign'
 include 'core:core-api'
 include 'core:core-enum'
 include 'storage:db-mongo'
-include 'clients:client-feign'
+
