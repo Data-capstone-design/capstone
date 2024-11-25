@@ -1,5 +1,5 @@
 <template>
-  <section class="q-pa-md q-mt-xl" style="max-width: 70%">
+  <section class="n-Section q-pa-md q-mt-xl">
     <h1 class="ns-Title">
       <q-icon name="book" class="q-mb-xs q-pl-xs" style="color:#0e0e0e" />
       <span>전체 노트</span>
@@ -18,7 +18,7 @@
           style="padding: 0; margin: 10px;"
       >
         <img
-            :src="`https://img.youtube.com/vi/${item.thumbnail}/default.jpg`"
+            :src="`https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`"
             class="q-card-image"
             alt="노트 이미지"
         />
@@ -64,7 +64,6 @@ interface NotePreview {
   videoId: string;
   userLevel: string;
   title: string;
-  thumbnail: string;
 }
 
 interface PagedNotePreviews {
@@ -98,7 +97,7 @@ const fetchNotes = async () => {
       }
     }
 
-    const response = await $fetch<PagedNotePreviews>('/notes/preview', {
+    const response: any = await $fetch<PagedNotePreviews>('/notes/preview', {
       method: 'GET',
       baseURL: config.public.apiBaseUrl,
       params
@@ -136,6 +135,10 @@ onMounted(() => {
 
 
 <style scoped>
+.n-Section {
+  max-width: 70%;
+  min-width: 70%;
+}
 
 .ns-Title {
   font-size: 1.5rem;
