@@ -1,7 +1,9 @@
 package com.technote.core.domain.note.implement;
 
-import com.technote.core.domain.note.implement.NoteVO.CommentaryVO;
-import com.technote.core.domain.note.implement.NoteVO.SegmentVO;
+import com.technote.core.domain.note.vo.NotePreviewVO;
+import com.technote.core.domain.note.vo.NoteVO;
+import com.technote.core.domain.note.vo.NoteVO.CommentaryVO;
+import com.technote.core.domain.note.vo.NoteVO.SegmentVO;
 import com.technote.core.enums.NoteStatus;
 import com.technote.core.enums.UserLevel;
 import com.technote.core.support.error.CustomException;
@@ -101,5 +103,20 @@ public class NoteStorageHandler {
                 .build()
         ).toList();
         noteRepository.setOutline(noteId, outline);
+    }
+
+    public List<NotePreviewVO> getPagedNotes(String lastId, int pageSize) {
+        return noteRepository.getPagedNotes(lastId, pageSize).stream()
+                .map(note -> NotePreviewVO.builder()
+                        .id(note.getId())
+                        .videoId(note.getVideoId())
+                        .userLevel(note.getUserLevel())
+                        .title(note.getTitle())
+                        .build()
+                ).toList();
+    }
+
+    public boolean hasMoreNotes(String lastId) {
+        return noteRepository.hasMoreNotes(lastId);
     }
 }

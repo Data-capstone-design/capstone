@@ -1,4 +1,4 @@
-package com.technote.core.domain.note.implement;
+package com.technote.core.domain.note.vo;
 
 import com.technote.core.enums.NoteStatus;
 import com.technote.core.enums.UserLevel;

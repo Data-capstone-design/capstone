@@ -5,6 +5,7 @@ import com.technote.storage.mongo.core.Note.Commentary;
 import com.technote.storage.mongo.core.Note.Segment;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -41,6 +42,29 @@ public class NoteCustomRepositoryImpl implements NoteCustomRepository {
         Query query = new Query(Criteria.where("_id").is(noteId));
         Update update = new Update().set("outline", segments);
         mongoTemplate.updateFirst(query, update, Note.class);
+    }
+
+    @Override
+    public List<Note> getPagedNotes (String lastId, int pageSize) {
+        Query query = new Query();
+
+        if (lastId != null) {
+            query.addCriteria(Criteria.where("_id").gt(lastId));
+        }
+
+        query.with(Sort.by(Sort.Direction.ASC, "_id"));
+        query.limit(pageSize);
+
+        return mongoTemplate.find(query, Note.class);
+    }
+
+    @Override
+    public boolean hasMoreNotes(String lastId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").gt(lastId));
+        query.limit(1);
+        return !mongoTemplate.find(query, Note.class)
+                .isEmpty();
     }
 }
 
