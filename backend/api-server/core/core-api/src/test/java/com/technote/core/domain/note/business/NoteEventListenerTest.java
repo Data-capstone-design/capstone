@@ -10,7 +10,7 @@ import com.technote.client.kafka.event.CreateNoteCommentaryEvent;
 import com.technote.client.kafka.event.CreateNoteOutlineEvent;
 import com.technote.client.kafka.event.CreateNoteOutlineEvent.CreateNoteOutlineEventSegment;
 import com.technote.core.domain.note.implement.NoteStorageHandler;
-import com.technote.core.domain.note.implement.NoteVO.SegmentVO;
+import com.technote.core.domain.note.vo.NoteVO.SegmentVO;
 import com.technote.core.domain.note.implement.SseEventSender;
 import java.util.List;
 import java.util.Map;
@@ -64,8 +64,8 @@ class NoteEventListenerTest {
             void 받은_해설을_저장하고_해설_생성에_대한_SSE를_발행한다() throws JsonProcessingException {
                 String expectedJson = objectMapper.writeValueAsString(
                         Map.of(
-                                "startTime", givenStartTime,
-                                "content", givenContent
+                                "content", givenContent,
+                                "startTime", givenStartTime
                         )
                 );
 
