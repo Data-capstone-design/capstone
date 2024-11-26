@@ -8,15 +8,11 @@ from app.domain.generation_process import GenerationProcess
 from app.domain.kafka_message.llm_request_message import LlmRequestMessage
 from app.domain.kafka_message.llm_result_message import LLMResultMessage
 from app.kafka.kafka_config import LLM_COMMENTARY_EVENTS
-from app.openai_service.event_handler.enhanced_event_handler import EnhancedExplanationEventHandler
-from app.openai_service.event_handler.event_handler_factory import event_handler_factory
-
-from app.openai_service.event_handler.explanation_event_handler import ExplanationEventHandler
-from app.openai_service.event_handler.feedback_event_handler import FeedbackEventHandler
-from app.openai_service.event_handler.index_event_handler import IndexEventHandler
-from app.openai_service.assistant_api_utils import *
 from app.message_processor.instructions.instructions import *
+from app.openai_service.assistant_api_utils import *
+from app.openai_service.event_handler.event_handler_factory import event_handler_factory
 from app.text_utils.text_utils import TextUtils
+
 
 async def read_text_file(file_path: str) -> str:
     """
@@ -62,7 +58,7 @@ class MessageProcessor:
             note_id=self.note_id,
             kafka_producer=self.producer
         )
-        run = await run_stream_with_backoff(self.index_assistant.id, thread.id, event_handler_factory=event_handler_factory, instructions=instruction, event_handler_factory_dto=handler_dto)
+        await run_stream_with_backoff(self.index_assistant.id, thread.id, event_handler_factory=event_handler_factory, instructions=instruction, event_handler_factory_dto=handler_dto)
 
     async def create_explanations(self, dir_path):
         logger.info("설명문 생성 시작 - 분할된 텍스트 파일들 병렬 처리")
@@ -107,18 +103,19 @@ class MessageProcessor:
         logger.info(f"설명문 생성 완료 | Thread ID: {thread.id} | 청크: {chunk_index}/{self.total_chunks}")
         return thread
 
-    async def create_feedbacks_for_explanations(self, results):
+    async def create_feedbacks_for_explanations(self, results, text_list):
         logger.info("피드백 텍스트 병렬 생성 시작")
-        tasks = [self.create_chunk_feedback(thread, chunk_index=idx) for idx, thread in
+        tasks = [self.create_chunk_feedback(thread, chunk_index=idx, text_list=text_list) for idx, thread in
                  enumerate(results, start=1)]
         await asyncio.gather(*tasks)
         logger.info("모든 피드백 생성 작업이 완료되었습니다.")
 
-    async def create_chunk_feedback(self, thread, chunk_index):
+    async def create_chunk_feedback(self, thread, chunk_index, text_list):
         logger.info(f"피드백 생성 시작 | Thread ID: {thread.id} | 청크: {chunk_index}/{self.total_chunks}")
         instruction = load_prompt(
             explanation_level = self.explanation_level,
             stage = "create_feedback",
+            text_list = text_list
         )
         handler_dto = EventHandlerFactoryDTO(
             process_stage=GenerationProcess.FEEDBACK_GENERATION,
@@ -183,7 +180,9 @@ class MessageProcessor:
         chunk_resource_list = await self.create_explanations(transcription_chunks_path)
         time.sleep(3)
         # 목차별 설명문 피드백 수행
-        await self.create_feedbacks_for_explanations(chunk_resource_list)
+        text_list_path = "openai_service/cs_term.txt"
+        text_list = await read_text_file(text_list_path)
+        await self.create_feedbacks_for_explanations(chunk_resource_list, text_list)
         time.sleep(3)
         # 목차별 피드백 반영 설명문 생성
         await self.create_enhanced_explanations(chunk_resource_list, outline_start_time_list)

@@ -60,7 +60,6 @@ class TextUtils:
 
     @staticmethod
     def split_by_toc(note_id, toc_filepath):
-        logger.info(toc_filepath)
         output_folder = f"capstone_storage/{note_id}/transcription_chunks"
         os.makedirs(output_folder, exist_ok=True)
         logger.info(f"Output folder '{output_folder}' created or already exists.")
@@ -116,7 +115,6 @@ class TextUtils:
             for text_item in json_objects:
                 text_start = float(text_item.get('start'))
                 if start_time<= text_start < end_time:
-                    logger.debug(f"TOC range: {start_time} to {end_time}, checking text start: {text_start}")
                     segment_content.append(text_item['text'])
 
             if segment_content:
