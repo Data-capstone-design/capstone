@@ -37,28 +37,6 @@ services:
     networks:
       - technote-network
 
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: technote-prometheus
-    volumes:
-      - ../../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml  # Prometheus 설정 파일
-    ports:
-      - "9090:9090"  # Prometheus UI 포트
-    networks:
-      - technote-network
-
-  grafana:
-    image: grafana/grafana:latest
-    container_name: technote-grafana
-    ports:
-      - "3001:3001"  # 내부와 외부 모두 3001 포트로 설정
-    environment:
-      - GF_SERVER_HTTP_PORT=3001  # Grafana 내부 포트를 3001로 변경
-    depends_on:
-      - prometheus
-    networks:
-      - technote-network
-
 networks:
   technote-network:
     external: true
