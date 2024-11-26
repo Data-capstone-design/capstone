@@ -26,6 +26,7 @@ export interface NoteStore {
     getNoteInfo: () => NoteInfo;
     resetStore: () => void;
     setNoteGenerateStatus: (generateStatus: NoteGenerateStatus) => void;
+    getNoteGenerateStatus: () => any;
     setTotalCommentaryCount: (totalCount:number) => void;
     addCurrentCommentaryCount: (count?:number) => void;
 }
@@ -93,8 +94,11 @@ export const useNoteStore = defineStore('note', (): NoteStore => {
     }
 
     const setNoteGenerateStatus = (generateStatus: NoteGenerateStatus) => {
+        console.log(`노트 생성상태 설정: generateStatus ${generateStatus}`);
         noteGenerateStatus.value = generateStatus;
     }
+
+    const getNoteGenerateStatus = () => noteGenerateStatus.value;
 
     const setNoteInfo = (videoId: string, userLevel: string, status: string): void => {
         noteInfo.videoId = videoId;
@@ -110,8 +114,10 @@ export const useNoteStore = defineStore('note', (): NoteStore => {
 
     const addCurrentCommentaryCount = (count?: number) => {
         if(count) {
+            console.log(`생성된 해설 개수: ${count} 개`)
             noteCommentaryCount.current += count;
         } else {
+            console.log(`해설 개수 1개 추가`)
             noteCommentaryCount.current += 1;
         }
     }
@@ -122,7 +128,6 @@ export const useNoteStore = defineStore('note', (): NoteStore => {
         noteInfo.status = '';
         noteCommentaryCount.total = 0;
         noteCommentaryCount.current = 0;
-
     }
 
 
@@ -137,6 +142,7 @@ export const useNoteStore = defineStore('note', (): NoteStore => {
         getNoteInfo,
         fetchNote,
         setNoteGenerateStatus,
+        getNoteGenerateStatus,
         setTotalCommentaryCount,
         addCurrentCommentaryCount,
         resetStore
