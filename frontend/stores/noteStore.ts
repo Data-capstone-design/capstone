@@ -1,40 +1,36 @@
 import {$fetch} from "ofetch";
-import type {Reactive, Ref} from "vue";
+import type {Reactive } from "vue";
 
 export enum NoteStatus {
-    COMPLETED = 'COMPLETED',
-    IN_PROGRESS = 'IN_PROGRESS',
-    NOT_EXIST = 'NOT_EXIST'
-}
-
-// IN_PROGRESS 상태일 때 목차가 생성중인지, 해설이 생성중인지 렌더링하는 함수
-export enum NoteGenerateStatus {
-    WAITING = '대기중 입니다',
-    OUTLINE_GENERATING = '목차 생성중 입니다',
-    COMMENTARY_GENERATING = '해설 생성중 입니다',
-    COMPLETE_GENERATED = '생성 완료'
+    NOT_EXIST = "NOT_EXIST",
+    OUTLINE_GENERATING    = "OUTLINE_GENERATING",
+    COMMENTARY_EXPLANATION_GENERATING = "COMMENTARY_EXPLANATION_GENERATING",
+    COMMENTARY_FEEDBACK_GENERATING = "COMMENTARY_FEEDBACK_GENERATING",
+    COMMENTARY_GENERATING = "COMMENTARY_GENERATING",
+    COMPLETED = "COMPLETED"
 }
 
 export interface NoteStore {
-    noteGenerateStatus: Ref<NoteGenerateStatus>;
     noteCommentaryCount: Reactive<NoteCommentaryCount>;
     noteInfo: Reactive<NoteInfo>;
     fetchCreateNote: (videoId: string, userLevel: string) => Promise<any>;
     fetchNoteStatus: (videoId: string, userLevel: string) => Promise<any>;
     fetchNote: (videoId: string, userLevel: string) => Promise<any>;
-    setNoteInfo: (videoId: string, userLevel: string, status: string) => void;
     getNoteInfo: () => NoteInfo;
     resetStore: () => void;
-    setNoteGenerateStatus: (generateStatus: NoteGenerateStatus) => void;
-    getNoteGenerateStatus: () => any;
+    setNoteInfoWithoutTitle: (videoId: string, userLevel: string, status: NoteStatus) => void;
+    setNoteInfo: (videoId: string, userLevel: string, title: string, status: NoteStatus) => void;
+    setNoteStatus: (generateStatus: NoteStatus) => void;
     setTotalCommentaryCount: (totalCount:number) => void;
     addCurrentCommentaryCount: (count?:number) => void;
+    setNoteTitle: (title: string) => void;
 }
 
 export interface NoteInfo {
     videoId: string;
     userLevel: string;
-    status: string;
+    status: NoteStatus;
+    title: string;
 }
 
 export interface NoteCommentaryCount {
@@ -43,12 +39,13 @@ export interface NoteCommentaryCount {
 }
 
 export const useNoteStore = defineStore('note', (): NoteStore => {
-    const noteGenerateStatus = ref<NoteGenerateStatus>(NoteGenerateStatus.WAITING);
     const noteInfo = reactive<NoteInfo>({
         videoId: '',
         userLevel: '',
-        status: ''
+        status: NoteStatus.NOT_EXIST,
+        title: ''
     });
+
     const noteCommentaryCount = reactive<NoteCommentaryCount>({
         total: 0,
         current: 0
@@ -93,17 +90,24 @@ export const useNoteStore = defineStore('note', (): NoteStore => {
         });
     }
 
-    const setNoteGenerateStatus = (generateStatus: NoteGenerateStatus) => {
-        console.log(`노트 생성상태 설정: generateStatus ${generateStatus}`);
-        noteGenerateStatus.value = generateStatus;
+    const setNoteStatus = (status: NoteStatus) => {
+        noteInfo.status = status;
     }
 
-    const getNoteGenerateStatus = () => noteGenerateStatus.value;
-
-    const setNoteInfo = (videoId: string, userLevel: string, status: string): void => {
+    const setNoteInfo = (videoId: string, userLevel: string, title: string, status: NoteStatus): void => {
         noteInfo.videoId = videoId;
         noteInfo.status = status;
         noteInfo.userLevel = userLevel;
+    }
+
+    const setNoteInfoWithoutTitle = (videoId: string, userLevel: string, status: NoteStatus): void => {
+        noteInfo.videoId = videoId;
+        noteInfo.status = status;
+        noteInfo.userLevel = userLevel;
+    }
+
+    const setNoteTitle = (title: string) => {
+        noteInfo.title = title;
     }
 
     const getNoteInfo = () => noteInfo;
@@ -113,11 +117,10 @@ export const useNoteStore = defineStore('note', (): NoteStore => {
     }
 
     const addCurrentCommentaryCount = (count?: number) => {
+        if (count == 0) return;
         if(count) {
-            console.log(`생성된 해설 개수: ${count} 개`)
             noteCommentaryCount.current += count;
         } else {
-            console.log(`해설 개수 1개 추가`)
             noteCommentaryCount.current += 1;
         }
     }
@@ -125,27 +128,26 @@ export const useNoteStore = defineStore('note', (): NoteStore => {
     const resetStore = () => {
         noteInfo.videoId = '';
         noteInfo.userLevel = '';
-        noteInfo.status = '';
+        noteInfo.status = NoteStatus.NOT_EXIST;
         noteCommentaryCount.total = 0;
         noteCommentaryCount.current = 0;
+
     }
-
-
 
     return {
         noteCommentaryCount,
-        noteGenerateStatus,
         noteInfo,
         fetchCreateNote,
         fetchNoteStatus,
         setNoteInfo,
+        setNoteInfoWithoutTitle,
         getNoteInfo,
         fetchNote,
-        setNoteGenerateStatus,
-        getNoteGenerateStatus,
+        setNoteStatus,
         setTotalCommentaryCount,
         addCurrentCommentaryCount,
-        resetStore
+        resetStore,
+        setNoteTitle
     }
 });
 

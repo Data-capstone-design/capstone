@@ -1,5 +1,5 @@
 <template>
-  <div :id="`c-ST-${commentary.startTime}`" class="c-CT-root content-section  q-shadow-xs">
+  <div :id="`c-ST-${commentary.startTime}`" class="c-CT-root">
 
     <div class="flex justify-between q-pr-xs">
       <div class="time-Badge-root">
@@ -36,5 +36,9 @@ const noteOutline = outlineStore.getNoteOutline();
 </script>
 
 <style scoped>
-
+.c-CT-root {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: inset -2px -7px 2px rgb(180 180 180 / 50%), 0 4px 8px rgb(33 33 33 / 20%)
+}
 </style>

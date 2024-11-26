@@ -40,7 +40,7 @@
               target="_blank"
               label="노트 보기"
               icon="book"
-              @click="goToNote(item.videoId,item.userLevel)"
+              @click="goToNote(item.videoId, item.title, item.userLevel)"
           />
         </q-card-actions>
 
@@ -122,10 +122,10 @@ const onScroll = (event: Event) => {
   }
 };
 
-const goToNote = async (videoId: string, userLevel: string): Promise<void> => {
+const goToNote = async (videoId: string, title: string, userLevel: string): Promise<void> => {
     const response = await noteStore.fetchNoteStatus(videoId,userLevel);
     const { noteStatus } = response.data;
-    noteStore.setNoteInfo(videoId, userLevel, noteStatus);
+    noteStore.setNoteInfo(videoId, userLevel,title, noteStatus);
     navigateTo("/note");
 };
 

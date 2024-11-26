@@ -18,17 +18,15 @@
 <script setup lang="ts">
 import {onBeforeUnmount, onMounted} from "vue";
 import {useVideoStore} from "~/stores/videoStore";
-import {NoteGenerateStatus, NoteStatus, useNoteStore} from "~/stores/noteStore";
+import {useNoteStore} from "~/stores/noteStore";
 import {useEventSource} from "~/composables/useEventSource";
-import {useCommentaryStore} from "~/stores/commentaryStore";
-import {useOutlineStore} from "~/stores/outlineStore";
+import { useInitNote } from "~/composables/useInitNote";
 
 const videoStore = useVideoStore();
 const noteStore = useNoteStore();
-const commentaryStore = useCommentaryStore();
-const outlineStore = useOutlineStore();
 const { stopAutoDisplayCommentary} = useAutoDisplayCommentary();
-const {connectSse, disconnectSse } = useEventSource();
+const { disconnectSse } = useEventSource();
+const { initNote } = useInitNote();
 
 
 const loading = ref<boolean>(true);
@@ -70,54 +68,7 @@ const onPlayerReady = async (event: any) => {
 onMounted(async () => {
   await loadYouTubeAPI();
   initializePlayer();
-  const {videoId, userLevel, status} = noteStore.getNoteInfo()
-  console.log("노트 생성 상태", status);
-  if (status == NoteStatus.NOT_EXIST) {
-    const response = await noteStore.fetchCreateNote(videoId, userLevel);
-    const {noteId} = response.data;
-    connectSse(noteId);
-
-  } else if (status == NoteStatus.IN_PROGRESS) {
-    const response = await noteStore.fetchNote(videoId, userLevel);
-    const {noteId, outline, commentaries} = response.data;
-
-    if (outline.length) {
-      let currentCommentaryCount = 0;
-
-      noteStore.setNoteGenerateStatus(NoteGenerateStatus.COMMENTARY_GENERATING);
-      outlineStore.setNoteOutline(outline);
-
-      for (const commentary of commentaries) {
-        if (commentary.content) {
-          currentCommentaryCount += 1;
-          await commentaryStore.appendCommentary(commentary.startTime, commentary.htmlContent);
-        }
-      }
-      const totalCommentaryCount = outline.length;
-      console.log(`목차 생성 완료 후 댓글정보 받아오는 중: total ${totalCommentaryCount}, current ${currentCommentaryCount}`)
-      noteStore.setTotalCommentaryCount(totalCommentaryCount);
-
-      if(currentCommentaryCount > 0) {
-        noteStore.addCurrentCommentaryCount(currentCommentaryCount);
-      }
-
-    } else {
-      noteStore.setNoteGenerateStatus(NoteGenerateStatus.OUTLINE_GENERATING);
-    }
-    connectSse(noteId);
-  }
-
-  else if (status == NoteStatus.COMPLETED) {
-    noteStore.setNoteGenerateStatus(NoteGenerateStatus.COMPLETE_GENERATED);
-    const response = await noteStore.fetchNote(videoId, userLevel);
-    const { outline, commentaries} = response.data;
-    outlineStore.setNoteOutline(outline);
-    for (const commentary of commentaries) {
-      if (commentary.content) {
-        await commentaryStore.appendCommentary(commentary.startTime, commentary.content);
-      }
-    }
-  }
+  await initNote();
 });
 
 onBeforeUnmount(() => {
