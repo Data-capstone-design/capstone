@@ -50,7 +50,7 @@ const outlineHeight = ref<number>(0);
 // `100vh - videoHeight - headerHeight`을 계산하여 outlineHeight에 반영
 const updateOutlineHeight = () => {
   const viewportHeight = window.innerHeight;
-  outlineHeight.value = viewportHeight - videoHeight.value - 150;
+  outlineHeight.value = viewportHeight - videoHeight.value - 190;
 };
 
 // 비디오 높이가 변경될 때마다 outlineHeight 업데이트

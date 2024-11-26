@@ -82,7 +82,7 @@ const handleSubmit = async (): Promise<void> => {
     const userLevel = selectedLevel.value;
     const response = await noteStore.fetchNoteStatus(videoId,userLevel);
     const { noteStatus } = response.data;
-    noteStore.setNoteInfo(videoId, userLevel, noteStatus);
+    noteStore.setNoteInfoWithoutTitle(videoId, userLevel, noteStatus);
     navigateTo("/note");
   }
 };
@@ -93,9 +93,7 @@ const handleSubmit = async (): Promise<void> => {
   position: relative;
   display: flex;
   align-items: center;
-
 }
-
 
 .checkbox-with-box::after {
   position:absolute;
@@ -111,12 +109,10 @@ const handleSubmit = async (): Promise<void> => {
   background-color: yellow;
 }
 
-/* INTERMEDIATE -> 파란색 박스 */
 .checkbox-with-box.INTERMEDIATE::after {
   background-color: blue;
 }
 
-/* ADVANCED -> 빨간색 박스 */
 .checkbox-with-box.ADVANCED::after {
   background-color: red;
 }
