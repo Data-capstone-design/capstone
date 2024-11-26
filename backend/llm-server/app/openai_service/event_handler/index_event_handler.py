@@ -3,11 +3,10 @@ import json
 import os
 import re
 
-from typing_extensions import override
-
 from loguru import logger
-from openai import AssistantEventHandler, AsyncAssistantEventHandler
+from openai import AsyncAssistantEventHandler
 from openai.types.beta.threads import Text
+from typing_extensions import override
 
 from app.domain.kafka_message.llm_index_message import IndexMessage
 from app.kafka.kafka_config import LLM_INDEX_EVENTS
@@ -55,10 +54,11 @@ class IndexEventHandler(AsyncAssistantEventHandler):
 
         # 메시지를 JSON으로 직렬화하여 Kafka에 전송
         try:
-            asyncio.create_task(
+            task = asyncio.create_task(
                 self.producer.send_message(topic=self.kafka_topic, message=index_message.model_dump_json())
             )
             logger.info(f"Kafka에 메시지가 전송되었습니다 note_id: {self.note_id}")
+
         except Exception as e:
             logger.error(f"Kafka에 메시지를 전송하는 중 오류가 발생했습니다: {e}")
 

@@ -1,0 +1,483 @@
+﻿Term
+4g
+5g
+abstract data type (adt)
+abstract method
+abstraction
+access point
+accessibility
+activex
+address
+agent architecture
+agent-based model (abm)
+aggregate function
+agile
+agile software development
+algorithm
+algorithm design
+algorithmic efficiency
+alias
+amazon web services
+american standard code for information interchange (ascii)
+anonymous ftp
+anti-spam
+applet
+application
+application programming interface (api)
+application software
+apt threats
+array data structure
+artifact
+artificial intelligence
+artificial intelligence (ai)
+ascii
+ascii file
+assembly language
+assertion
+associative array
+at command set
+attachment
+attenuation
+augmented reality (ar)
+authentication
+automata theory
+automated reasoning
+automation
+autonomous vehicle
+backbone
+bandwidth
+bayesian programming
+bcp (business continuity plan)
+benchmark
+best, worst and average case
+bi (business intelligence)
+big data
+big o notation
+binary file
+binary number
+binary search algorithm
+binary tree
+binhex
+bioinformatics
+biometric authentication
+bit
+bit rate (r)
+blacklist
+blended learning
+blockchain
+blocklisting
+blog
+bluetooth
+bmp (bitmap file)
+bmp file format
+bookmark
+boolean algebra
+boolean data type
+boolean expression
+boolean logic
+booting
+botnet
+bounce
+break/fix
+bridge
+broadband connection
+browser
+buffer
+buffered
+business continuity
+business continuity plan
+byod
+byod (bring your own device)
+byte
+cable modem
+cache
+callback
+captcha
+carrier services
+case-sensitive
+cbt (computer-based training)
+cdma
+central processing unit (cpu)
+certificate authority
+cgi (common gateway interface)
+character
+chatgpt
+cipher
+class
+class-based programming
+cleanroom software engineering
+client
+client-server architecture
+closure
+cloud
+cloud computing
+cluster
+cmmc
+cms (content management system)
+code library
+codec
+coding
+coding theory
+cognitive science
+collection
+comma-separated values (csv)
+compiler
+compliance management
+compression
+computability theory
+computation
+computational biology
+computational chemistry
+computational complexity theory
+computational model
+computational neuroscience
+computational physics
+computational science
+computational steering
+computer
+computer architecture
+computer data storage
+computer ethics
+computer graphics
+computer network
+computer networking
+computer program
+computer programming
+computer science
+computer scientist
+computer security
+computer virus
+computer vision
+computing
+concatenation
+concurrency
+conditional
+container
+containerization
+content management
+continuation-passing style (cps)
+control flow
+cookie
+copilot (microsoft)
+cpu
+cpu (central processing unit)
+creative commons (cc)
+crm (customer relationship management)
+cross-platform
+crowdsourcing
+cryptography
+csp
+css
+csv
+customer relationship management
+cyber physical attacks
+cyber-insurance
+cyberbullying
+cybersecurity
+cyberspace
+daemon
+data
+data center
+data encryption
+data loss prevention (dlp)
+data mining
+data science
+data structure
+data type
+database
+ddos (distributed denial of service)
+ddos attacks
+debugging
+declaration
+decryption
+deep learning
+desktop
+devices
+devops
+digital certificate
+digital data
+digital signal processing (dsp)
+disaster recovery
+discrete event simulation (des)
+disk storage
+distributed computing
+divide and conquer algorithm
+dns
+dns (domain name system)
+documentation
+domain
+domain name system (dns)
+double-precision floating-point format
+download
+dpi (deep packet inspection)
+driver
+dsl (digital subscriber line)
+e-learning
+edge device
+email
+emulator
+encryption
+endpoint protection
+ethernet
+event
+event-driven programming
+evolutionary computing
+exception handling
+executable
+execution
+existence detection
+expression
+extranet
+faq (frequently asked questions)
+fault-tolerant computer system
+feasibility study
+fiber optics
+field
+filename extension
+filter (software)
+firewall
+firmware
+floating point arithmetic
+for loop
+formal methods
+formal verification
+front end developer
+ftp (file transfer protocol)
+functional programming
+game theory
+garbage in, garbage out (gigo)
+gateway
+gigabyte
+global variable
+gpu (graphics processing unit)
+graph theory
+graphics interchange format
+graphics processing unit (gpu)
+handle
+hard problem
+hash function
+hash table
+heap
+heapsort
+high-definition multimedia interface (hdmi)
+html
+html (hypertext markup language)
+http (hypertext transfer protocol)
+https (secure http)
+human-computer interaction (hci)
+hyperconvergence
+ide
+identifier
+image processing
+imperative programming
+incident response plan
+incremental build model
+information space analysis
+information technology (it)
+information visualization
+infrastructure as a service (iaas)
+inheritance
+input/output (i/o)
+insertion sort
+instruction cycle
+integer
+integrated development environment (ide)
+integration testing
+intellectual property (ip)
+intelligent agent
+interface
+internal documentation
+internet
+internet bot
+internet of things (iot)
+interpreter
+invariant
+iot (internet of things)
+ip address
+isp (internet service provider)
+it project manager
+it support specialist
+iteration
+java
+javascript
+kernel
+kubernetes
+lan (local area network)
+latency
+library (computing)
+linear search
+linked list
+linker
+linux
+list
+loader
+local area network (lan)
+logic error
+logic programming
+lte
+machine learning
+machine learning (ml)
+machine vision (mv)
+malware
+managed service provider (msp)
+mathematical logic
+matrix
+memory
+merge sort
+method
+methodology
+microservices
+modem
+multi-factor authentication (mfa)
+natural language processing (nlp)
+network
+network interface card (nic)
+node
+number theory
+numerical analysis
+numerical method
+object
+object code
+object-oriented analysis and design (ooad)
+object-oriented programming (oop)
+open source
+open-source software (oss)
+operating system (os)
+optical fiber
+packet
+pair programming
+parallel computing
+parameter
+password
+patch management
+peripheral
+phishing
+platform as a service (paas)
+pointer
+postcondition
+precondition
+primary storage
+primitive data type
+priority queue
+procedural generation
+procedural programming
+procedure
+program lifecycle phase
+programming language
+programming language implementation
+programming language theory
+prolog
+protocol
+proxy server
+python
+quantum computing
+queue
+quicksort
+r programming language
+radix
+ram (random access memory)
+random access memory (ram)
+ransomware
+record
+recursion
+reference
+reference counting
+regression testing
+relational database
+reliability engineering
+requirements analysis
+robotics
+round-off error
+router
+routing table
+run time
+run time error
+saas (software as a service)
+scalability
+search algorithm
+secondary storage
+selection sort
+semantics
+seo (search engine optimization)
+sequence
+serializability
+serialization
+server
+service level agreement
+set
+singleton variable
+smtp (simple mail transfer protocol)
+software
+software agent
+software as a service (saas)
+software construction
+software deployment
+software design
+software developer
+software development
+software development process
+software engineer
+software engineering
+software maintenance
+software prototyping
+software requirements specification
+software testing
+solid state drive (ssd)
+sorting algorithm
+source code
+spiral model
+sql
+sql (structured query language)
+ssl (secure sockets layer)
+stack
+state
+statement
+storage
+stream
+string
+structured query language (sql)
+structured storage
+subnet
+subroutine
+switch
+symbolic computation
+syntax
+syntax error
+system console
+tcp/ip (transmission control protocol/internet protocol)
+technical documentation
+third-generation programming language
+threat intelligence
+tokenization
+top-down and bottom-up design
+transmission control protocol/internet protocol (tcp/ip)
+tree
+trojan
+two-factor authentication (2fa)
+type theory
+ui (user interface)
+uniform resource locator (url)
+upload
+url (uniform resource locator)
+user
+user agent
+user interface (ui)
+user interface design
+v-model
+variable
+virtual machine (vm)
+virtual private network (vpn)
+virtual reality (vr)
+vpn (virtual private network)
+wan (wide area network)
+waterfall model
+waveform audio file format
+web application
+web browser
+web crawler
+wi-fi
+wide area network (wan)
+xhtml
+xml (extensible markup language)
+zero trust
+zero-day exploit

@@ -1,4 +1,6 @@
 import os
+import traceback
+
 from dotenv import load_dotenv
 from openai import AsyncOpenAI, AsyncAssistantEventHandler
 from tenacity import (
@@ -9,6 +11,10 @@ from tenacity import (
 
 from loguru import logger
 
+from app.grafana_watcher.grafana_config import metrics_url, logs_url, metrics_username, logs_username, \
+    access_token
+from app.grafana_watcher.grafana_watcher import monitor
+
 # 환경 변수 로드
 load_dotenv()
 api_key = os.environ.get('OPENAI_API_KEY')
@@ -16,13 +22,29 @@ api_key = os.environ.get('OPENAI_API_KEY')
 client = AsyncOpenAI(api_key=api_key)
 
 # Assistant 생성 함수
-async def create_assistant_model(name, instructions, model):
+async def create_assistant_model(name, instructions, model, temperature):
     logger.info("Assistant 모델 생성 중...")
     assistant = await client.beta.assistants.create(
         name=name,
         instructions=instructions,
         model=model,
-        tools=[{"type": "file_search"}]
+        temperature=temperature,
+    )
+    logger.success("Assistant 모델 생성 완료.")
+    return assistant
+
+async def create_assistant_model_with_vector_store(name, instructions, model, vectorstore_id=None):
+    logger.info("Assistant 모델 생성 중...")
+    assistant = await client.beta.assistants.create(
+        name=name,
+        instructions=instructions,
+        model=model,
+        tools=[{"type": "file_search"}],
+        tool_resources= {
+            "file_search" : {
+                "vector_store_ids": [vectorstore_id],
+            }
+        }
     )
     logger.success("Assistant 모델 생성 완료.")
     return assistant
@@ -97,12 +119,35 @@ async def run_stream(assistant_id: str, thread_id: str, event_handler: AsyncAssi
         event_handler=event_handler
     ) as stream:
         await stream.until_done()
+        # run = await stream.get_final_run()
+        # await monitor(
+        #     response=run,
+        #     metrics_url=metrics_url,
+        #     logs_url=logs_url,
+        #     metrics_username=metrics_username,
+        #     logs_username=logs_username,
+        #     access_token=access_token,
+        # )
     logger.success("스트리밍 완료.")
+    return
 
-@retry(wait=wait_random_exponential(multiplier=1, max=60), stop=stop_after_attempt(5))
+@retry(
+    wait=wait_random_exponential(multiplier=1, max=60),
+    stop=stop_after_attempt(5)
+)
 async def run_stream_with_backoff(assistant_id: str, thread_id: str, event_handler_factory, instructions, event_handler_factory_dto):
-    event_handler = await event_handler_factory(event_handler_factory_dto)
-    await run_stream(assistant_id, thread_id, event_handler, instructions)
+    try:
+        event_handler = await event_handler_factory(event_handler_factory_dto)
+        await run_stream(assistant_id, thread_id, event_handler, instructions)
+    except Exception as e:
+        # 기본 예외 로그
+        logger.error(f"run_stream_with_backoff 예외 발생: {e}")
+
+        # 스택 트레이스 로그
+        logger.error("".join(traceback.format_exception(type(e), e, e.__traceback__)))
+
+        # 예외를 다시 발생
+        raise
 
 
 # 스레드에서 메시지 목록 가져오기 함수
