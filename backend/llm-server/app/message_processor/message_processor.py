@@ -80,6 +80,13 @@ class MessageProcessor:
 
         results = await asyncio.gather(*tasks)
         logger.info("모든 설명문 생성 작업이 완료되었습니다.")
+        complete_message = LLMResultMessage(
+            noteId=self.note_id,
+            startTime=0,
+            commentaryOrder=-1,
+            content="EXPLANATION END"
+        )
+        await self.producer.send_message(topic=LLM_COMMENTARY_EVENTS, message = complete_message.model_dump_json())
         return results
     # 병렬적으로 수행하기 위해 create explanation으로 asyncio로 thread를 개수만큼 바로 생성하고 요구를  보내도록 수정하기
     async def create_chunk_explanation(self, chunk_file_path, chunk_index):
@@ -109,6 +116,13 @@ class MessageProcessor:
                  enumerate(results, start=1)]
         await asyncio.gather(*tasks)
         logger.info("모든 피드백 생성 작업이 완료되었습니다.")
+        complete_message = LLMResultMessage(
+            noteId=self.note_id,
+            startTime=0,
+            commentaryOrder=-1,
+            content="FEEDBACK END"
+        )
+        await self.producer.send_message(topic=LLM_COMMENTARY_EVENTS, message=complete_message.model_dump_json())
 
     async def create_chunk_feedback(self, thread, chunk_index, text_list):
         logger.info(f"피드백 생성 시작 | Thread ID: {thread.id} | 청크: {chunk_index}/{self.total_chunks}")
