@@ -18,9 +18,10 @@
           style="padding: 0; margin: 10px;"
       >
         <img
-            :src="`https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`"
-            class="q-card-image"
+            :src="`https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg`"
+            @error="(e) => console.log('onerror triggered:', e)"
             alt="노트 이미지"
+            class="q-card-image"
         />
 
         <q-card-section class="no-padding full-width">
