@@ -38,10 +38,11 @@ public class NoteService {
 
     public PagedNotePreviewsDto getMainPageNotes(String lastId, int pageSize) {
         List<NotePreviewVO> notePreviews = noteStorageHandler.getPagedNotes(lastId, pageSize);
-        log.info("notePreviews {}", notePreviews);
         boolean isEmpty = notePreviews.isEmpty();
         String nextCursor = isEmpty ? null : notePreviews.get(notePreviews.size() -1).id();
         boolean hasMore = !isEmpty && noteStorageHandler.hasMoreNotes(nextCursor);
         return new PagedNotePreviewsDto(notePreviews, nextCursor, hasMore);
     }
+
+
 }

@@ -31,9 +31,9 @@ public class NoteCustomRepositoryImpl implements NoteCustomRepository {
     }
 
     @Override
-    public void setStatusToComplete(String noteId) {
+    public void setStatus(String noteId, NoteStatus status) {
         Query query = new Query(Criteria.where("_id").is(noteId));
-        Update update = new Update().set("status", NoteStatus.COMPLETED);
+        Update update = new Update().set("status", status);
         mongoTemplate.updateFirst(query, update, Note.class);
     }
 
