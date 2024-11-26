@@ -1,21 +1,22 @@
 import {useCreateHtml} from '~/composables/useCreateHtml'
 import type {Ref} from "vue";
-import type {Commentary} from "~/types/commentary";
+import type {HtmlCommentary} from "~/types/commentary";
 import {useVideoStore} from "~/stores/videoStore";
 
 interface CommentaryStore {
     isGenerateCommentariesCompleted: Ref<boolean>;
     isCommentaryFollowingVideo: Ref<boolean>;
-    commentaries: Ref<Commentary[]>
+    commentaries: Ref<HtmlCommentary[]>;
+    totalCommentaries: Ref<HtmlCommentary[]>;
     getIsGenerateCommentariesCompleted: () => boolean;
     getIsCommentaryFollowingVideo: () => boolean;
-    getCommentaries: () => Commentary[];
+    getCommentaries: () => HtmlCommentary[];
     updateCommentaries: (currentTime: number) => void;
     setIsCommentaryFollowingVideo: (followingVideo: boolean) => void;
     setScrollableCommentaries: () => void;
     getCurrentCommentaryTime: () => number;
+    appendCommentary: (startTime: number, content: string) => Promise<void>;
     addCommentary: (startTime: number, content: string) => Promise<void>;
-    sortCommentaries: () => void;
     resetStore: () => void;
 }
 
@@ -25,17 +26,30 @@ export const useCommentaryStore = defineStore('commentary', (): CommentaryStore 
     const {createHtmlFromCommentary} = useCreateHtml();
     const isGenerateCommentariesCompleted: Ref<boolean> = ref<boolean>(false);
     const isCommentaryFollowingVideo: Ref<boolean> = ref<boolean>(false);
-    const commentaries: Ref<Commentary[]> = ref<Commentary[]>([]);
-    const totalCommentaries: Commentary[] = [];
+    const commentaries: Ref<HtmlCommentary[]> = ref<HtmlCommentary[]>([]);
+    const totalCommentaries: Ref<HtmlCommentary[]> = ref<HtmlCommentary[]>([]);
+    /*
+
+     */
+    const appendCommentary = async (startTime: number, content: string):Promise<void> => {
+        const htmlContent = await createHtmlFromCommentary(content);
+        const commentary = createCommentary(startTime, htmlContent);
+
+        totalCommentaries.value.push(commentary);
+        commentaries.value.push(commentary);
+    }
 
     const addCommentary = async (startTime: number, content: string):Promise<void> => {
         const htmlContent = await createHtmlFromCommentary(content);
         const commentary = createCommentary(startTime, htmlContent);
-        totalCommentaries.push(commentary);
-        commentaries.value.push(commentary);
+
+        const comparator = (a: HtmlCommentary, b: HtmlCommentary) => a.startTime - b.startTime
+
+        totalCommentaries.value = [...totalCommentaries.value, commentary].sort(comparator);
+        commentaries.value = [...totalCommentaries.value];
     }
 
-    const createCommentary = (startTime:number, htmlContent: string) : Commentary => {
+    const createCommentary = (startTime:number, htmlContent: string) : HtmlCommentary => {
         return {
             startTime,
             htmlContent
@@ -44,23 +58,24 @@ export const useCommentaryStore = defineStore('commentary', (): CommentaryStore 
 
     const setScrollableCommentaries = () => {
         if(commentaries.value.length == AUTO_DISPLAY_COMMENTARY_SIZE) {
-            commentaries.value = totalCommentaries;
+            commentaries.value = totalCommentaries.value;
         }
     }
 
     const updateCommentaries = (currentTime: number): void => {
+        console.log(`해설 업데이트: currentTime ${currentTime}`)
         const startIndex = getTargetCommentaryIndex(currentTime);
-        const commentary: Commentary = totalCommentaries[startIndex];
+        const commentary: HtmlCommentary = totalCommentaries.value[startIndex];
         commentaries.value = [commentary]
     }
 
     const getTargetCommentaryIndex = (currentTime: number): number => {
         let start: number = 0;
-        let end: number = totalCommentaries.length - 1;
+        let end: number = totalCommentaries.value.length - 1;
         let index: number = -1;
         while (start <= end) {
             const mid = (start + end) >> 1;
-            if (totalCommentaries[mid].startTime <= currentTime) {
+            if (totalCommentaries.value[mid].startTime <= currentTime) {
                 index = mid;
                 start = mid + 1
             } else {
@@ -84,26 +99,21 @@ export const useCommentaryStore = defineStore('commentary', (): CommentaryStore 
         const videoStore = useVideoStore();
         const currentTime = videoStore.getCurrentVideoTime();
         const targetCommentaryIndex = getTargetCommentaryIndex(currentTime);
-        return totalCommentaries[targetCommentaryIndex].startTime
+        return totalCommentaries.value[targetCommentaryIndex].startTime
     }
 
     const resetStore = (): void => {
         isGenerateCommentariesCompleted.value = false;
         isCommentaryFollowingVideo.value = false;
         commentaries.value = [];
-        totalCommentaries.length = 0;
-    }
-
-    const sortCommentaries = () => {
-        const comparator = (a: Commentary,b: Commentary) => a.startTime - b.startTime
-        totalCommentaries.sort(comparator);
-        commentaries.value.sort(comparator);
+        totalCommentaries.value = [];
     }
 
     return {
         isCommentaryFollowingVideo,
         isGenerateCommentariesCompleted,
         commentaries,
+        totalCommentaries,
         addCommentary,
         getIsCommentaryFollowingVideo,
         getIsGenerateCommentariesCompleted,
@@ -112,7 +122,7 @@ export const useCommentaryStore = defineStore('commentary', (): CommentaryStore 
         setIsCommentaryFollowingVideo,
         setScrollableCommentaries,
         getCurrentCommentaryTime,
-        sortCommentaries,
+        appendCommentary,
         resetStore
     };
 })

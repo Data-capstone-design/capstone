@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {type Commentary} from "~/types/commentary";
+import {type HtmlCommentary} from "~/types/commentary";
 import type {PropType} from "vue";
 import {useFormatTime} from "~/composables/useFormatTime";
 import { useOutlineStore } from "~/stores/outlineStore";
@@ -23,7 +23,7 @@ const outlineStore = useOutlineStore();
 
 defineProps({
   commentary: {
-    type: Object as PropType<Commentary>,
+    type: Object as PropType<HtmlCommentary>,
     required: true,
   },
   index: {
@@ -32,8 +32,7 @@ defineProps({
   }
 });
 
-const noteOutline = outlineStore.getNoteOutline(); // Note outline 가져오기
-console.log(noteOutline)
+const noteOutline = outlineStore.getNoteOutline();
 </script>
 
 <style scoped>

@@ -4,8 +4,13 @@ export enum KnowledgeLevel {
     ADVANCED = "ADVANCED"
 }
 
-export interface Commentary {
+export interface HtmlCommentary {
     startTime: number;
     htmlContent: string;
+}
+
+export interface Commentary {
+    startTime: number;
+    content: string;
 }
 

@@ -22,18 +22,16 @@ import {NoteGenerateStatus, NoteStatus, useNoteStore} from "~/stores/noteStore";
 import {useEventSource} from "~/composables/useEventSource";
 import {useCommentaryStore} from "~/stores/commentaryStore";
 import {useOutlineStore} from "~/stores/outlineStore";
-import {type Commentary} from "~/types/commentary";
 
 const videoStore = useVideoStore();
 const noteStore = useNoteStore();
 const commentaryStore = useCommentaryStore();
 const outlineStore = useOutlineStore();
-const {startAutoDisplayCommentary, stopAutoDisplayCommentary} = useAutoDisplayCommentary();
-const {connectSse} = useEventSource();
+const { stopAutoDisplayCommentary} = useAutoDisplayCommentary();
+const {connectSse, disconnectSse } = useEventSource();
 
 
 const loading = ref<boolean>(true);
-let eventSource: EventSource | null = null;
 
 const loadYouTubeAPI = (): Promise<void> => {
   return new Promise<void>((resolve) => {
@@ -77,46 +75,54 @@ onMounted(async () => {
   if (status == NoteStatus.NOT_EXIST) {
     const response = await noteStore.fetchCreateNote(videoId, userLevel);
     const {noteId} = response.data;
-    eventSource = connectSse(noteId);
+    connectSse(noteId);
 
   } else if (status == NoteStatus.IN_PROGRESS) {
     const response = await noteStore.fetchNote(videoId, userLevel);
     const {noteId, outline, commentaries} = response.data;
-    console.log(noteId, outline, commentaries);
-
 
     if (outline.length) {
+      let currentCommentaryCount = 0;
+
       noteStore.setNoteGenerateStatus(NoteGenerateStatus.COMMENTARY_GENERATING);
       outlineStore.setNoteOutline(outline);
+
       for (const commentary of commentaries) {
-        await commentaryStore.addCommentary(commentary.startTime, commentary.htmlContent);
+        if (commentary.content) {
+          currentCommentaryCount += 1;
+          await commentaryStore.appendCommentary(commentary.startTime, commentary.htmlContent);
+        }
       }
-      noteStore.setTotalCommentaryCount(outline.length);
-      noteStore.addCurrentCommentaryCount(commentaries.length);
+      const totalCommentaryCount = outline.length;
+      console.log(`목차 생성 완료 후 댓글정보 받아오는 중: total ${totalCommentaryCount}, current ${currentCommentaryCount}`)
+      noteStore.setTotalCommentaryCount(totalCommentaryCount);
+
+      if(currentCommentaryCount > 0) {
+        noteStore.addCurrentCommentaryCount(currentCommentaryCount);
+      }
+
     } else {
       noteStore.setNoteGenerateStatus(NoteGenerateStatus.OUTLINE_GENERATING);
     }
-    eventSource = connectSse(noteId);
+    connectSse(noteId);
   }
 
   else if (status == NoteStatus.COMPLETED) {
     noteStore.setNoteGenerateStatus(NoteGenerateStatus.COMPLETE_GENERATED);
     const response = await noteStore.fetchNote(videoId, userLevel);
-    console.log(response);
     const { outline, commentaries} = response.data;
-    console.log(outline, commentaries)
     outlineStore.setNoteOutline(outline);
     for (const commentary of commentaries) {
-      await commentaryStore.addCommentary(commentary.startTime, commentary.content);
+      if (commentary.content) {
+        await commentaryStore.appendCommentary(commentary.startTime, commentary.content);
+      }
     }
   }
 });
 
 onBeforeUnmount(() => {
+  disconnectSse();
   stopAutoDisplayCommentary();
-  if (eventSource) {
-    eventSource.close()
-  }
 });
 
 window.addEventListener('resize', () => videoStore.setPlayerSize(window.innerWidth));
