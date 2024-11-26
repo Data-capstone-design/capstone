@@ -1,16 +1,10 @@
 package com.technote.core.enums;
 
-import java.util.Arrays;
-
 public enum NoteStatus {
-    COMPLETED,
-    IN_PROGRESS,
-    NOT_EXIST;
-
-    public static NoteStatus fromValue(String value) {
-        return Arrays.stream(NoteStatus.values())
-                .filter(v -> v.name().equals(value))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(value));
-    }
+    NOT_EXIST,
+    OUTLINE_GENERATING,
+    COMMENTARY_EXPLANATION_GENERATING,
+    COMMENTARY_FEEDBACK_GENERATING,
+    COMMENTARY_GENERATING,
+    COMPLETED;
 }
