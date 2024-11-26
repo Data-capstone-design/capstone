@@ -36,7 +36,12 @@ services:
       - "27017:27017"
     networks:
       - technote-network
+    volumes:
+      - mongo-data:/data/db
 
 networks:
   technote-network:
     external: true
+
+volumes:
+  mongo-data:

@@ -6,12 +6,12 @@ import com.technote.core.domain.note.vo.NoteVO.CommentaryVO;
 import com.technote.core.domain.note.vo.NoteVO.SegmentVO;
 import com.technote.core.enums.NoteStatus;
 import com.technote.core.enums.UserLevel;
-import com.technote.core.support.error.CustomException;
-import com.technote.core.support.error.ErrorType;
 import com.technote.storage.mongo.core.Note;
 import com.technote.storage.mongo.core.Note.Commentary;
 import com.technote.storage.mongo.core.Note.Segment;
 import com.technote.storage.mongo.core.NoteRepository;
+import com.technote.core.support.error.CustomException;
+import com.technote.core.support.error.ErrorType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class NoteStorageHandler {
                 .videoId(videoId)
                 .title(title)
                 .userLevel(userLevel)
-                .status(NoteStatus.IN_PROGRESS)
+                .status(NoteStatus.OUTLINE_GENERATING)
                 .outline(new ArrayList<>())
                 .commentaries(new ArrayList<>())
                 .build();
@@ -79,8 +79,8 @@ public class NoteStorageHandler {
                 .build();
     }
 
-    public void setStatusToCompleted(String noteId) {
-        noteRepository.setStatusToComplete(noteId);
+    public void setStatus(String noteId, NoteStatus status) {
+        noteRepository.setStatus(noteId, status);
     }
 
     public void setNoteCommentariesBasedOnOutline(String noteId, List<SegmentVO> segments) {

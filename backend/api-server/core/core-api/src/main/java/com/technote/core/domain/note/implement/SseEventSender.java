@@ -1,5 +1,6 @@
 package com.technote.core.domain.note.implement;
 
+import com.technote.core.enums.SseName;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,34 +11,17 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @Component
 @RequiredArgsConstructor
 public class SseEventSender {
-    private static final String CONNECT_EVENT_NAME = "connect";
-    private static final String OUTLINE_EVENT_NAME = "outline";
-    private static final String COMMENTARY_EVENT_NAME = "commentary";
-    private static final String COMPLETE_EVENT_NAME = "complete";
-
     private final SseEmitterManager sseEmitterManager;
 
-    public void sendConnectEvent(String noteId, String sessionId) {
-        sendEvent(noteId, sessionId, CONNECT_EVENT_NAME, "");
+    public void sendEvent(String noteId, String sessionId, SseName eventName) {
+        sendEvent(noteId, sessionId, eventName, "");
     }
 
-    public void broadcastOutlineEvent(String noteId, String data) {
-        broadcastEvent(noteId, OUTLINE_EVENT_NAME, data);
-    }
-
-    public void broadcastCommentaryEvent(String noteId, String data) {
-        broadcastEvent(noteId, COMMENTARY_EVENT_NAME, data);
-    }
-
-    public void broadcastCompleteEvent(String noteId) {
-        broadcastEvent(noteId, COMPLETE_EVENT_NAME, "");
-    }
-
-    private void sendEvent(String noteId, String sessionId, String eventName, String data) {
+    public void sendEvent(String noteId, String sessionId, SseName eventName, String data) {
         try {
             var emitter = sseEmitterManager.getEmitter(noteId, sessionId);
             if (emitter != null) {
-                var event = SseEmitter.event().name(eventName).data(data);
+                var event = SseEmitter.event().name(eventName.getValue()).data(data);
                 emitter.send(event);
                 log.info("Event '{}' sent to sessionId: {}", eventName, sessionId);
             } else {
@@ -48,7 +32,11 @@ public class SseEventSender {
         }
     }
 
-    private void broadcastEvent(String noteId, String eventName, String data) {
+    public void broadcastEvent(String noteId, SseName eventName) {
+        broadcastEvent(noteId, eventName, "");
+    }
+
+    public void broadcastEvent(String noteId, SseName eventName, String data) {
         var noteEmitters = sseEmitterManager.getEmittersByNoteId(noteId);
         if (noteEmitters != null) {
             for (String sessionId : noteEmitters.keySet()) {
