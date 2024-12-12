@@ -8,10 +8,13 @@
 
 생성된 노트를 보거나, 새로운 노트를 생성할 수 있습니다.
 
+<br>
 
 ![](docs/image/494e6f14.png)
 
 영상 링크와 사용자 수준을 입력하면 AI가 해설 노트를 제작합니다.
+
+<br>
 
 ![](docs/image/f553649f.png)
 
@@ -22,6 +25,8 @@
   ![](docs/image/67e1b62c.png)
 
  
+<br>
+
 ![](docs/image/83c0d897.png)
 
 ![](docs/image/e9e0f8fa.png)
